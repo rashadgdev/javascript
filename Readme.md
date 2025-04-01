@@ -1,304 +1,160 @@
-1.  [Introduction to JavaScript]()
+## 1. Introduction to JavaScript
+- [1.1 Exploring JavaScript](#11-exploring-javascript)
+- [1.2 Hello World](#12-hello-world)
+- [1.3 A Tour of JavaScript](#13-a-tour-of-javascript)
+- [1.4 Example: Character Frequency Histograms](#14-example-character-frequency-histograms)
+- [1.5 Summary](#15-summary)
+
+## 2. Lexical Structure
+- [2.1 The Text of a JavaScript Program](#21-the-text-of-a-javascript-program)
+- [2.2 Comments](#22-comments)
+- [2.3 Literals](#23-literals)
+- [2.4 Identifiers and Reserved Words](#24-identifiers-and-reserved-words)
+  - [2.4.1 Reserved Words](#241-reserved-words)
+- [2.5 Unicode](#25-unicode)
+  - [2.5.1 Unicode Escape Sequences](#251-unicode-escape-sequences)
+  - [2.5.2 Unicode Normalization](#252-unicode-normalization)
+- [2.6 Optional Semicolons](#26-optional-semicolons)
+- [2.7 Summary](#27-summary)
+
+## 3. Types, Values, and Variables
+- [3.1 Overview and Definitions](#31-overview-and-definitions)
+- [3.2 Numbers](#32-numbers)
+  - [3.2.1 Integer Literals](#321-integer-literals)
+  - [3.2.2 Floating-Point Literals](#322-floating-point-literals)
+  - [3.2.3 Arithmetic in JavaScript](#323-arithmetic-in-javascript)
+  - [3.2.4 Binary Floating-Point and Rounding Errors](#324-binary-floating-point-and-rounding-errors)
+  - [3.2.5 Arbitrary Precision Integers with BigInt](#325-arbitrary-precision-integers-with-bigint)
+  - [3.2.6 Dates and Times](#326-dates-and-times)
+- [3.3 Text](#33-text)
+  - [3.3.1 String Literals](#331-string-literals)
+  - [3.3.2 Escape Sequences in String Literals](#332-escape-sequences-in-string-literals)
+  - [3.3.3 Working with Strings](#333-working-with-strings)
+  - [3.3.4 Template Literals](#334-template-literals)
+  - [3.3.5 Pattern Matching](#335-pattern-matching)
+- [3.4 Boolean Values](#34-boolean-values)
+- [3.5 null and undefined](#35-null-and-undefined)
+- [3.6 Symbols](#36-symbols)
+- [3.7 The Global Object](#37-the-global-object)
+- [3.8 Immutable Primitive Values and Mutable Object References](#38-immutable-primitive-values-and-mutable-object-references)
+- [3.9 Type Conversions](#39-type-conversions)
+  - [3.9.1 Conversions and Equality](#391-conversions-and-equality)
+  - [3.9.2 Explicit Conversions](#392-explicit-conversions)
+  - [3.9.3 Object to Primitive Conversions](#393-object-to-primitive-conversions)
+- [3.10 Variable Declaration and Assignment](#310-variable-declaration-and-assignment)
+  - [3.10.1 Declarations with let and const](#3101-declarations-with-let-and-const)
+  - [3.10.2 Variable Declarations with var](#3102-variable-declarations-with-var)
+  - [3.10.3 Destructuring Assignment](#3103-destructuring-assignment)
+- [3.11 Summary](#311-summary)
+
+## 4. Expressions and Operators
+- [4.1 Primary Expressions](#41-primary-expressions)
+- [4.2 Object and Array Initializers](#42-object-and-array-initializers)
+- [4.3 Function Definition Expressions](#43-function-definition-expressions)
+- [4.4 Property Access Expressions](#44-property-access-expressions)
+  - [4.4.1 Conditional Property Access](#441-conditional-property-access)
+- [4.5 Invocation Expressions](#45-invocation-expressions)
+  - [4.5.1 Conditional Invocation](#451-conditional-invocation)
+- [4.6 Object Creation Expressions](#46-object-creation-expressions)
+- [4.7 Operator Overview](#47-operator-overview)
+  - [4.7.1 Number of Operands](#471-number-of-operands)
+  - [4.7.2 Operand and Result Type](#472-operand-and-result-type)
+  - [4.7.3 Operator Side Effects](#473-operator-side-effects)
+  - [4.7.4 Operator Precedence](#474-operator-precedence)
+  - [4.7.5 Operator Associativity](#475-operator-associativity)
+  - [4.7.6 Order of Evaluation](#476-order-of-evaluation)
+- [4.8 Arithmetic Expressions](#48-arithmetic-expressions)
+  - [4.8.1 The + Operator](#481-the-operator)
+  - [4.8.2 Unary Arithmetic Operators](#482-unary-arithmetic-operators)
+  - [4.8.3 Bitwise Operators](#483-bitwise-operators)
+- [4.9 Relational Expressions](#49-relational-expressions)
+  - [4.9.1 Equality and Inequality Operators](#491-equality-and-inequality-operators)
+  - [4.9.2 Comparison Operators](#492-comparison-operators)
+  - [4.9.3 The in Operator](#493-the-in-operator)
+  - [4.9.4 The instanceof Operator](#494-the-instanceof-operator)
+- [4.10 Logical Expressions](#410-logical-expressions)
+  - [4.10.1 Logical AND (&&)](#4101-logical-and)
+  - [4.10.2 Logical OR (||)](#4102-logical-or)
+  - [4.10.3 Logical NOT (!)](#4103-logical-not)
+- [4.11 Assignment Expressions](#411-assignment-expressions)
+  - [4.11.1 Assignment with Operation](#4111-assignment-with-operation)
+- [4.12 Evaluation Expressions](#412-evaluation-expressions)
+  - [4.12.1 eval()](#4121-eval)
+  - [4.12.2 Global eval()](#4122-global-eval)
+  - [4.12.3 Strict eval()](#4123-strict-eval)
+- [4.13 Miscellaneous Operators](#413-miscellaneous-operators)
+  - [4.13.1 The Conditional Operator (?)](#4131-the-conditional-operator)
+  - [4.13.2 First-Defined (??)](#4132-first-defined)
+  - [4.13.3 The typeof Operator](#4133-the-typeof-operator)
+  - [4.13.4 The delete Operator](#4134-the-delete-operator)
+  - [4.13.5 The await Operator](#4135-the-await-operator)
+  - [4.13.6 The void Operator](#4136-the-void-operator)
+  - [4.13.7 The comma Operator (,)](#4137-the-comma-operator)
+- [4.14 Summary](#414-summary)
+
+## 5. Statements
+- [5.1 Expression Statements](#51-expression-statements)
+- [5.2 Compound and Empty Statements](#52-compound-and-empty-statements)
+- [5.3 Conditionals](#53-conditionals)
+  - [5.3.1 if](#531-if)
+  - [5.3.2 else if](#532-else-if)
+  - [5.3.3 switch](#533-switch)
+- [5.4 Loops](#54-loops)
+  - [5.4.1 while](#541-while)
+  - [5.4.2 do/while](#542-dowhile)
+  - [5.4.3 for](#543-for)
+  - [5.4.4 for/of](#544-forof)
+  - [5.4.5 for/in](#545-forin)
+- [5.5 Jumps](#55-jumps)
+  - [5.5.1 Labeled Statements](#551-labeled-statements)
+  - [5.5.2 break](#552-break)
+  - [5.5.3 continue](#553-continue)
+  - [5.5.4 return](#554-return)
+  - [5.5.5 yield](#555-yield)
+  - [5.5.6 throw](#556-throw)
+  - [5.5.7 try/catch/finally](#557-trycatchfinally)
+- [5.6 Miscellaneous Statements](#56-miscellaneous-statements)
+  - [5.6.1 with](#561-with)
+  - [5.6.2 debugger](#562-debugger)
+  - [5.6.3 “use strict”](#563-use-strict)
+- [5.7 Declarations](#57-declarations)
+  - [5.7.1 const, let, and var](#571-const-let-and-var)
+  - [5.7.2 function](#572-function)
+  - [5.7.3 class](#573-class)
+  - [5.7.4 import and export](#574-import-and-export)
+- [5.8 Summary of JavaScript Statements](#58-summary-of-javascript-statements)
+
+## 6. Objects
+- [6.1 Introduction to Objects](#61-introduction-to-objects)
+- [6.2 Creating Objects](#62-creating-objects)
+  - [6.2.1 Object Literals](#621-object-literals)
+  - [6.2.2 Creating Objects with new](#622-creating-objects-with-new)
+  - [6.2.3 Prototypes](#623-prototypes)
+  - [6.2.4 Object.create()](#624-objectcreate)
+- [6.3 Querying and Setting Properties](#63-querying-and-setting-properties)
+  - [6.3.1 Objects As Associative Arrays](#631-objects-as-associative-arrays)
+  - [6.3.2 Inheritance](#632-inheritance)
+  - [6.3.3 Property Access Errors](#633-property-access-errors)
+- [6.4 Deleting Properties](#64-deleting-properties)
+- [6.5 Testing Properties](#65-testing-properties)
+- [6.6 Enumerating Properties](#66-enumerating-properties)
+  - [6.6.1 Property Enumeration Order](#661-property-enumeration-order)
+- [6.7 Extending Objects](#67-extending-objects)
+- [6.8 Serializing Objects](#68-serializing-objects)
+- [6.9 Object Methods](#69-object-methods)
+  - [6.9.1 The toString() Method](#691-the-tostring-method)
+  - [6.9.2 The toLocaleString() Method](#692-the-tolocalestring-method)
+  - [6.9.3 The valueOf() Method](#693-the-valueof-method)
+  - [6.9.4 The toJSON() Method](#694-the-tojson-method)
+- [6.10 Extended Object Literal Syntax](#610-extended-object-literal-syntax)
+  - [6.10.1 Shorthand Properties](#6101-shorthand-properties)
+  - [6.10.2 Computed Property Names](#6102-computed-property-names)
+  - [6.10.3 Symbols as Property Names](#6103-symbols-as-property-names)
+  - [6.10.4 Spread Operator](#6104-spread-operator)
+  - [6.10.5 Shorthand Methods](#6105-shorthand-methods)
+  - [6.10.6 Property Getters and Setters](#6106-property-getters-and-setters)
+- [6.11 Summary](#611-summary)
 
-    [1.1 Exploring JavaScript]()
-
-    [1.2 Hello World]()
-
-    [1.3 A Tour of JavaScript]()
-
-    [1.4 Example: Character Frequency Histograms]()
-
-    [1.5 Summary]()
-
-2.  [Lexical Structure]()
-
-    [2.1 The Text of a JavaScript Program]()
-
-    [2.2 Comments]()
-
-    [2.3 Literals]()
-
-    [2.4 Identifiers and Reserved Words]()
-
-    [2.4.1 Reserved Words]()
-
-    [2.5 Unicode]()
-
-    [2.5.1 Unicode Escape Sequences]()
-
-    [2.5.2 Unicode Normalization]()
-
-    [2.6 Optional Semicolons]()
-
-    [2.7 Summary]()
-
-3.  [Types, Values, and Variables]()
-
-    [3.1 Overview and Definitions]()
-
-    [3.2 Numbers]()
-
-    [3.2.1 Integer Literals]()
-
-    [3.2.2 Floating-Point Literals]()
-
-    [3.2.3 Arithmetic in JavaScript]()
-
-    [3.2.4 Binary Floating-Point and Rounding Errors]()
-
-    [3.2.5 Arbitrary Precision Integers with BigInt]()
-
-    [3.2.6 Dates and Times]()
-
-    [3.3 Text]()
-
-    [3.3.1 String Literals]()
-
-    [3.3.2 Escape Sequences in String Literals]()
-
-    [3.3.3 Working with Strings]()
-
-    [3.3.4 Template Literals]()
-
-    [3.3.5 Pattern Matching]()
-
-    [3.4 Boolean Values]()
-
-    [3.5 null and undefined]()
-
-    [3.6 Symbols]()
-
-    [3.7 The Global Object]()
-
-    [3.8 Immutable Primitive Values and Mutable Object References]()
-
-    [3.9 Type Conversions]()
-
-    [3.9.1 Conversions and Equality]()
-
-    [3.9.2 Explicit Conversions]()
-
-    [3.9.3 Object to Primitive Conversions]()
-
-    [3.10 Variable Declaration and Assignment]()
-
-    [3.10.1 Declarations with let and const]()
-
-    [3.10.2 Variable Declarations with var]()
-
-    [3.10.3 Destructuring Assignment]()
-
-    [3.11 Summary]()
-
-4.  [Expressions and Operators]()
-
-    [4.1 Primary Expressions]()
-
-    [4.2 Object and Array Initializers]()
-
-    [4.3 Function Definition Expressions]()
-
-    [4.4 Property Access Expressions]()
-
-    [4.4.1 Conditional Property Access]()
-
-    [4.5 Invocation Expressions]()
-
-    [4.5.1 Conditional Invocation]()
-
-    [4.6 Object Creation Expressions]()
-
-    [4.7 Operator Overview]()
-
-    [4.7.1 Number of Operands]()
-
-    [4.7.2 Operand and Result Type]()
-
-    [4.7.3 Operator Side Effects]()
-
-    [4.7.4 Operator Precedence]()
-
-    [4.7.5 Operator Associativity]()
-
-    [4.7.6 Order of Evaluation]()
-
-    [4.8 Arithmetic Expressions]()
-
-    [4.8.1 The + Operator]()
-
-    [4.8.2 Unary Arithmetic Operators]()
-
-    [4.8.3 Bitwise Operators]()
-
-    [4.9 Relational Expressions]()
-
-    [4.9.1 Equality and Inequality Operators]()
-
-    [4.9.2 Comparison Operators]()
-
-    [4.9.3 The in Operator]()
-
-    [4.9.4 The instanceof Operator]()
-
-    [4.10 Logical Expressions]()
-
-    [4.10.1 Logical AND (&&)]()
-
-    [4.10.2 Logical OR (||)]()
-
-    [4.10.3 Logical NOT (!)]()
-
-    [4.11 Assignment Expressions]()
-
-    [4.11.1 Assignment with Operation]()
-
-    [4.12 Evaluation Expressions]()
-
-    [4.12.1 eval()]()
-
-    [4.12.2 Global eval()]()
-
-    [4.12.3 Strict eval()]()
-
-    [4.13 Miscellaneous Operators]()
-
-    [4.13.1 The Conditional Operator (?)]()
-
-    [4.13.2 First-Defined (??)]()
-
-    [4.13.3 The typeof Operator]()
-
-    [4.13.4 The delete Operator]()
-
-    [4.13.5 The await Operator]()
-
-    [4.13.6 The void Operator]()
-
-    [4.13.7 The comma Operator (,)]()
-
-    [4.14 Summary]()
-
-5.  [Statements]()
-
-    [5.1 Expression Statements]()
-
-    [5.2 Compound and Empty Statements]()
-
-    [5.3 Conditionals]()
-
-    [5.3.1 if]()
-
-    [5.3.2 else if]()
-
-    [5.3.3 switch]()
-
-    [5.4 Loops]()
-
-    [5.4.1 while]()
-
-    [5.4.2 do/while]()
-
-    [5.4.3 for]()
-
-    [5.4.4 for/of]()
-
-    [5.4.5 for/in]()
-
-    [5.5 Jumps]()
-
-    [5.5.1 Labeled Statements]()
-
-    [5.5.2 break]()
-
-    [5.5.3 continue]()
-
-    [5.5.4 return]()
-
-    [5.5.5 yield]()
-
-    [5.5.6 throw]()
-
-    [5.5.7 try/catch/finally]()
-
-    [5.6 Miscellaneous Statements]()
-
-    [5.6.1 with]()
-
-    [5.6.2 debugger]()
-
-    [5.6.3 “use strict”]()
-
-    [5.7 Declarations]()
-
-    [5.7.1 const, let, and var]()
-
-    [5.7.2 function]()
-
-    [5.7.3 class]()
-
-    [5.7.4 import and export]()
-
-    [5.8 Summary of JavaScript Statements]()
-
-6.  [Objects]()
-
-    [6.1 Introduction to Objects]()
-
-    [6.2 Creating Objects]()
-
-    [6.2.1 Object Literals]()
-
-    [6.2.2 Creating Objects with new]()
-
-    [6.2.3 Prototypes]()
-
-    [6.2.4 Object.create()]()
-
-    [6.3 Querying and Setting Properties]()
-
-    [6.3.1 Objects As Associative Arrays]()
-
-    [6.3.2 Inheritance]()
-
-    [6.3.3 Property Access Errors]()
-
-    [6.4 Deleting Properties]()
-
-    [6.5 Testing Properties]()
-
-    [6.6 Enumerating Properties]()
-
-    [6.6.1 Property Enumeration Order]()
-
-    [6.7 Extending Objects]()
-
-    [6.8 Serializing Objects]()
-
-    [6.9 Object Methods]()
-
-    [6.9.1 The toString() Method]()
-
-    [6.9.2 The toLocaleString() Method]()
-
-    [6.9.3 The valueOf() Method]()
-
-    [6.9.4 The toJSON() Method]()
-
-    [6.10 Extended Object Literal Syntax]()
-
-    [6.10.1 Shorthand Properties]()
-
-    [6.10.2 Computed Property Names]()
-
-    [6.10.3 Symbols as Property Names]()
-
-    [6.10.4 Spread Operator]()
-
-    [6.10.5 Shorthand Methods]()
-
-    [6.10.6 Property Getters and Setters]()
-
-    [6.11 Summary]()
 
 7.  [Arrays]()
 
