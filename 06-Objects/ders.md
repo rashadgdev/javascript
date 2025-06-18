@@ -294,7 +294,7 @@ let baseObject = {
   b: 2
 };
 
-let myObject = Object.create(baseObject); // myObject-in prototypi baseObject-dir
+let myObject = Object.create(baseObject); // myObject-in prototipi baseObject-dir
 myObject.c = 3; // 'c' myObject-in öz xüsusiyyətidir
 
 console.log(myObject.a); // 1 (baseObject-dən irsən gəldi)
@@ -316,11 +316,9 @@ JavaScript-də **object (obyekt)** yaratmağın bir neçə yolu var:
 ---
 ##  6.2.1 Object Literals (Obyekt Literalı)
 
-###  Nədir?
-
 **Obyekt literalı (Object Literal)** JavaScript-də obyekt yaratmağın **ən sadə, ən qısa və ən çox istifadə olunan** yoludur. Bu üsulda, obyekt birbaşa kodun içində, **curly braces** (fiqurlu mötərizələr) `{}` daxilində, **`açar (key): dəyər (value)`** cütlükləri şəklində təyin olunur. 
 
-###  Sintaksis necədir?
+###  Sintaksis:
 
 ```javascript
 let objectName = {
@@ -342,7 +340,8 @@ let point = {
 
 let p2 = {
   x: point.x,
-  y: point.y + 1 // Mövcud 'point' obyektinin dəyərlərindən istifadə edərək yeni dəyər hesablayır
+  y: point.y + 1 
+  // Mövcud 'point' obyektinin dəyərlərindən istifadə edərək yeni dəyər hesablayır
 }; // 🔹 Digər obyektin xüsusiyyətlərinə əsaslanaraq yeni obyekt yaradır
 ```
 
@@ -354,32 +353,34 @@ Obyekt literalları içərisində başqa obyektlər, massivlər və ya müxtəli
 
 ```javascript
 let book = {
-  "main title": "JavaScript",          // 🔸 Adında boşluq olan xüsusiyyət – mütləq dırnaq içində yazılmalıdır
-  "sub-title": "The Definitive Guide", // 🔸 Adında defis olan xüsusiyyət – string kimi yazılmalıdır
-  for: "all audiences",                // ⚠️ `for` JavaScript-in rezerv açar sözüdür. Lakin burada property adı kimi istifadə olunduğu üçün, bu halda problem yaratmır.
-  author: {                            // 🔸 Daxilində başqa bir obyekt saxlayan xüsusiyyət
+  "main title": "JavaScript",          
+  // Adında boşluq olan xüsusiyyət – mütləq dırnaq içində yazılmalıdır
+  "sub-title": "The Definitive Guide", 
+  // Adında defis olan xüsusiyyət – string kimi yazılmalıdır
+  for: "all audiences",                
+  // ⚠️ `for` JavaScript-in rezerv açar sözüdür. Lakin burada property adı kimi istifadə olunduğu üçün, bu halda problem yaratmır.
+  author: {                           
+  //  Daxilində başqa bir obyekt saxlayan xüsusiyyət
     firstname: "David",
     surname: "Flanagan"
   },
-  pages: 1200,                         // 🔸 Ədədi dəyər
-  isAvailable: true                    // 🔸 Boolean dəyər
+  pages: 1200,                         // Ədədi dəyər
+  isAvailable: true                    // Boolean dəyər
 };
 ```
 
 ### 💡 Qeydlər:
 
-* **Xüsusiyyət adı (property key)** JavaScript **identifikatoru** (məs: `name`, `x`) ola bilər və ya **string literal** (`"main title"`, `"sub-title"`). Əgər xüsusiyyət adı JavaScript identifikatoru olmaya biləcək simvollar (məsələn, boşluq, defis, rəqəmlə başlama) ehtiva edirsə, onu mütləq dırnaq içində string kimi yazmalısan.
+* **Xüsusiyyət adı (property key)** JavaScript **identifikatoru** (məs: `name`, `x`) ola bilər və ya **string literal** (`"main title"`, `"sub-title"`). Əgər xüsusiyyət adı JavaScript identifikatoru olmaya biləcək simvollar (məsələn, boşluq, defis, rəqəmlə başlama) -dan ibarətdirsə, onu mütləq dırnaq içində string kimi yazmalısan.
 * **Xüsusiyyət dəyəri (property value)** isə istənilən **JavaScript ifadəsi** ola bilər — bu, sadə bir dəyər, başqa bir dəyişkən, obyekt, massiv və ya hətta bir funksiya ola bilər.
 * Obyektin **son xüsusiyyətindən sonra vergül (trailing comma)** qoymaq **ən yaxşı təcrübədir (best practice)**:
 
-    ```javascript
-    let user = {
-      name: "Aysel",
-      age: 25, // ✅ Bu vergül sintaktik cəhətdən düzgündür və tövsiyə olunur
-    };
-    ```
-
-    Bu üsul, gələcəkdə obyektə yeni xüsusiyyətlər əlavə etdikdə **sintaksis səhvlərinin** (xüsusilə `git` kimi versiya nəzarət sistemlərində `diff` fərqlərini izləyərkən) qarşısını alır və kodun daha təmiz görünməsini təmin edir.
+```javascript
+let user = {
+  name: "Ayan",
+  age: 25, // ✅ Bu vergül sintaktik cəhətdən düzgündür və tövsiyə olunur
+};
+```
 
 ---
 
@@ -387,40 +388,35 @@ let book = {
 
 **Object literal** bir **ifadə (expression)** olduğu üçün, **hər çağırıldıqda (yəni, hər dəfə icra olunduqda) yeni və fərqli bir obyekt** yaradır. Bu, yaddaşda tamamilə ayrı bir yer tutan yeni bir obyekt instansı deməkdir.
 
+`Date.now()` sənə **hal-hazırkı anın zaman damğasını (timestamp)** qaytarır — bu da **1970-01-01 00:00:00 UTC** tarixindən bəri keçən **millisaniyə sayıdır**.
+
 ```javascript
 function createUser(name) {
   return {
     username: name,
-    createdAt: Date.now() // Funksiyanın hər çağırılışında fərqli zaman damğası
+    createdAt: Date.now() // Funksiyanın hər çağırılışında fərqli zaman olur
   };
 }
 
-let u1 = createUser("Ali");
+let u1 = createUser("Rashad");
 // Bir neçə milli saniyə gözləyək (və ya başqa kod icra olunsun)
 setTimeout(() => {
-  let u2 = createUser("Aytac");
+  let u2 = createUser("Ayan");
   console.log(u1 !== u2); // true – u1 və u2 yaddaşda fərqli obyektlərdir
   console.log(u1.createdAt); // Məsələn: 1718029200000
   console.log(u2.createdAt); // Məsələn: 1718029200050 (bir qədər sonra yaranıb)
 }, 50);
 ```
 
-Burada `createUser()` funksiyası çağırıldıqca **fərqli obyektlər** yaranır və onların `createdAt` dəyərləri də təbii olaraq fərqli olur, çünki `Date.now()` çağırıldığı anın zaman damğasını qaytarır. ⏱️
+Burada `createUser()` funksiyası çağırıldıqca **fərqli obyektlər** yaranır və onların `createdAt` dəyərləri də təbii olaraq fərqli olur, çünki `Date.now()` çağırıldığı anın zaman (timestamp) qaytarır. ⏱️
 
 ---
 
-### 🔮 Əlavə Yaradılma Üsulları
-
-Yuxarıdakı nümunələr **JavaScript-in ilkin versiyalarından** etibarən dəstəklənən obyekt yaratma üsullarını göstərir.
-Amma **ES6 (ECMAScript 2015) və sonrası** versiyalarda `object literal` yazılışını daha **güclü** və funksional edən **yeni xüsusiyyətlər** (`shorthand property names`, `computed property names`, `method properties`) də əlavə olunub. Onlara **§6.10** bölməsində daha ətraflı baxacağıq. 🧙‍♂️
-
----
-
-# 🏗️ 6.2.2 `new` ilə Obyekt Yaratmaq
+#  6.2.2 `new` ilə Obyekt Yaratmaq
 
 JavaScript-də obyekt yaratmağın başqa bir üsulu **`new` operatorundan** istifadə etməkdir. 🔧 Bu operator, adətən **konstruktor funksiyaları (constructor functions)** və ya **siniflərlə (classes)** birlikdə istifadə olunur.
 
-### 🧠 `new` operatoru nə edir?
+### `new` operatoru nə edir?
 
 `new` operatoru çağırıldıqda bir neçə addımı avtomatik olaraq yerinə yetirir:
 
@@ -430,6 +426,80 @@ JavaScript-də obyekt yaratmağın başqa bir üsulu **`new` operatorundan** ist
 4.  **Obyekti Qaytarır:** Əgər konstruktor funksiyası açıq şəkildə bir obyekt qaytarmasa, `new` operatoru avtomatik olaraq yeni yaradılmış və doldurulmuş (initialized) obyekti qaytarır.
 
 Bu funksiyaya **konstruktor (constructor)** deyilir — yəni obyektin ilk dəyərlərini təyin edən və onun quruluşunu formalaşdıran funksiya. 🏗️
+
+---
+
+###  `new` operatoru necə işləyir?
+
+Təsəvvür edin ki, `new` operatoru bir "ustadır" və siz ona bir "tikinti planı" (konstruktor funksiyası) verirsiniz. Usta bu plan əsasında yeni bir bina (obyekt) tikir. Bu proses bir neçə addımda baş verir:
+
+1.  **Boş bir ərazi seçir:** Usta ilk olaraq heç nə olmayan, tamamilə **boş bir yer** (yeni bir JavaScript obyekti) ayırır.
+2.  **Planı yerə qoyur:** Seçilmiş bu boş yer, sizin verdiyiniz **tikinti planı ilə** (konstruktor funksiyasının `prototype` xüsusiyyəti ilə) əlaqələndirilir. Beləcə, usta nəyi tikəcəyini bilir.
+3.  **Planı tətbiq edir:** Usta sonra sizin **tikinti planınızı** (konstruktor funksiyasını) götürür və onu bu boş yerdə tətbiq etməyə başlayır. Məsələn, divarları hörür, pəncərələri qoyur. Bu zaman, planın içindəki `this` sözü məhz tikilməkdə olan **yeni binaya** işarə edir. Bu, binanın ilkin xüsusiyyətlərini təyin edən əsas mərhələdir.
+4.  **Hazır binanı təhvil verir:** Əgər planın özü başqa bir bina təhvil vermirsə, usta avtomatik olaraq **yeni tikilmiş və tamamlanmış binanı** (obyekti) sizə qaytarır.
+
+Bu "tikinti planı" rolunu oynayan funksiyaya **konstruktor** deyilir. O, obyektin ilkin dəyərlərini təyin edir və onun necə qurulacağını formalaşdırır.
+
+---
+
+### 🌐 `User` Obyektləri Yaratmaq
+
+Veb tətbiqlərində, eyni quruluşa malik, lakin fərqli məlumatlara sahib çoxlu istifadəçi obyektləri olur. **`new` operatoru** bizə bu tip obyektləri proqramatik şəkildə və təkrar kod yazmadan yaratmağa imkan verir.
+
+Gəlin bir **`User` konstruktor funksiyası** yaradaq. Bu funksiya hər bir istifadəçi obyekti üçün bir "sxem" və ya "klassik obyekt şablonu" rolunu oynayacaq:
+
+```javascript
+// 'User' konstruktor funksiyamız (istifadəçi obyekti üçün şablon)
+function User(id, name, email) {
+  // 'this' açar sözü burada 'new' ilə yaradılacaq yeni istifadəçi obyektinə (instansına) işarə edir.
+  this.id = id;         // İstifadəçinin unikal ID-sini təyin edir
+  this.name = name;     // İstifadəçinin adını təyin edir
+  this.email = email;   // İstifadəçinin e-mail adresini təyin edir
+
+  // İstifadəçinin proqramda statusunu göstərən metod
+  this.displayStatus = function() {
+    console.log(`ID: ${this.id}, Name: ${this.name}, Email: ${this.email}`);
+  };
+
+  // İstifadəçinin emailini dəyişdirmək üçün metod
+  this.updateEmail = function(newEmail) {
+    this.email = newEmail;
+    console.log(`${this.name}'s email has been updated to ${this.email}.`);
+  };
+}
+
+// İndi 'new' operatorundan istifadə edərək bu şablondan yeni istifadəçi obyektləri yaradaq:
+
+// Yeni bir 'user1' obyekti yaradırıq
+let user1 = new User(101, "Nicat Qarayev", "nicat@example.com");
+
+// Yeni bir 'user2' obyekti yaradırıq
+let user2 = new User(102, "Ayan Qarayeva", "ayan@example.com");
+
+// Yeni bir 'user3' obyekti yaradırıq
+let user3 = new User(103, "Yunis Huseynzade", "yunis@example.com");
+
+
+console.log(user1);
+//  User { id: 101, name: 'Nicat Qarayev', email: 'nicat@example.com', displayStatus: [Function], updateEmail: [Function] }
+
+console.log(user2);
+// User { id: 102, name: 'Ayan Qarayeva', email: 'ayan@example.com', displayStatus: [Function], updateEmail: [Function] }
+
+user1.displayStatus();    
+//  ID: 101, Name: Nicat Qarayev, Email: nicat@example.com
+user2.displayStatus();   
+ // ID: 102, Name: Ayan Qarayeva, Email: ayan@example.com
+
+user3.updateEmail("yunis.h@newdomain.com"); 
+// Yunis Huseynzade's email has been updated to yunis.h@newdomain.com.
+user3.displayStatus();                        
+// ID: 103, Name: Yunis Huseynzade, Email: yunis.h@newdomain.com
+```
+
+---
+
+Bu nümunədə **`User` konstruktor funksiyası** bir növ "istifadəçi obyektlərini idarəetmə sistemi" kimi edir. Biz **`new` operatoru** vasitəsilə bu sistemdən **`user1`, `user2`, `user3`** kimi fərqli, lakin eyni quruluşa (id, name, email) malik və eyni bacarıqlara (`displayStatus`, `updateEmail`) sahib obyektlər "yaradıb, konfiqurasiya etdik". Hər bir yeni obyekt fərqli məlumatlarla ilkinləşdirilir, ancaq hər biri `User` tipindən olduğunu qoruyur.
 
 ---
 
@@ -463,23 +533,38 @@ console.log(s); // Set(0) {}
 
 Lakin, `Date`, `RegExp`, `Map`, `Set` kimi daha mürəkkəb daxili tiplər üçün `new` operatoru vacibdir.
 
-Ən əsası isə, sən **öz konstruktor funksiyalarını** (və ya ES6 ilə gələn sinifləri (classes)) da yaza bilərsən ki, bu da xüsusi növ obyektlər yaratmağa imkan verir. Bu mövzu daha sonra, **9-cu fəsildə** daha ətraflı izah olunacaq. 📘
+---
+
+### 6.2.3 **Prototiplər (Prototypes)**
+
+JavaScript-də obyekt yaratmağın daha inkişaf etmiş üsullarına keçməzdən əvvəl, dilin əsas prinsiplərindən biri olan **prototip** konsepsiyasını dərindən anlamalıyıq. Bu anlayış, JavaScript-in obyekt yönümlü təbiətini və məlumatı necə miras aldığını izah edən mərkəzi bir mexanizmdir.
 
 ---
 
-# 🧬 6.2.3 Prototiplər (Prototypes)
+### **Prototip Nədir?**
 
-Obyekt yaratmağın üçüncü üsuluna keçməzdən əvvəl, JavaScript-in ən təməl və vacib anlayışlarından biri olan **prototip** konsepsiyasını dərindən başa düşməliyik. Bu, JavaScript-in necə işlədiyini anlamaq üçün açar nöqtələrdən biridir. 🧠
+JavaScript-də **hər bir obyekt** (bəzi istisnalar olsa da) özündən daha yuxarı səviyyədə, yəni **prototip zəncirində** yerləşən başqa bir obyektə bağlıdır. Bu bağlı olduğu obyektə **prototip** deyilir. Bu əlaqə, obyektlərin **xüsusiyyətləri (properties)** və **metodları (methods)** başqa obyektlərdən **irsən almasına (inheritance)** imkan verən daxili bir mexanizmdir.
 
-### 🧩 Prototip nədir?
+Daha sadə desək:
 
-JavaScript-də **demək olar ki, hər obyektin** başqa bir obyektlə gizli bir əlaqəsi var. Bu əlaqəli obyektə **prototype** (prototip) deyilir. Bu, obyektlərin **xüsusiyyətləri (properties)** və **metodları (methods)** başqa obyektlərdən **irsən almasına (inherit)** imkan verən mexanizmdir.
-
-Qısaca desək, bir obyekt bir xüsusiyyətə daxil olmaq istədikdə, əvvəlcə özündə axtarır. Əgər tapmasa, **prototipinə** baxır. Əgər orada da tapmasa, prototipin prototipinə baxır və bu proses zəncir boyunca davam edir.
+* Hər bir obyektin arxasında, onun "genetik məlumatını" daşıyan bir **ana obyekt** var. Bu ana obyekt prototipdir.
+* Bir obyektdə müəyyən bir xüsusiyyətə və ya metoda müraciət edildikdə, JavaScript ilk olaraq həmin obyektin özündə axtarış aparır.
+* Əgər axtarılan xüsusiyyət və ya metod obyektin özündə tapılmazsa, JavaScript avtomatik olaraq onun **prototipində** axtarışa başlayır.
+* Bu axtarış, obyektin prototipindən başlayaraq, prototipin prototipinə və s. doğru, bir **zəncir** boyunca davam edir. Bu zəncirə **prototip zənciri (prototype chain)** deyilir. Zəncir ən sonda `null` prototipə çatanda axtarış dayanır.
 
 ---
 
-### 🧱 Hansı obyektin prototipi nədir?
+### **Praktiki Əhəmiyyəti**
+
+Prototip mexanizmi JavaScript-də yaddaş səmərəliliyi və kodun təkrar istifadəsi üçün kritikdir. Məsələn:
+
+* Əgər siz minlərlə **`User` (istifadəçi)** obyekti yaratırsınızsa və hər bir istifadəçinin `greet()` (salamlamaq) adlı bir metodu varsa, bu metodu hər obyektin daxilində təkrarən saxlamaq yaddaş israfına səbəb olar.
+
+Prototip zənciri, JavaScript-in obyektlər arasında əlaqə qurma və funksionallığı paylaşma yoludur. Bu, dilin unikal "miras alma" modelinin əsasını təşkil edir.
+
+---
+
+###  Hansı obyektin prototipi nədir?
 
 Hər bir obyektin prototipi, onun necə yaradılmasından asılı olaraq dəyişə bilər:
 
@@ -488,48 +573,103 @@ Hər bir obyektin prototipi, onun necə yaradılmasından asılı olaraq dəyiş
 | `{}` və ya `new Object()`         | `Object.prototype`         | Boş obyektlər və ya `Object` konstruktoru ilə yaradılan obyektlər `Object.prototype`-dan irsən gəlir. |
 | `[]` və ya `new Array()`          | `Array.prototype`          | Massivlər (arrays) `Array.prototype`-dan irsən gəlir. Bu prototip `push()`, `pop()`, `map()` kimi metodları təmin edir. |
 | `new Date()`                     | `Date.prototype`           | `Date` obyektləri `Date.prototype`-dan irsən gəlir. Bu prototip `getFullYear()`, `getMonth()` kimi metodları təmin edir. |
-| `new Function()` və ya funksiya deklarasiyası | `Function.prototype`       | Funksiyalar `Function.prototype`-dan irsən gəlir. |
+| `new Function()` | `Function.prototype`       | Funksiyalar `Function.prototype`-dan irsən gəlir. |
 
-🔗 Unutma ki, bütün bu prototiplər (məsələn, `Array.prototype`, `Date.prototype`, `Function.prototype`) sonda yenidən **`Object.prototype`-ə bağlanır**. Bu ardıcıllığa **prototip zənciri (prototype chain)** deyilir. Yəni, bütün obyektlər (bir neçə istisna ilə) nəticədə `Object.prototype`-dən metodları miras ala bilir.
+Unutma ki, bütün bu prototiplər (məsələn, `Array.prototype`, `Date.prototype`, `Function.prototype`) sonda yenidən **`Object.prototype`-ə bağlanır**. Bu ardıcıllığa **prototip zənciri (prototype chain)** deyilir. Yəni, bütün obyektlər (bir neçə istisna ilə) nəticədə `Object.prototype`-dən metodları miras ala bilir.
 
 ---
 
-### 🔍 Qarışdırıcı məqam: `prototype` xüsusiyyəti və `[[Prototype]]` daxili yuvası
 
-Bu iki termin bir-birinə çox bənzəsə də, JavaScript-də fərqli mənalara malikdir və bəzən çaşqınlıq yaradır. Gəlin fərqləri aydınlaşdıraq:
+### 🔍 **`prototype` və `[[Prototype]]` Fərqi: Aydın Nümunə**
 
-1.  **`[[Prototype]]` (Daxili yuva / Internal Slot):**
-    * Bu, **hər bir obyektin** (funksiyalar da daxil olmaqla) sahib olduğu **gizli, daxili bir referansdır**.
-    * Bu referans, həmin obyektin **kimdən irsən gəldiyini** göstərən prototip obyektə işarə edir.
-    * Sən `[[Prototype]]` daxili yuvasına birbaşa daxil ola bilməzsən. Onu əldə etmək üçün `Object.getPrototypeOf()` kimi metodlardan və ya bəzi brauzerlərdə `__proto__` (köhnəlmiş) xüsusiyyətindən istifadə olunur.
-    * **Məqsədi:** Obyektin prototip zəncirindəki növbəti həlqəsini təyin etmək.
+Bu iki termin JavaScript-də obyektlərin miras mexanizmini anlamaq üçün əsasdır, lakin tez-tez qarışdırılır. Onları bir konstruktor funksiyası və ondan yaradılan obyektlər kontekstində aydınlaşdıraq.
 
-2.  **`prototype` (Açıq Xüsusiyyət / Public Property):**
-    * Bu, **yalnız funksiyaların** (xüsusilə konstruktor funksiyalarının) sahib olduğu **adi bir xüsusiyyətdir**.
-    * Bu xüsusiyyətin dəyəri, həmin funksiya ilə **`new` operatoru vasitəsilə yaradılan obyektlərin prototipi olacaq** obyektə işarə edir.
-    * **Məqsədi:** Yeni obyektlərin hansı prototipə sahib olacağını müəyyənləşdirmək.
+---
 
-Misala baxaq:
+### 1. **`[[Prototype]]` (Obyektin "Miras Aldığı Yer")**
+
+* Bu, **hər bir obyektin** (funksiyalar da daxil olmaqla) sahib olduğu **daxili bir əlaqədir**.
+* Bu əlaqə, obyektin **hansı digər obyektin xüsusiyyətlərini və metodlarını miras aldığını** göstərir. Yəni, bir obyektin özündə olmayan bir xüsusiyyətə müraciət etdikdə, JavaScript avtomatik olaraq bu `[[Prototype]]` əlaqəsi vasitəsilə "yuxarıya", miras aldığı obyektə baxır.
+* Siz `[[Prototype]]` daxili əlaqəsinə birbaşa adla müraciət edə bilməzsiniz. Onu əldə etmək üçün `Object.getPrototypeOf()` kimi standart metodlardan istifadə olunur (və ya bəzi brauzerlərdə köhnəlmiş `__proto__` xüsusiyyətindən).
+* **Məqsədi:** Obyektin **miras zəncirindəki** növbəti "mərhələsini" təyin etmək.
+
+---
+
+### 2. **`prototype` (Konstruktor Funksiyasının "Gələcək Planı")**
+
+* Bu, **yalnız funksiyaların** (xüsusilə **konstruktor funksiyalarının** və siniflərin) sahib olduğu **adi bir xüsusiyyətdir**.
+* Bu xüsusiyyətin dəyəri, həmin funksiya ilə **`new` operatoru vasitəsilə yaradılacaq bütün yeni obyektlərin "Miras Aldığı Yer" (`[[Prototype]]`) olacaq obyektə** işarə edir. Yəni, konstruktor funksiyası yeni obyektlər üçün bir növ "gələcək miras planı" təqdim edir.
+* Bu xüsusiyyətə birbaşa müraciət edib metodlar və xüsusiyyətlər əlavə edə bilərsiniz ki, gələcəkdə yaradılacaq bütün instanslar onları miras alsın.
+* **Məqsədi:** `new` operatoru ilə yaradılacaq yeni obyektlərin hansı ümumi metodları və xüsusiyyətləri miras alacağını **müəyyənləşdirmək**.
+
+---
+
+### **Kod Nümunəsi: `Smartphone`**
+
+Gəlin bir `Smartphone` konstruktoru yaradaq. Hər smartfonun özünə aid `brand` (brendi) və `model`i var, və bütün smartfonlar `call()` (zəng etmək) metoduna sahib olacaq.
 
 ```javascript
-function User(name) { // 'User' bir konstruktor funksiyasıdır
-  this.name = name;
+// 'Smartphone' konstruktor funksiyamız (Bu, yeni smartfonlar yaratmaq üçün bizim "şablonumuzdur")
+function Smartphone(brand, model) {
+  this.brand = brand;   // Smartfonun özünə aid xüsusiyyətlər
+  this.model = model;
+  this.batteryLevel = 100; // Bütün smartfonlar ilkin olaraq 100% batareya ilə başlasın
 }
 
-let u = new User("Cavid"); // 'u' obyekti 'User' konstruktoru ilə yaradıldı
+// 'Smartphone.prototype' üzərinə bir metod əlavə edirik.
+// Bu metod, 'Smartphone' konstruktoru ilə 'new' vasitəsilə yaradılacaq BÜTÜN smartfon instansları tərəfindən miras alınacaq.
+Smartphone.prototype.call = function(number) {
+  console.log(`${this.brand} ${this.model} is calling ${number}...`);
+};
 
-// 'u' obyektinin [[Prototype]]-i 'User.prototype' obyektidir.
-console.log(Object.getPrototypeOf(u) === User.prototype); // ✅ true (u-nun prototipi User.prototype-dir)
+// Batareya səviyyəsini azaltmaq üçün başqa bir metod
+Smartphone.prototype.drainBattery = function(amount) {
+    this.batteryLevel -= amount;
+    console.log(`${this.brand} ${this.model}'s battery is now ${this.batteryLevel}%.`);
+};
 
-// 'User' funksiyasının özünün 'prototype' xüsusiyyəti var.
-console.log(typeof User.prototype); // "object"
+// İndi 'new' operatoru ilə 'Smartphone' şablonundan iki yeni smartfon obyekti yaradaq:
+let iphone = new Smartphone("Apple", "iPhone 15 Pro");
+let samsung = new Smartphone("Samsung", "Galaxy S24");
+
+// --- '[[Prototype]]' nədir? (Obyektin miras bağlantısı) ---
+// 'iphone' obyektinin daxili '[[Prototype]]' dəyəri 'Smartphone.prototype' obyektinə işarə edir.
+// Yəni 'iphone', 'Smartphone.prototype'-dan miras alır.
+console.log(Object.getPrototypeOf(iphone) === Smartphone.prototype); // true
+
+
+// iphone.call() çağırılanda, JavaScript əvvəlcə iphone-un özündə 'call' metodunu axtarır.
+// Tapmayanda, iphone-un '[[Prototype]]' vasitəsilə 'Smartphone.prototype'-a gedir və metodu oradan tapır.
+iphone.call("555-1234"); //  Apple iPhone 15 Pro is calling 555-1234...
+samsung.drainBattery(10); //  Samsung Galaxy S24's battery is now 90%.
+
+// --- 'prototype' nədir? (Konstruktorun miras planı) ---
+// 'Smartphone' funksiyasının özünün 'prototype' adlı bir xüsusiyyəti var.
+// Bu 'prototype' xüsusiyyətinin dəyəri, yuxarıda 'call' və 'drainBattery' metodlarını əlavə etdiyimiz obyektdir.
+console.log(typeof Smartphone.prototype); //  "object" (həmin obyektin tipini göstərir)
+console.log(Smartphone.prototype);
+//  { call: [Function (anonymous)], drainBattery: [Function (anonymous)] }
+// Bu obyektin içində 'call' və 'drainBattery' metodları var.
+
+// 'Smartphone' funksiyasının özünün '[[Prototype]]'-i nədir?
+// Unutmayın ki, funksiyalar da JavaScriptdə obyektdir, ona görə onların da '[[Prototype]]'-i var.
+// Funksiyalar ümumi 'Function.prototype'-dan miras alır.
+console.log(Object.getPrototypeOf(Smartphone) === Function.prototype); //  true
+// Qeyd: Bu, 'Smartphone.prototype'-dan fərqlidir.
 ```
-
-Burada `User.prototype` yeni yaranan `u` obyektinin `[[Prototype]]`-i (yəni, prototipi) rolunu oynayır.
 
 ---
 
-### 🧤 `Object.prototype` haqqında xüsusi qeyd
+Bu nümunədə:
+
+* **`Smartphone.prototype`** bizim **"Miras Planımızdır"**. Ora əlavə etdiyimiz `call` və `drainBattery` metodları, `new Smartphone()` ilə yaradılacaq bütün ağıllı telefonların ortaq bacarıqları olacaq.
+* **`iphone` və `samsung`** obyektlərinin hər birinin öz daxili **`[[Prototype]]` bağlantısı** var. Bu bağlantı onları `Smartphone.prototype` obyektinə yönləndirir ki, onlar `call` və `drainBattery` metodlarını **miras ala bilsinlər**.
+
+Beləliklə, **`prototype`** konstruktor funksiyasına aiddir və **gələcək instansların** nəyi miras alacağını **müəyyən edir**, `[[Prototype]]` isə **hər bir obyekt instansına** aiddir və onun **hazırda nədən miras aldığını** göstərir.
+
+---
+
+###  `Object.prototype` haqqında xüsusi qeyd
 
 `Object.prototype` – prototip zəncirinin ən yuxarı hissəsində yerləşən **xüsusi bir obyektdir**:
 * Bu **yeganə obyektlərdən biridir ki, heç bir prototipi yoxdur**. Yəni, o heç nədən irsən gəlmir — bu, **prototip zəncirinin başlanğıcı və ya sonudur**. 🔚
@@ -549,23 +689,46 @@ JavaScript-də bir obyektin xüsusiyyətinə və ya metoduna daxil olmaq istədi
 Misal:
 
 ```javascript
-let d = new Date(); // 'd' obyektinin prototip zənciri: d → Date.prototype → Object.prototype
+let userProfile = {
+  name: "Ali",
+  age: 30,
+  city: "Baku"
+};
 
-// d.toString() metodunu çağırırıq
-// 1. 'd' obyektinin özündə 'toString()' varmı? Xeyr.
-// 2. 'd'-nin prototipinə ('Date.prototype'-ə) baxır. 'Date.prototype'-də 'toString()' metodu var!
+// userProfile.name xüsusiyyətinə müraciət edirik
+// 1. 'userProfile' obyektinin özündə 'name' xüsusiyyəti varmı? Bəli!
+// 2. Tapdı və dəyəri qaytardı.
+console.log(userProfile.name); // Output: "Ali"
+
+// userProfile.toString() metodunu çağırırıq
+// 1. 'userProfile' obyektinin özündə 'toString()' metodu varmı? Xeyr.
+// 2. 'userProfile'-in prototipinə ('Object.prototype'-ə) baxır. 'Object.prototype'-də 'toString()' metodu var!
 // 3. Tapdı və icra etdi.
-console.log(d.toString()); // Nəticə: "Wed Jun 11 2025 15:05:01 GMT+0400 (Azerbaijan Standard Time)" (tarixə uyğun)
+console.log(userProfile.toString()); // Output: "[object Object]"
 
-// d.hasOwnProperty('something') metodunu çağırırıq
-// 1. 'd' obyektinin özündə 'hasOwnProperty()' varmı? Xeyr.
-// 2. 'd'-nin prototipinə ('Date.prototype'-ə) baxır. 'Date.prototype'-də 'hasOwnProperty()' varmı? Xeyr.
-// 3. 'Date.prototype'-in prototipinə ('Object.prototype'-ə) baxır. 'Object.prototype'-də 'hasOwnProperty()' metodu var!
-// 4. Tapdı və icra etdi.
-console.log(d.hasOwnProperty('getDate')); // false (getDate Date.prototype-dədir, 'd'-nin özündə deyil)
-console.log(d.hasOwnProperty('toString')); // false (toString Date.prototype-dədir, 'd'-nin özündə deyil)
+// userProfile.hasOwnProperty('age') metodunu çağırırıq
+// 1. 'userProfile' obyektinin özündə 'hasOwnProperty()' varmı? Xeyr.
+// 2. 'userProfile'-in prototipinə ('Object.prototype'-ə) baxır. 'Object.prototype'-də 'hasOwnProperty()' metodu var!
+// 3. Tapdı və icra etdi.
+console.log(userProfile.hasOwnProperty('age')); // Output: true (Çünki 'age' birbaşa 'userProfile' obyektinin özünün xüsusiyyətidir)
+console.log(userProfile.hasOwnProperty('city')); // Output: true
+
+// userProfile.hasOwnProperty('toString') metodunu çağırırıq
+// 1. 'userProfile' obyektinin özündə 'hasOwnProperty()' varmı? Xeyr.
+// 2. 'userProfile'-in prototipinə ('Object.prototype'-ə) baxır. 'Object.prototype'-də 'hasOwnProperty()' metodu var!
+// 3. Tapdı və icra etdi.
+console.log(userProfile.hasOwnProperty('toString')); // Output: false (Çünki 'toString' metodu 'Object.prototype'-dədir, 'userProfile'-in özündə deyil)
+
+// userProfile.propertyIsEnumerable('name') metodunu çağırırıq
+// 1. 'userProfile' obyektinin özündə 'propertyIsEnumerable()' varmı? Xeyr.
+// 2. 'userProfile'-in prototipinə ('Object.prototype'-ə) baxır. 'Object.prototype'-də 'propertyIsEnumerable()' metodu var!
+// 3. Tapdı və icra etdi.
+console.log(userProfile.propertyIsEnumerable('name')); // Output: true (Çünki 'name' enumeration üçün mövcuddur)
 ```
-Beləliklə, obyekt həm `Date.prototype`-dən, həm də `Object.prototype`-dən **xüsusiyyətləri və metodları miras ala bilir**. Bu mexanizm, JavaScript-də kodun təkrar istifadəsi (reusability) üçün fundamentaldır.
+Bu nümunə prototip zəncirinin düz obyektlərdə necə fəaliyyət göstərdiyini aydın şəkildə nümayiş etdirir:
+
+* **`name`, `age`, `city`** kimi xüsusiyyətlər birbaşa **`userProfile`** obyektinin özündə mövcuddur, buna görə də onlara müraciət edərkən prototip zəncirində axtarışa ehtiyac qalmır.
+* **`toString()`**, **`hasOwnProperty()`** və **`propertyIsEnumerable()`** kimi metodlar isə **`userProfile`** obyektinin özündə deyil, onun prototipi olan **`Object.prototype`** üzərində yerləşir. Bu səbəbdən, bu metodlar çağırıldıqda, JavaScript prototip zəncirini izləyərək onları `Object.prototype` üzərində tapır və istifadə edir.
 
 ---
 
@@ -578,7 +741,8 @@ Beləliklə, obyekt həm `Date.prototype`-dən, həm də `Object.prototype`-dən
 `Object.create(proto, [propertiesObject])`
 
 * `proto`: Yeni obyektin prototipi olacaq obyekt. Bu arqument `null` da ola bilər.
-* `propertiesObject` (optional): Yeni obyektə əlavə olunacaq xüsusiyyətləri təyin edən, xüsusiyyət təsvirlərini (property descriptors) ehtiva edən obyekt. Bu, ən çox §14.1-də müzakirə olunacaq xüsusiyyət atributları (`writable`, `enumerable`, `configurable`) ilə bağlıdır.
+* `propertiesObject` (optional): Yeni obyektə əlavə olunacaq xüsusiyyətləri təyin edən, xüsusiyyət təsvirlərini (property descriptors) ehtiva edən obyekt.  
+  Bu, ən çox §14.1-də müzakirə olunacaq xüsusiyyət atributları (`writable`, `enumerable`, `configurable`) ilə bağlıdır.
 
 ```javascript
 let protoObj = { x: 1, y: 2 };
@@ -602,27 +766,62 @@ Burada `o1` adlı yeni obyekt yaradılır və onun `[[Prototype]]`-i (yəni, pro
 
 ---
 
-### 🚫 `null` Prototipi ilə Obyekt Yaratmaq
+### 🚫 **`null` Prototipi ilə Obyekt Yaratmaq: Praktik Nümunələr**
 
-Əgər `Object.create(null)` istifadə etsən, nəticədə **heç bir prototipi olmayan** bir obyekt yaranır:
+`Object.create(null)` istifadə etdiyiniz zaman, nəticədə **heç bir prototipi olmayan** bir obyekt əldə edirsiniz. Bu o deməkdir ki, o, **JavaScript-in ən təməl obyektindən (yəni `Object.prototype`-dən)** gələn heç bir metodu miras almır.
+
+Gəlin bunun praktikada nə anlama gəldiyinə baxaq:
 
 ```javascript
-let o2 = Object.create(null);
+// 'null' prototipi ilə bir obyekt yaradırıq
+let cleanObject = Object.create(null);
 
-console.log(o2); // [Object: null prototype] {} - brauzer konsolunda fərqli görünə bilər
+console.log(cleanObject); // Output: [Object: null prototype] {}
+// (Brauzer konsolunda adətən {} kimi görünür, amma prototype fərqi qeyd olunur
+
+// Öz xüsusiyyətlərini əlavə edə bilərik
+cleanObject.name = "John Doe";
+cleanObject.age = 30;
+cleanObject.id = 123;
+
+console.log(cleanObject); // Output: [Object: null prototype] { name: 'John Doe', age: 30, id: 123 }
 ```
-
-❌ Bu obyekt:
-
-* `toString()`, `hasOwnProperty()` kimi `Object.prototype`-dən gələn heç bir metodu **irsən almır**.
-* Bu səbəbdən, onun üzərində bu cür metodları çağırsan xəta verəcək: `o2.toString()` // TypeError!
-* Bəzi JavaScript operatorları (məsələn, `+` operatoru obyektləri stringə çevirərkən `toString()` metoduna ehtiyac duyarsa) onunla **düzgün işləməyə bilər**.
-
-Bu üsul adətən **tamamilə təmiz obyektlər yaratmaq** üçün istifadə olunur – məsələn, digər obyektlərin daxili metodlarından təsirlənməməsi lazım olan `dictionary` tipli obyektlər və ya `JSON` tipli məlumatları saxlamaq üçün təhlükəsiz bir qab kimi. 🛡️
 
 ---
 
-### 🧼 Adi Boş Obyekt Yaratmaq
+### **`null` Prototipi Obyektlərinin Xüsusiyyətləri:**
+
+Bu obyektlər öz təmizliyində faydalı olsa da, `Object.prototype`-dən metodları miras almadıqları üçün bəzi xüsusiyyətlərə malikdirlər:
+
+1.  **Ümumi Obyekt Metodlarını İrsən Almır:**
+    `cleanObject` üzərində `Object.prototype`-də olan metodları birbaşa çağıra bilməzsiniz.
+
+    ```javascript
+    // Misal 1: toString() metodu yoxdur
+    try {
+      console.log(cleanObject.toString()); // TypeError: cleanObject.toString is not a function
+    } catch (e) {
+      console.log(`Error: ${e.message}`); // Output: Error: cleanObject.toString is not a function
+    }
+
+    // Misal 2: hasOwnProperty() metodu yoxdur
+    try {
+      console.log(cleanObject.hasOwnProperty('name')); // TypeError: cleanObject.hasOwnProperty is not a function
+    } catch (e) {
+      console.log(`Error: ${e.message}`); // Output: Error: cleanObject.hasOwnProperty is not a function
+    }
+    ```
+
+    **Qeyd:** Əgər siz yenə də `hasOwnProperty` kimi metodlara ehtiyac duyursunuzsa, onlara `Object.prototype` üzərindən birbaşa müraciət edə bilərsiniz:
+
+    ```javascript
+    // 'Object.prototype.hasOwnProperty.call()' vasitəsilə hasOwnProperty-ni çağırmaq
+    console.log(Object.prototype.hasOwnProperty.call(cleanObject, 'name')); // Output: true
+    console.log(Object.prototype.hasOwnProperty.call(cleanObject, 'someProperty')); // Output: false
+    ```
+---
+
+###  Adi Boş Obyekt Yaratmaq
 
 Əgər sadəcə `{}` və ya `new Object()` ilə eyni nəticəni almaq istəyirsənsə (yəni, `Object.prototype`-dən irsən gələn adi bir boş obyekt), belə yaza bilərsən:
 
@@ -633,7 +832,7 @@ console.log(o3); // {}
 console.log(o3.toString()); // "[object Object]" - işləyir, çünki Object.prototype-dən gəlir
 ```
 
-Bu, **adi boş obyekt** kimidir – `toString()` və digər ümumi metodlara malikdir. ✅
+Bu, **adi boş obyekt** kimidir – `toString()` və digər ümumi metodlara malikdir.
 
 ---
 
@@ -647,44 +846,68 @@ Bu, **adi boş obyekt** kimidir – `toString()` və digər ümumi metodlara mal
 
 ---
 
-### 🛡️ Real Dünya Nümunəsi: Təhlükəsiz Obyekt Nüsxəsi (Shallow Copy)
+Əlbəttə, `Object.create()` metodunun gücünü və xüsusilə də "shallow copy" (səthi nüsxə) funksiyasını daha yaxşı başa düşmək üçün başqa bir nümunəyə baxaq. Bu dəfə, bir konfigurasiya obyektini təhlükəsiz şəkildə funksiyalara ötürmə ssenarisini araşdıraq.
 
-Təsəvvür et ki, hansısa bir kitabxana funksiyasına obyekt ötürürsən, amma onun bu obyektə **təsadüfən dəyişiklik etməsini istəmirsən**. `Object.create()` bu cür ssenarilərdə faydalı ola bilər:
+---
+
+### ⚙️ **Standart Tənzimləmələrin Fərdiləşdirilməsi**
+
+Bir tətbiqdə adətən **standart tənzimləmələr** olur və biz istifadəçi üçün bu tənzimləmələrin üzərində dəyişikliklər etməyə imkan veririk, lakin orijinal standart tənzimləmələrə toxunmaq istəmirik. `Object.create()` bu cür ssenari üçün əlverişlidir.
 
 ```javascript
-let originalData = {
-  id: 1,
-  name: "Məhsul A",
-  price: 100,
-  description: "Bu dəyər dəyişilməməlidir."
+// Standart (Default) Tənzimləmələr Obyekti
+// Bu obyektdəki dəyərlər dəyişməz qalmalıdır.
+const defaultSettings = {
+  theme: "dark",
+  fontSize: 16,
+  notifications: true,
+  language: "en"
 };
 
-// 'originalData'-nı prototip kimi istifadə edərək yeni bir obyekt yaradırıq.
-// Bu yeni obyekt 'originalData'-nın bütün xüsusiyyətlərini irsən alır.
-let safeView = Object.create(originalData);
+// 'defaultSettings'-i prototip kimi istifadə edərək yeni, fərdiləşdirilmiş tənzimləmələr yaradırıq.
+// 'userSettings' obyekti 'defaultSettings'-in bütün xüsusiyyətlərini irsən alır.
+let userSettings = Object.create(defaultSettings);
 
-console.log(safeView.description); // "Bu dəyər dəyişilməməlidir." - orijinaldan oxundu
+console.log("Default Theme:", defaultSettings.theme);         // Output: Default Theme: dark
+console.log("User Settings Theme (reads from prototype):", userSettings.theme); // Output: User Settings Theme (reads from prototype): dark
+console.log("---");
 
-// Təsəvvür et ki, hansısa funksiya 'safeView' üzərində işləyir:
-function processProduct(productObj) {
-  productObj.description = "Bu dəyişdirildi!"; // productObj-nin özündə yeni bir "description" yaradır
-  productObj.price = 120; // price-i dəyişdirməyə çalışır
-  console.log("Daxili funksiya: ", productObj.description);
-}
+// İstifadəçi tənzimləmələrini dəyişməyə cəhd edirik:
+console.log("User changing settings...");
+userSettings.theme = "light";       // 'userSettings' obyekti üçün yeni 'theme' xüsusiyyəti yaranır
+userSettings.fontSize = 18;         // 'userSettings' obyekti üçün yeni 'fontSize' xüsusiyyəti yaranır
+userSettings.notifications = false; // 'userSettings' obyekti üçün yeni 'notifications' xüsusiyyəti yaranır
 
-processProduct(safeView);
+console.log("---");
+console.log("After User Settings Changes:");
 
-console.log("Orijinal obyektin description-ı:", originalData.description); // Nəticə: "Bu dəyər dəyişilməməlidir."
-console.log("Orijinal obyektin price-i:", originalData.price); // Nəticə: 100
-console.log("SafeView-in description-ı:", safeView.description); // Nəticə: "Bu dəyişdirildi!"
-console.log("SafeView-in price-i:", safeView.price); // Nəticə: 120
+// Orijinal 'defaultSettings' obyektinə baxaq:
+console.log("Original Default Theme:", defaultSettings.theme);       // Output: Original Default Theme: dark (Dəyişmədi!)
+console.log("Original Default Font Size:", defaultSettings.fontSize); // Output: Original Default Font Size: 16 (Dəyişmədi!)
+console.log("Original Default Notifications:", defaultSettings.notifications); // Output: Original Default Notifications: true (Dəyişmədi!)
+
+// 'userSettings' obyektinə baxaq (dəyişikliklər onun özündədir):
+console.log("User Settings Theme:", userSettings.theme);           // Output: User Settings Theme: light
+console.log("User Settings Font Size:", userSettings.fontSize);     // Output: User Settings Font Size: 18
+console.log("User Settings Notifications:", userSettings.notifications); // Output: User Settings Notifications: false
+
+// 'language' xüsusiyyəti dəyişdirilməyib, ona görə hələ də prototipdən oxunur:
+console.log("User Settings Language:", userSettings.language);     // Output: User Settings Language: en
+console.log("Is 'language' directly on userSettings?", userSettings.hasOwnProperty('language')); // Output: false
 ```
 
-Bu nümunədə:
-* `processProduct` funksiyası `safeView` obyektinin `description` xüsusiyyətini dəyişməyə çalışdıqda, `safeView`-in **özündə** yeni bir `description` xüsusiyyəti yaranır. `originalData`-dakı `description` dəyəri dəyişməz qalır.
-* `price` xüsusiyyəti də eyni şəkildə işləyir.
-* 📖 Funksiya `originalData`-nın xüsusiyyətlərini **oxuya bilər**.
-* ❌ Amma onları dəyişsə də, bu dəyişiklik **əsl `originalData` obyektinə təsir etməz** — dəyişikliklər yalnız yeni `safeView` obyektinin özündə qalır. Bu, **"shadowing"** (kölgələmə) adlanır.
+---
+
+**Bu Nümunədə Nələr Baş Verir:**
+
+* `defaultSettings` obyekti bizim **standart tənzimləmələrimizdir**. Biz bunların dəyişməz qalmasını istəyirik.
+* `userSettings = Object.create(defaultSettings)` ifadəsi ilə `defaultSettings`-i **prototip** kimi istifadə edən yeni bir **`userSettings`** obyekti yaratdıq.
+    * Bu o deməkdir ki, `userSettings` obyekti `defaultSettings`-dəki `theme`, `fontSize`, `notifications`, `language` dəyərlərini **oxuya bilir**, lakin bu dəyərlər ilkin olaraq `userSettings`-in özündə saxlanılmır; onlar prototipdən miras alınır.
+* `userSettings.theme = "light";` kimi sətirləri icra etdikdə, JavaScript `userSettings` obyektinin **özündə** `theme` adlı yeni bir xüsusiyyət yaradır.
+    * Bu yeni `theme` xüsusiyyəti `defaultSettings`-dəki `theme` xüsusiyyətini **kölgələyir (shadows)**. Yəni, `userSettings.theme` indi onun özündəki `"light"` dəyərini qaytarır, amma `defaultSettings.theme` hələ də `"dark"` olaraq qalır.
+* `language` xüsusiyyəti dəyişdirilmədiyindən, `userSettings.language` hələ də `defaultSettings`-dən miras alınan `"en"` dəyərini göstərir. `userSettings.hasOwnProperty('language')` ifadəsinin `false` qaytarması da bunu təsdiqləyir, çünki `language` `userSettings`-in özünün bir xüsusiyyəti deyil, prototipdən gəlir.
+
+Nəticədə, `Object.create()` sayəsində **orijinal `defaultSettings` obyektinə zərər vermədən**, istifadəçi üçün fərdiləşdirilmiş tənzimləmələr yarada bildik. Bu, konfigurasiya idarəetməsi və ya dəyişməz (immutable) data strukturları ilə işləyərkən çox faydalı bir yanaşmadır.
 
 ---
 
@@ -694,15 +917,10 @@ Bu nümunədə:
 
 ---
 
-### ⏭️ Növbəti Addım
-
-Prototip zənciri və `Object.create()` ilə obyektlərin necə işlədiyini anladıq. İndi isə obyektlərdə xüsusiyyətlərə necə **daxil olmaq (access)**, **dəyər yazmaq (set)** və onları **silmək (delete)** kimi əsas əməliyyatların mexanizmlərinə keçəcəyik. Bu konseptlər, yuxarıda öyrəndiyimiz prototip zənciri mexanizmlərinin real kodda **nəyə görə və necə işlədiyini** tam olaraq başa düşmək üçün kritik əhəmiyyət kəsb edir. 🧠🔎
-
----
-
 # 6.3 Xüsusiyyətlərə Daxil Olmaq və Təyin Etmək (Querying and Setting Properties)
 
-JavaScript-də obyektlərin ən fundamental əməliyyatlarından biri onların daxilində saxladıqları xüsusiyyətlərə (properties) daxil olmaq (oxumaq) və ya onların dəyərlərini dəyişdirmək (yazmaq, təyin etmək)dir. Bu əməliyyatlar üçün iki əsas operatordan istifadə edirik: **dot operator (`.`)** və **square bracket operator (`[]`)**. (Bu operatorlar haqqında ilkin məlumatı §4.4-də əldə etmişdin.)
+JavaScript-də obyektlərin ən fundamental əməliyyatlarından biri onların daxilində saxladıqları xüsusiyyətlərə (properties) daxil olmaq (oxumaq) və ya onların dəyərlərini dəyişdirmək (yazmaq, təyin etmək)dir.  
+Bu əməliyyatlar üçün iki əsas operatordan istifadə edirik: **dot operator (`.`)** və **square bracket operator (`[]`)**. (Bu operatorlar haqqında ilkin məlumatı §4.4-də əldə etmişdin.)
 
 ### 🔍 Xüsusiyyətlərin dəyərini almaq (Querying Properties)
 
@@ -744,8 +962,6 @@ Bir obyektin xüsusiyyətinin dəyərini oxumaq üçün hər iki operatordan ist
     console.log(pubYear);   // 2008
     ```
 
-> **Qeyd:** Növbəti fəsildə (§7) `square bracket` operatorunda rəqəmlərin də (massiv indeksləri kimi) çox istifadə olunduğunu görəcəyik. Əslində, massiv indeksləri də JavaScript daxilində avtomatik olaraq string-ə çevrilir. Məsələn, `myArray[0]` əslində `myArray["0"]` kimi işləyir.
-
 ---
 
 ### ✏️ Xüsusiyyət yaratmaq və ya dəyərini dəyişmək (Setting Properties)
@@ -782,10 +998,6 @@ console.log(book.author.firstname); // "David"
 
 ---
 
-Növbəti bölmədə **JavaScript-də xüsusiyyətlərin (properties) necə axtarıldığı (Querying) və necə təyin olunduğu (Setting)** mexanizmləri barədə daha dərin izah verəcəyik. Bu mexanizmlər, xüsusilə də prototip zənciri ilə necə əlaqəli olduğunu başa düşməyə kömək edəcək.
-
----
-
 # 6.3.1 Obyektlər Assosiativ Massivlər Kimi (Objects As Associative Arrays)
 
 Əvvəlki bölmədə izah etdiyimiz kimi, aşağıdakı iki JavaScript ifadəsi əksər hallarda eyni dəyəri qaytarır:
@@ -806,8 +1018,8 @@ Birinci sintaksis — **dot operator (`.`)** ilə və bir **identifikatorla** is
 ### 🤔 Strongly Typed vs. Loosely Typed (Dinamik Tipli) – Fərq Nədir?
 
 * **Strongly typed (Ciddi tipli) dillər (məsələn: C, C++, Java):** Bu dillərdə obyektlərin yalnız öncədən təyin olunmuş və sayca məhdud olan xüsusiyyətləri (properties) ola bilər. Obyektin tipini təyin edərkən bütün xüsusiyyətlər bəyan edilir və proqram işləyərkən yeni xüsusiyyətlər əlavə etmək mümkün deyil.
-* **JavaScript isə loosely typed (dinamik tipli) dildir:** Bu, obyektlərə **istənilən vaxt, istənilən sayda yeni xüsusiyyət əlavə etməyin** və ya mövcudlarını silməyin mümkün olduğu deməkdir. Bu dinamiklik JavaScript-i çox çevik edir.
 
+* **JavaScript isə loosely typed (dinamik tipli) dildir:** Bu, obyektlərə **istənilən vaxt, istənilən sayda yeni xüsusiyyət əlavə etməyin** və ya mövcudlarını silməyin mümkün olduğu deməkdir.
 ---
 
 ### 🔸 Dot operator (`.`) – Sabit (Static) Xüsusiyyət Adları
@@ -818,15 +1030,16 @@ Dot operatoru (`.`) ilə istifadə olunan property adı **identifier** kimi yaz�
 let myProperty = "name";
 let person = { name: "Aysel", age: 25 };
 
-// console.log(person.myProperty); // undefined olacaq! Çünki "person" obyektində "myProperty" adlı bir xüsusiyyət yoxdur.
-                                 // JavaScript `myProperty` sözünü bir identifikator kimi qəbul edir, dəyişkən kimi yox.
+// console.log(person.myProperty); 
+// undefined olacaq! Çünki "person" obyektində "myProperty" adlı bir xüsusiyyət yoxdur.
+// JavaScript `myProperty` sözünü bir identifikator kimi qəbul edir, dəyişkən kimi yox.
 ```
 
 ---
 
 ### 🔹 Square bracket operator (`[]`) – Dinamik (Dynamic) Xüsusiyyət Adları
 
-Square bracket operatoru (`[]`) ilə property adı bir **string ifadəsi** kimi verilir. Bu o deməkdir ki, proqram icra olunarkən (runtime) bu string dəyəri **dinamik şəkildə yaradıla və ya dəyişdirilə bilər**. Bu, data-driven proqramlaşdırma üçün inanılmaz dərəcədə güclü bir xüsusiyyətdir.
+Square bracket operatoru (`[]`) ilə property adı bir **string ifadəsi** kimi verilir. Bu o deməkdir ki, proqram icra olunarkən (runtime) bu string dəyəri **dinamik şəkildə yaradıla və ya dəyişdirilə bilər**.
 
 Məsələn:
 
@@ -864,20 +1077,22 @@ Tutaq ki, sən istifadəçi portfelində (portfolio) saxladığı səhmlərin ad
 ```javascript
 // Yeni səhm əlavə edən funksiya
 function addStock(portfolio, stockName, shares) {
-  portfolio[stockName] = shares; // stockName dəyəri dinamikdir, ona görə square bracket istifadə edirik
+  portfolio[stockName] = shares; 
+  // stockName dəyəri dinamikdir, ona görə square bracket istifadə edirik
   console.log(`${stockName} səhmi portfelə əlavə edildi: ${shares} ədəd.`);
 }
 
 let myPortfolio = {}; // Boş portfel obyekti
 
-addStock(myPortfolio, "AAPL", 10); // Apple səhmi
-addStock(myPortfolio, "GOOGL", 5); // Google səhmi
-addStock(myPortfolio, "MSFT", 12); // Microsoft səhmi
+addStock(myPortfolio, "AAPL", 10); 
+// Apple səhmi portfelə əlavə edildi: 10 ədəd.
+addStock(myPortfolio, "GOOGL", 5); 
+// Google səhmi portfelə əlavə edildi: 5 ədəd.
+addStock(myPortfolio, "MSFT", 12); 
+// Microsoft səhmi portfelə əlavə edildi: 12 ədəd.
 
 console.log(myPortfolio); // { AAPL: 10, GOOGL: 5, MSFT: 12 }
 ```
-
-Burada, `stockName` dəyişəni runtime zamanı dinamik təyin olunur, ona görə də yalnız square bracket operatoru ilə property oxumaq/yazmaq mümkündür.
 
 ---
 
@@ -913,17 +1128,6 @@ console.log(`Portfelin ümumi dəyəri: $${portfolioWorth.toFixed(2)}`);
 // Nəticə: $8310.00 (10*170 + 5*180 + 12*420)
 ```
 
-`for...in` dövrü həmçinin prototip zəncirindən gələn `enumerable` xüsusiyyətləri də gəzir. Bunu nəzərə almaq lazımdır. Yalnız obyektin "öz" xüsusiyyətlərini gəzmək istəyirsənsə, `hasOwnProperty()` metodundan istifadə etməyin tövsiyə olunur:
-
-```javascript
-for(let stockSymbol in portfolio) {
-  if (portfolio.hasOwnProperty(stockSymbol)) { // Yalnız obyektin öz xüsusiyyətlərini nəzərə alırıq
-    let shares = portfolio[stockSymbol];
-    // ...
-  }
-}
-```
-
 ---
 
 ### 🚩 ES6 və sonrakı versiyalarda: `Map` class-ı
@@ -937,15 +1141,11 @@ Sadə obyektlər assosiativ massiv kimi işləməyinə baxmayaraq, **ES6 (ECMASc
 * **Performans:** Böyük həcmli data üçün `Map` obyektlər, xüsusilə tez-tez əlavə etmə/silmə əməliyyatları edildikdə, sadə obyektlərə nisbətən daha yaxşı performans göstərə bilər.
 * **`size` xüsusiyyəti:** Birbaşa kolleksiyadakı elementlərin sayını verir.
 
-Gələcəkdə mürəkkəb açar-dəyər kolleksiyaları ilə işləyərkən `Map` class-ından istifadə etməyi düşünməyin tövsiyə olunur.
-
 ---
 
-# 6.3.2 İrsiyyət (Inheritance) 🧬🧩
+# 6.3.2 İrsiyyət (Inheritance) 
 
-JavaScript obyektləri həm **özünəməxsus xüsusiyyətlərə (own properties)**, həm də **prototip obyektindən miras aldıqları (inherited properties)** xüsusiyyətlərə sahib ola bilirlər. Bu səbəbdən, bir xüsusiyyətə daxil olarkən JavaScript-in necə davrandığını və bu irsiyyət mexanizminin necə işlədiyini yaxşı başa düşmək vacibdir.
-
----
+JavaScript obyektləri həm **özünəməxsus xüsusiyyətlərə (own properties)**, həm də **prototip obyektindən miras aldıqları (inherited properties)** xüsusiyyətlərə sahib ola bilirlər.
 
 ### 🔗 Prototip Zənciri (Prototype Chain) – Xüsusiyyətlərin Axtarışı
 
@@ -968,16 +1168,18 @@ p.y = 2;              // 'p'-nin öz xüsusiyyəti: y = 2
 let q = Object.create(p);  // 'q'-nun prototipi 'p' obyektidir (q → p → o → Object.prototype)
 q.z = 3;              // 'q'-nun öz xüsusiyyəti: z = 3
 
-console.log(q.x); // Nəticə: 1. Q.x-i axtararkən: q-da yoxdur → p-də yoxdur → o-da var (x=1) → tapdı!
-console.log(q.y); // Nəticə: 2. Q.y-i axtararkən: q-da yoxdur → p-də var (y=2) → tapdı!
-console.log(q.z); // Nəticə: 3. Q.z-i axtararkən: q-da var (z=3) → tapdı!
+console.log(q.x); // 1
+// Q.x-i axtararkən: q-da yoxdur → p-də yoxdur → o-da var (x=1) → tapdı!
+console.log(q.y); // 2
+//  Q.y-i axtararkən: q-da yoxdur → p-də var (y=2) → tapdı!
+console.log(q.z); // 3
+// Q.z-i axtararkən: q-da var (z=3) → tapdı!
 
-let f = q.toString(); // Nəticə: "[object Object]". toString() metodunu axtararkən: q-da yoxdur → p-də yoxdur → o-da yoxdur → Object.prototype-də var → tapdı!
+let f = q.toString(); // "[object Object]". toString() metodunu axtararkən: q-da yoxdur → p-də yoxdur → o-da yoxdur → Object.prototype-də var → tapdı!
 
-console.log(f);
-console.log(q.x + q.y); // Nəticə: 3 (miras alınan x və y dəyərləri istifadə olundu)
+console.log(q.x + q.y); // 3 
+// (miras alınan x və y dəyərləri istifadə olundu)
 ```
-Bu mexanizm, obyektlərin ortaq funksionallıqları təkrar yazmadan paylaşmasına imkan verir və JavaScript-də kodun yenidən istifadəsinin əsasını təşkil edir.
 
 ---
 
@@ -991,24 +1193,32 @@ Bir obyektə (məsələn, `o.x = value`) dəyər təyin etdiyin zaman axtarış 
 4.  **Miras alınan xüsusiyyətlərin "kölgələnməsi" (Shadowing):** Əgər obyektdə yaradılan yeni xüsusiyyətin prototip zəncirində eyni adlı miras alınmış bir xüsusiyyət varsa, yeni yaradılan own property miras alınan xüsusiyyəti "kölgələyir" (shadows). Bu o deməkdir ki, həmin obyekt vasitəsilə həmin xüsusiyyətə daxil olduqda, özünəməxsus property-nin dəyəri qaytarılır, miras alınan dəyər isə gizli qalır və birbaşa obyekt vasitəsilə əlçatan olmur. Lakin, prototipdəki orijinal dəyər dəyişməz qalır.
 
 ```javascript
-let unitcircle = { r: 1 };   // Prototip obyekti: çevrənin radiusu 1-dir.
+let unitcircle = { r: 1 };   
+// Prototip obyekti: çevrənin radiusu 1-dir.
 
-let c = Object.create(unitcircle); // 'c' obyekti 'unitcircle'-dən miras alır.
-                                   // c-nin prototipi unitcircle-dir.
-                                   // c.r-i oxuyanda 1 qaytarılacaq.
+let c = Object.create(unitcircle); 
+// 'c' obyekti 'unitcircle'-dən miras alır.   
+// c-nin prototipi unitcircle-dir.
+// c.r-i oxuyanda 1 qaytarılacaq.
 
-c.x = 1;                  // 'c'-nin özünəməxsus xüsusiyyəti: x = 1 yaradılır.
-c.y = 1;                  // 'c'-nin özünəməxsus xüsusiyyəti: y = 1 yaradılır.
-c.r = 2;                  // 'c'-nin özünəməxsus xüsusiyyəti: r = 2 yaradılır.
-                          // Bu, 'unitcircle.r' (dəyəri 1 olan) xüsusiyyətini 'c' üçün "kölgələyir".
+c.x = 1;                  
+// 'c'-nin özünəməxsus xüsusiyyəti: x = 1 yaradılır.
+c.y = 1;                  
+// 'c'-nin özünəməxsus xüsusiyyəti: y = 1 yaradılır.
+c.r = 2;                 
+// 'c'-nin özünəməxsus xüsusiyyəti: r = 2 yaradılır.
+// Bu, 'unitcircle.r' (dəyəri 1 olan) xüsusiyyətini 'c' üçün "kölgələyir".
 
-console.log(unitcircle.r); // Nəticə: 1. Orijinal prototip obyekti dəyişməz qaldı.
-console.log(c.r);          // Nəticə: 2. 'c'-nin özünəməxsus 'r' xüsusiyyəti oxundu, prototipdəki gizləndi.
+console.log(unitcircle.r); 
+// Orijinal prototip obyekti dəyişməz qaldı.
+console.log(c.r);          
+//'c'-nin özünəməxsus 'r' xüsusiyyəti oxundu, prototipdəki gizləndi.
 
-console.log(c.hasOwnProperty('r'));        // true (çünki c.r indi c-nin öz xüsusiyyətidir)
-console.log(unitcircle.hasOwnProperty('r')); // true (unitcircle.r də öz xüsusiyyətidir)
+console.log(c.hasOwnProperty('r'));        
+// true (çünki c.r indi c-nin öz xüsusiyyətidir)
+console.log(unitcircle.hasOwnProperty('r')); 
+// true (unitcircle.r də öz xüsusiyyətidir)
 ```
-
 ---
 
 ### ⚠️ İstisna: Accessor Properties (Getter/Setter) və Setter-lər
