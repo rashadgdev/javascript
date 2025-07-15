@@ -1,22 +1,23 @@
 # Fəsil 8. Funksiyalar (Functions) ⚙️
 
-**Funksiyalar (Functions)** JavaScript proqramlarının əsas hissəsidir. Onlar bir dəfə təyin olunub dəfələrlə çağırıla (invoked) bilən kod bloklarıdır. Funksiyalar **parametrlər (parameters)** qəbul edir və çağırış zamanı **arqumentlər (arguments)** ötürülür. Funksiya icrası **qaytarma dəyəri (return value)** hesablaya bilər. Hər çağırışın bir də **çağırış konteksti (invocation context)**, yəni `this` dəyəri olur.
+**Funksiyalar (Functions)** JavaScript proqramlarının əsas hissəsidir. Onlar bir dəfə təyin olunub dəfələrlə çağırıla bilən kod bloklarıdır. Funksiyalar **parametrlər (parameters)** qəbul edir və çağırış zamanı **arqumentlər** ötürülür.
 
-Əgər funksiya obyektin xüsusiyyətidirsə, o, **metod (method)** adlanır. Yeni obyektləri ilkinləşdirən funksiyalar isə **konstruktorlardır (constructors)**.
+Əgər funksiya obyektin xüsusiyyətidirsə, o, **metod (method)** adlanır.
+Funksiya obyektin içindədirsə, ona metod, yeni obyekt yaradırsa **konstruktor** deyilir.
 
-JavaScript-də funksiyalar **obyektlərdir (objects)**. Onları dəyişənlərə təyin edə, digər funksiyalara ötürə, hətta özlərinin də xüsusiyyətləri və metodları ola bilər. Funksiyalar başqa funksiyaların içində **iç-içə (nested)** ola bilər və təyin olunduqları skopdakı dəyişənlərə daxil ola bilirlər. Bu, JavaScript funksiyalarının **kloujurlar (closures)** olmasını təmin edir.
+JavaScript-də funksiyalar **obyektlərdir (objects)**. Onları dəyişənlərə təyin edə, digər funksiyalara ötürə, hətta özlərinin də xüsusiyyətləri və metodları ola bilər. Funksiyalar başqa funksiyaların içində **iç-içə (nested)** ola bilər.
 
 ---
 
 ## 8.1 Funksiyaları Təyin Etmək (Defining Functions) 📝
 
-JavaScript-də funksiyaları təyin etməyin ən yaygın yolu `function` açar sözüdür. ES6 isə `function` açar sözü olmadan **"ox funksiyalarını (arrow functions)"** təqdim edib ki, bu, daha yığcam sintaksisə malikdir. Metodları təyin etmək üçün obyekt literalları və siniflərdə qısa sintaksislər (§6.10.5, §6.10.6) də var. Həmçinin `Function()` konstruktoru (§8.7.7), `function*` (generator funksiyaları) və `async function` (asinxron funksiyalar) da funksiya təyin etmək üçün istifadə olunur.
+JavaScript-də funksiyaları təyin etməyin ən geniş istifadə olunan yolu `function` açar sözüdür. ES6 isə `function` açar sözü olmadan **"ox funksiyalarını (arrow functions)"** təqdim edib ki, bu, daha yığcam sintaksisə malikdir.
 
 ---
 
 ### 8.1.1 Funksiya Bəyanatları (Function Declarations)
 
-**Funksiya bəyanatı (Function declaration)** `function` açar sözü ilə başlayır, ardınca funksiyanın adı, mötərizədə parametrlər və fiqurlu mötərizədə kod (funksiya gövdəsi) gəlir.
+`Function` açar sözü ilə başlayır, ardınca funksiyanın adı, mötərizədə parametrlər və fiqurlu mötərizədə kod (funksiya gövdəsi) gəlir.
 
 **Quruluşu:**
 * **Ad (Identifier):** Funksiyanın adıdır, dəyişən kimi işləyir.
@@ -26,52 +27,39 @@ JavaScript-də funksiyaları təyin etməyin ən yaygın yolu `function` açar s
 **Misallar:**
 
 ```javascript
-function printprops(o) { // Bir obyektin xüsusiyyətlərini çap edir
-  for (let p in o) {
-    console.log(`${p}: ${o[p]}`);
-  }
-}
 
-function distance(x1, y1, x2, y2) { // İki nöqtə arasındakı məsafəni hesablayır
+function distance(x1, y1, x2, y2) { 
+// İki nöqtə arasındakı məsafəni hesablayır
   let dx = x2 - x1;
   let dy = y2 - y1;
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-function factorial(x) { // Faktoriyalları hesablayan rekursiv funksiya
-  if (x <= 1) return 1;
-  return x * factorial(x - 1);
+function sum(a,b){
+  // 2 verilmiş ədədin cəmini hesablayır
+  return a + b;
 }
 ```
 
-**Vacib Məqam:** Funksiya bəyanatları **"hoist olunur" (hoisted)**. Bu o deməkdir ki, onlar kod işə düşməzdən əvvəl təyin olunur. Yəni, funksiyanı təyin olunduğu yerdən əvvəl də çağıra bilərsiniz.
-
-Funksiyalar dəyər qaytarmalıdırsa, `return` ifadəsindən istifadə edirlər. Əgər `return` yoxdursa və ya dəyər göstərilməyibsə, funksiya `undefined` qaytarır. ES6-dan əvvəl funksiya bəyanatları yalnız ən üst səviyyədə və ya başqa funksiya daxilində olmalı idi. ES6-nın **strict mode**-unda isə bloklar daxilində də istifadə oluna bilər, lakin yalnız o blokda görünür.
+Funksiyalar dəyər qaytarmalıdırsa, `return` ifadəsindən istifadə edirlər. Əgər `return` yoxdursa və ya dəyər göstərilməyibsə, funksiya `undefined` qaytarır. 
 
 ---
 
 ### 8.1.2 Funksiya İfadələri (Function Expressions)
 
-**Funksiya ifadələri (Function expressions)** funksiya bəyanatlarına oxşayır, lakin daha böyük bir ifadənin hissəsi olurlar və adları **ixtiyaridir (optional)**.
+Funksiya bəyanatlarına oxşayır, lakin daha böyük bir ifadənin hissəsi olurlar və adları **ixtiyaridir (optional)**.
 
 **Misallar:**
 
 ```javascript
-const square = function(x) { return x*x; }; // Dəyişənə təyin edilmiş funksiya ifadəsi
+const square = function(x) { return x*x; }; 
+// Dəyişənə təyin edilmiş funksiya ifadəsi
 
-const f = function fact(x) { // Rekursiya üçün adı olan funksiya ifadəsi
-  if (x <= 1) return 1;
-  else return x * fact(x-1);
-};
-
-// Başqa funksiyalara arqument kimi ötürülən funksiya ifadəsi
-[3,2,1].sort(function(a,b) { return a-b; });
-
-// Dərhal çağırılan funksiya ifadəsi (IIFE)
 let tensquared = (function(x) {return x*x;}(10));
+// Dərhal çağırılan funksiya ifadəsi (IIFE)
 ```
 
-**Vacib Məqam:** Funksiya ifadələri **hoist olunmur**. Onlar yalnız təyin olunduqları ifadə icra olunduqdan sonra mövcud olurlar. Odur ki, funksiya ifadələrini təyin olunmazdan əvvəl çağırmaq mümkün deyil. Funksiyaya dəfələrlə istinad etmək üçün onu bir dəyişənə (adətən `const` ilə) təyin etmək lazımdır. Rekursiv funksiyalar üçün ad qoymaq olar; bu ad funksiyanın daxili skopunda yerli dəyişən kimi işləyir.
+**Vacib Məqam:** Funksiya ifadələri **hoist olunmur**. Onlar yalnız təyin olunduqları ifadə icra olunduqdan sonra mövcud olurlar. Odur ki, funksiya ifadələrini təyin olunmazdan əvvəl çağırmaq mümkün deyil. Funksiyaya dəfələrlə istinad etmək üçün onu bir dəyişənə (adətən `const` ilə) təyin etmək lazımdır.
 
 ---
 
@@ -84,11 +72,11 @@ ES6-da **ox funksiyaları (arrow functions)** `function` açar sözü olmadan, `
     ```javascript
     const sum = (x, y) => { return x + y; };
     ```
-* Əgər gövdə **tək bir `return` ifadəsidirsə**, `return`, nöqtəli vergül və fiqurlu mötərizələri buraxa bilərsiniz:
+* Əgər gövdə **tək bir `return` ifadəsidirsə**, `return`, nöqtəli vergül və fiqurlu mötərizələri qoymaya bilərsiniz:
     ```javascript
-    const sum = (x, y) => x + y; // Daha yığcam!
+    const sum = (x, y) => x + y;
     ```
-* Əgər funksiyanın **yalnız bir parametri varsa**, parametrin ətrafındakı mötərizələri də buraxa bilərsiniz:
+* Əgər funksiyanın **yalnız bir parametri varsa**, parametrin ətrafındakı mötərizələri də qoymaya bilərsiniz:
     ```javascript
     const polynomial = x => x*x + 2*x + 3;
     ```
@@ -99,24 +87,27 @@ ES6-da **ox funksiyaları (arrow functions)** `function` açar sözü olmadan, `
 
 **Qeydlər:**
 * Parametrlər və `=>` arasında yeni sətir qoymayın (sintaktik səhvə səbəb ola bilər).
-* Əgər gövdə tək `return` ifadəsidirsə və qaytarılan dəyər bir **obyekt literalidirsə (object literal)**, sintaktik qarışıqlığı önləmək üçün obyekt literalını mötərizəyə almalısınız:
+
+
     ```javascript
-    const f = x => { return { value: x }; }; // Yaxşı
-    const g = x => ({ value: x });          // Yaxşı: obyekti mötərizəyə alıb
-    const h = x => { value: x };            // Pis: 'value' bir etiketdir, funksiya undefined qaytarır
+    const f = x => { return { value: x }; }; 
+    // {value: "5"}
+    const g = x => ({ value: x });          
+    // {value: "5"}
+    const h = x => { value: x };            
+    // undefined
     ```
 
 Ox funksiyaları `map()`, `filter()` kimi **massiv metodlarına (array methods)** funksiya ötürərkən ideal seçimdir, çünki qısa yazılışa malikdirlər:
 
 ```javascript
-let filtered = [1, null, 2, 3].filter(x => x !== null); // null elementlər silinir
-let squares = [1, 2, 3, 4].map(x => x*x);               // Hər elementi kvadrata yüksəldir
+let filtered = [1, null, 2, 3].filter(x => x !== null); 
+// [1, 2, 3]
+// null elementlər silinir
+let squares = [1, 2, 3, 4].map(x => x*x);   
+// [1, 4, 9, 16]           
+// Hər elementi kvadrata yüksəldir
 ```
-
-**Mühüm Fərqlər:**
-* **`this` dəyəri:** Ox funksiyaları `this` dəyərini **təyin olunduqları mühitdən (environment in which they are defined)** miras alır, öz çağırış kontekstlərini təyin etmirlər. Bu, çox vacib və faydalı bir xüsusiyyətdir.
-* **Konstruktor deyil:** Ox funksiyalarının `prototype` xüsusiyyəti yoxdur, buna görə də yeni siniflər üçün **konstruktor funksiyaları (constructor functions)** kimi istifadə oluna bilməzlər.
-
 ---
 
 ### 8.1.4 İç-içə Funksiyalar (Nested Functions) 🌳
@@ -126,22 +117,24 @@ JavaScript-də funksiyalar başqa funksiyaların daxilində **iç-içə (nested)
 **Misal:**
 
 ```javascript
-function hypotenuse(a, b) {
-  function square(x) { // Daxili (nested) funksiya
-    return x*x;
+function processArray(arr) {
+  function isEven(n) { 
+    // Daxili funksiya: ədədin cüt olduğunu yoxlayır
+    return n % 2 === 0;
   }
-  return Math.sqrt(square(a) + square(b));
-}
-console.log(hypotenuse(3, 4)); // => 5
-```
 
-İç-içə funksiyaların maraqlı cəhəti onların **dəyişən skop qaydalarıdır (variable scoping rules)**: onlar içində yerləşdikləri funksiyanın (və ya funksiyaların) parametrlərinə və dəyişənlərinə daxil ola bilərlər. Yuxarıdakı misalda, daxili `square()` funksiyası xarici `hypotenuse()` funksiyası tərəfindən təyin olunan `a` və `b` parametrlərini oxuya və yaza bilir. Bu skop qaydaları çox vacibdir və §8.6-da yenidən nəzərdən keçiriləcək.
+  let evenNumbers = arr.filter(isEven);
+  return evenNumbers.reduce((sum, n) => sum + n, 0);
+}
+
+console.log(processArray([1, 2, 3, 4, 5, 6])); // => 12 (2+4+6)
+```
 
 ---
 
 # 8.2 Funksiyaları Çağırmaq (Invoking Functions) 🚀
 
-Funksiya kodları təyin olunanda deyil, **çağırılanda (invoked)** icra olunur. JavaScript funksiyaları beş əsas yolla çağırıla bilər:
+Funksiya kodları təyin olunanda deyil, **çağırılanda** icra olunur. JavaScript funksiyaları beş əsas yolla çağırıla bilər:
 1.  **Funksiyalar kimi (As functions)**
 2.  **Metodlar kimi (As methods)**
 3.  **Konstruktorlar kimi (As constructors)**
@@ -150,224 +143,498 @@ Funksiya kodları təyin olunanda deyil, **çağırılanda (invoked)** icra olun
 
 ---
 
-### 8.2.1 Funksiya Çağırışı (Function Invocation)
-
-Funksiyalar adi funksiyalar və ya metodlar kimi çağırış ifadəsi (§4.5) ilə çağırılır. Çağırış ifadəsi funksiya obyektinə çevrilən bir ifadə, ardınca mötərizədə arqumentlər siyahısından ibarətdir.
-
-**Misallar:**
-```javascript
-printprops({x: 1}); // Adi funksiya çağırışı
-let total = distance(0,0,2,1) + distance(2,1,3,5);
-let probability = factorial(5)/factorial(13);
-```
-Çağırış zamanı, arqumentlər (mötərizə daxilindəkilər) qiymətləndirilir və funksiyanın parametrlərinə təyin olunur. Funksiya geriyə `undefined` qaytara bilər (əgər `return` yoxdursa və ya dəyər göstərilməyibsə), ya da `return` ifadəsindəki dəyəri qaytarır.
-
-**Şərti Çağırış (Conditional Invocation):**
-ES2020-də `?.` operatoru ilə funksiyanı yalnız `null` və ya `undefined` olmadığı halda çağırmaq olar:
-```javascript
-f?.(x) // f null/undefined deyilsə, f(x) çağırılır, əks halda undefined
-```
-
-**`this` dəyəri (Invocation Context):**
-* **Non-strict mode:** `this` dəyəri **qlobal obyekt (global object)** olur.
-* **Strict mode:** `this` dəyəri `undefined` olur.
-* **Ox funksiyaları (Arrow functions):** `this` dəyərini **təyin olunduqları mühitdən (environment in which they are defined)** miras alırlar.
-
-Adətən, adi funksiya kimi çağırılan funksiyalar `this` açar sözünü istifadə etmir.
-
-**Rekursiv Funksiyalar (Recursive Functions) və Stack:**
-**Rekursiv funksiya (recursive function)** özünü çağıran funksiyadır (məsələn, `factorial()`). Rekursiya zamanı hər funksiya çağırışı **çağırış stack-ına (call stack)** yeni bir icra konteksti (execution context) əlavə edir. Çox sayda rekursiv çağırış **"Maximum call-stack size exceeded"** xətasına səbəb ola bilər, çünki stack yaddaşı dolar.
+Budur **8.2.1 Funksiya Çağırışı** bölməsinin **daha çox example ilə zənginləşdirilmiş, qısa, aydın və axıcı yenilənmiş versiyası**:
 
 ---
 
-### 8.2.2 Metod Çağırışı (Method Invocation)
+### 8.2.1 Funksiya Çağırışı (Function Invocation) ⚡️
 
-**Metod (Method)** obyektin bir xüsusiyyətində saxlanılan JavaScript funksiyasıdır. Bir funksiyanı obyektin metodu kimi təyin etmək üçün: `o.m = f;`
+JavaScript-də funksiyalar **funksiya adı + mötərizə içində arqumentlər** ilə çağırılır:
 
-**Çağırılış qaydası:**
 ```javascript
-o.m();     // Metod çağırışı
-o.m(x, y); // Arqumentlərlə metod çağırışı
+function greet(name) {
+  console.log("Salam, " + name + "!");
+}
+
+greet("Ayan"); // Salam, Ayan!
 ```
-`o.m` bir xüsusiyyətə daxilolma ifadəsidir, bu da funksiyanın metod kimi çağırıldığını bildirir.
 
-**`this` dəyəri (Invocation Context):**
-Metod çağırışında **`this` dəyəri metodun çağırıldığı obyektin özü olur**. Bu, metodun həmin obyekt üzərində əməliyyat apardığını göstərir.
+Arqumentlər **mötərizədə qiymətləndirilir**, parametrlərə ötürülür. Əgər `return` istifadə edilmirsə, funksiya `undefined` qaytarır.
 
-**Misal:**
 ```javascript
-let calculator = { // Bir obyekt literal
-  operand1: 1,
-  operand2: 1,
-  add() { // Metod qısa sintaksisi
-    this.result = this.operand1 + this.operand2; // 'this' 'calculator' obyektinə işarə edir
+function add(a, b) {
+  return a + b;
+}
+
+let result = add(5, 7); 
+console.log(result); // 12
+```
+
+---
+
+### Mürəkkəb Misal: Birdən çox funksiyanın çağırılması
+
+```javascript
+function square(x) {
+  return x * x;
+}
+
+function sumOfSquares(a, b) {
+  return square(a) + square(b);
+}
+
+console.log(sumOfSquares(3, 4)); // 25
+```
+
+---
+
+### ❓ Şərti Çağırış (Optional Chaining)
+
+Bəzən funksiya mövcud olmaya bilər. ES2020-dən `?.` istifadə edərək **funksiya varsa çağırmaq**, yoxdursa keçmək mümkündür:
+
+```javascript
+let f = null;
+f?.(5); // Heç nə etmir, error atmır
+
+let logger = (msg) => console.log(msg);
+logger?.("Hello!"); // Hello!
+```
+
+---
+
+### 🔹 `this` dəyəri
+
+Funksiya çağırılarkən **`this` konteksti** dəyişə bilər:
+
+* **Adi çağırışda:**
+
+  ```javascript
+  function showThis() {
+    console.log(this);
   }
-};
+  showThis(); 
+  // Non-strict: qlobal obyekt, Strict: undefined
+  ```
 
-calculator.add();     // Metod çağırışı
-console.log(calculator.result); // => 2
-```
-Kvadrat mötərizə (`[]`) ilə xüsusiyyətə daxil olmaq da metod çağırışına səbəb ola bilər: `o["m"](x,y);`
+* **Obyekt metodu kimi çağırışda:**
 
-**Metod Zənciri (Method Chaining):**
-Metodlar obyekt qaytardıqda, bir metodun qaytarma dəyərini növbəti metodun hissəsi kimi istifadə edərək **zəncirvari çağırışlar (method chaining)** yaratmaq olar. Metod öz dəyərini qaytarmadıqda `this` qaytarmaq bu zəncirləməni asanlaşdırır.
-
-```javascript
-// Zəncirvari metod çağırışı nümunəsi
-new Square().x(100).y(100).size(50).outline("red").fill("blue").draw();
-```
-**Vacib:** `this` bir açar sözdür, dəyişən deyil. Ona dəyər təyin etmək olmaz.
-
-**Daxili Funksiyalarda `this` Problemi:**
-`this` dəyişənlər kimi skoplara aid deyil. Ox funksiyaları istisna olmaqla, iç-içə (nested) funksiyalar `this` dəyərini xarici funksiyadan miras almır. Bu, JavaScript-in "qüsuru" sayılır.
-
-**Problem:**
-```javascript
-let o = {
-  m: function() {
-    // Bu 'this' 'o' obyektidir
-    function f() { // İç-içə funksiya
-      // Bu 'this' qlobal obyekt və ya undefined olacaq, 'o' deyil!
+  ```javascript
+  const user = {
+    name: "Samir",
+    greet() {
+      console.log("Salam, " + this.name);
     }
-    f();
+  };
+  user.greet(); // Salam, Samir
+  ```
+
+* **Arrow functions:**
+
+  ```javascript
+  const obj = {
+    value: 42,
+    show: () => console.log(this.value)
+  };
+  obj.show(); 
+  // undefined (arrow this miras alır, obyektə bağlanmır)
+  ```
+
+---
+
+### 🌀 Rekursiv Funksiyalar və Call Stack
+
+**Rekursiv funksiya** özünü çağırır. Hər çağırışda `call stack`-a yeni kontekst əlavə edilir.
+
+```javascript
+function countdown(n) {
+  if (n <= 0) {
+    console.log("Hazır!");
+  } else {
+    console.log(n);
+    countdown(n - 1);
+  }
+}
+countdown(5);
+// 5
+// 4
+// 3
+// 2
+// 1
+// Hazır!
+```
+
+Çox dərin rekursiya:
+
+```javascript
+function forever() {
+  return forever();
+}
+forever(); // "Maximum call stack size exceeded" error verir
+```
+
+---
+
+### 8.2.2 Metod Çağırışı (Method Invocation) ⚙️
+
+**Metod** obyektin içində saxlanan funksiyadır. Çağırışda:
+
+```javascript
+object.method(args);
+```
+
+şəklində istifadə olunur və **`this` həmin obyektə işarə edir.**
+
+---
+
+###  Sadə Misal
+
+```javascript
+let user = {
+  name: "Aylin",
+  sayHi() {
+    console.log("Salam, " + this.name);
   }
 };
-o.m();
+
+user.sayHi(); 
+// Salam, Aylin
 ```
-**Həll Yolları:**
-1.  **`self` dəyişəni:** Xarici `this` dəyərini bir dəyişəndə (`self` kimi) saxlamaq:
-    ```javascript
-    let o = {
-      m: function() {
-        let self = this; // 'this' dəyərini saxlayırıq
-        function f() {
-          console.log(self === o); // => true
-        }
-        f();
-      }
+
+Burada `sayHi()` metodu **`user` obyektinə bağlıdır**, `this` → `user`.
+
+---
+
+### 📌 Parametrlə Çağırış
+
+```javascript
+let calculator = {
+  add(a, b) {
+    console.log(a + b);
+  }
+};
+
+calculator.add(3, 4); 
+// 7
+```
+
+---
+
+### 📌 Kvadrat Mötərizə ilə Çağırış
+
+Xüsusiyyət adı dəyişkən olduqda:
+
+```javascript
+let methodName = "sayHi";
+user[methodName](); 
+// Salam, Aylin
+```
+
+---
+
+### 📌 Metod Zənciri (Method Chaining)
+
+Əgər metod **obyekti qaytararsa**, ardıcıl metod çağırmaq mümkündür:
+
+```javascript
+let counter = {
+  value: 0,
+  increment() {
+    this.value++;
+    return this; // chaining üçün this qaytarılır
+  },
+  decrement() {
+    this.value--;
+    return this;
+  },
+  show() {
+    console.log(this.value);
+    return this;
+  }
+};
+
+counter.increment().increment().decrement().show(); 
+// 1
+```
+
+---
+
+### 🌀 `this` və Daxili Funksiyalar Problemi
+
+Daxili funksiyalar (`nested functions`) `this`-i **miras almır**, default olaraq `undefined` (strict mode) və ya `global object` olur.
+
+#### Problem:
+
+```javascript
+let obj = {
+  data: 42,
+  show() {
+    function inner() {
+      console.log(this.data); 
+    }
+    inner();
+  }
+};
+obj.show();
+// undefined
+```
+
+---
+
+### Həll Yolları
+
+#### 1️⃣ `self = this` ilə:
+
+```javascript
+let obj = {
+  data: 42,
+  show() {
+    let self = this;
+    function inner() {
+      console.log(self.data);
+    }
+    inner();
+  }
+};
+obj.show();
+// 42
+```
+
+#### 2️⃣ Arrow funksiyaları ilə (tövsiyə olunur):
+
+```javascript
+let obj = {
+  data: 42,
+  show() {
+    const inner = () => {
+      console.log(this.data);
     };
-    o.m();
-    ```
-2.  **Ox funksiyaları (ES6+):** Daxili funksiyanı ox funksiyası kimi təyin etmək:
-    ```javascript
-    let o = {
-      m: function() {
-        const f = () => { // Ox funksiyası 'this'i miras alır
-          console.log(this === o); // => true
-        };
-        f();
-      }
-    };
-    o.m();
-    ```
-3.  **`bind()` metodu:** `bind()` metodu vasitəsilə daxili funksiyanın `this` dəyərini təyin etmək:
-    ```javascript
-    const f = (function() {
-      console.log(this === o);
-    }).bind(this); // 'this'i xarici 'this'ə bağlayırıq
-    ```
+    inner();
+  }
+};
+obj.show();
+// 42
+```
+
+#### 3️⃣ `bind()` ilə:
+
+```javascript
+let obj = {
+  data: 42,
+  show() {
+    function inner() {
+      console.log(this.data);
+    }
+    inner.bind(this)();
+  }
+};
+obj.show();
+// 42
+```
 
 ---
 
 ### 8.2.3 Konstruktor Çağırışı (Constructor Invocation) 🏗️
 
-Əgər funksiya çağırışının qarşısında **`new`** açar sözü varsa, bu, **konstruktor çağırışıdır (constructor invocation)**. Konstruktorlar yeni obyektlər yaratmaq və ilkinləşdirmək üçündür (§4.6, §6.2.2, Fəsil 9).
+Əgər funksiya **`new` ilə çağırılırsa**, bu **konstruktor çağırışıdır** və **yeni obyekt yaratmaq** üçün istifadə olunur.
 
- ```javascript
-    o = new Object();
-    o = new Object;
+---
+
+### 📌 Əsas Sintaksis
+
+```javascript
+let obj = new Object();
+let arr = new Array(1, 2, 3);
+let date = new Date();
+```
+---
+
+### 📌 Sadə Konstruktor Nümunəsi
+
+```javascript
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+let user1 = new User("Aylin", 25);
+console.log(user1.name); // Aylin
+console.log(user1.age);  // 25
 ```
 
-**Fərqləri:**
-* **Arqumentlər (Arguments):** Adi çağırışlar kimi ötürülür. Boş mötərizələri (`()`) buraxmaq olar: `new Object()` ilə `new Object` eynidir.
-* **`this` dəyəri (Invocation Context):** Konstruktor çağırışı **yeni, boş bir obyekt yaradır** və **həmin obyekt `this` dəyəri olur**. Konstruktor funksiyası bu obyektə `this` vasitəsilə müraciət edir. Hətta `new o.m()` kimi görünsə də, `o` obyektinin özü deyil, yeni yaradılan obyekt `this` olur.
-* **Qaytarma dəyəri (Return Value):** Konstruktorlar adətən `return` açar sözünü istifadə etmir, sadəcə yeni obyekti ilkinləşdirib implicit olaraq qaytarırlar. Bu halda, yeni yaradılan obyekt çağırışın dəyəri olur.
-    * Əgər konstruktor **obyekt qaytararsa**, həmin obyekt çağırışın dəyəri olur.
-    * Əgər `return` dəyərsizdirsə və ya **primitiv dəyər** qaytararsa, bu dəyər **göz ardı edilir** və yenə də yeni yaradılan obyekt çağırışın dəyəri olur.
+---
+
+### 🔹 `this` dəyəri
+
+Konstruktor çağırışında `this` həmişə **yeni yaradılan obyektə** işarə edir.
+
+```javascript
+function Point(x, y) {
+  this.x = x;
+  this.y = y;
+}
+
+let p = new Point(3, 4);
+console.log(p.x, p.y); 
+// 3 4
+```
+---
+
+### 📌 `return` Davranışı
+
+* Konstruktor funksiyasında `return` yazılmasa belə, **yeni obyekt avtomatik qaytarılır.**
+* Əgər konstruktor **primitiv dəyər** (number, string, boolean və s.) qaytararsa, yenə də yeni obyekt qaytarılır.
+
+**Misallar:**
+
+```javascript
+function A() {
+  this.value = 10;
+}
+console.log(new A().value); 
+// 10
+
+function B() {
+  return { x: 1 };
+}
+console.log(new B()); 
+// { x: 1 }
+
+function C() {
+  return 42; 
+  // primitiv dəyər
+}
+console.log(new C()); 
+// C { } --> yeni obyekt, 42 ignore edilir
+```
 
 ---
 
-### 8.2.4 Dolayı Çağırış (Indirect Invocation) ↩️
+```javascript
+function Rectangle(width, height) {
+  this.width = width;
+  this.height = height;
+  this.area = function() {
+    return this.width * this.height;
+  };
+}
 
-JavaScript funksiyaları obyekt olduğu üçün metodları var. **`call()`** və **`apply()`** metodları funksiyanı **dolayı yolla (indirectly)** çağırmaq üçün istifadə olunur.
-
-* Hər iki metod sizə **`this` dəyərini açıq şəkildə (explicitly specify)** təyin etməyə imkan verir. Bu o deməkdir ki, funksiyanı istənilən obyektin metodu kimi çağıra bilərsiniz, hətta o obyektin əsl metodu olmasa belə.
-* Hər iki metod həmçinin arqumentləri də təyin etməyə imkan verir.
-    * **`call()`:** Arqumentləri öz arqument siyahısı kimi qəbul edir.
-    * **`apply()`:** Arqumentləri massiv şəklində gözləyir.
-
-Bu metodlar §8.7.4-də ətraflı təsvir olunub.
-
----
-
-### 8.2.5 Gizli Funksiya Çağırışı (Implicit Function Invocation) 👻
-
-JavaScript-də funksiya çağırışı kimi görünməyən, lakin funksiyaların çağırılmasına səbəb olan müxtəlif dil xüsusiyyətləri var. Bu cür funksiyaları yazarkən diqqətli olun, çünki onların nə zaman çağırıldığını koddan başa düşmək çətin olduğundan, səhvləri tapmaq və düzəltmək daha çətin ola bilər.
-
-**Gizli çağırışa səbəb ola biləcək dil xüsusiyyətləri:**
-
-* **Getter və Setterlər (§6.10.6):** Obyektin xüsusiyyətlərinin dəyərini sorğulamaq və ya təyin etmək, müvafiq getter/setter metodlarını çağıra bilər.
-* **Obyektin String/Rəqəm Kontekstində İstifadəsi (§3.9.3):**
-    * String kontekstində (`+` ilə birləşdirmək kimi): `toString()` metodu çağırılır.
-    * Rəqəm kontekstində: `valueOf()` metodu çağırılır.
-* **İterativ Obyektlər Üzərində Dövr Etmək (Chapter 12):** İterativ obyektlərin elementləri üzərində dövr edərkən bir sıra metod çağırışları baş verir.
-* **Tağlı Şablon Literalları (Tagged Template Literals) (§14.5):** Bir funksiya çağırışıdır, lakin gizli şəkildədir.
-* **Proksi Obyektlər (Proxy Objects) (§14.7):** Bu obyektlər üzərində demək olar ki, hər əməliyyat bir funksiyanın çağırılmasına səbəb olur, çünki onların davranışı funksiyalarla tamamilə idarə olunur.
+let rect = new Rectangle(5, 10);
+console.log(rect.area()); // 50
+```
 
 ---
 
+### 8.2.4 Dolayı Çağırış (Indirect Invocation)
 
-# 8.3 Funksiya Arqumentləri və Parametrləri (Function Arguments and Parameters) 📝
+JavaScript-də funksiyalar obyekt olduğu üçün onların `call()` və `apply()` metodları mövcuddur. Bu metodlar funksiyanı dolayı yolla çağırmağa və `this` dəyərini açıq şəkildə təyin etməyə imkan verir.
+
+Bu üsulla funksiyanı başqa obyekt üzərində metod kimi işlətmək olur, həmin obyektin özündə həmin metod olmasa belə.
+
+---
+
+#### `call()` və `apply()` arasındakı fərq
+
+* `call()` arqumentləri vergüllə ayrılmış şəkildə qəbul edir.
+* `apply()` arqumentləri massiv (array) şəklində qəbul edir.
+
+Hər ikisinin ilk arqumenti `this` dəyərinin hansı obyekt olacağını göstərir.
+
+---
+
+#### Nümunə: `call()`
+
+```javascript
+function greet() {
+  console.log("Hello, " + this.name);
+}
+
+let user = { name: "Alice" };
+greet.call(user); // Hello, Alice
+```
+
+Burada `greet` funksiyası `user` obyektinin `name` xüsusiyyətini oxuyur, çünki `call()` vasitəsilə `this` həmin obyektə bağlanır.
+
+
+#### Nümunə: `apply()`
+
+```javascript
+introduce.apply(person, ["London", 30]);
+// My name is John, I am 30 years old, living in London.
+```
+
+---    
+
+# 8.3 Funksiya Arqumentləri və Parametrləri (Function Arguments and Parameters)
 
 JavaScript funksiya təyinləri parametrlər üçün gözlənilən tip təyin etmir və funksiya çağırışları arqument dəyərləri üzərində **tip yoxlaması (type checking)** aparmır. Hətta ötürülən arqumentlərin sayını da yoxlamır. Bəzi hallarda arqumentlərin tipini yoxlamaq lazım gələ bilər.
 
 ---
 
-### 8.3.1 İxtiyari Parametrlər və Defolt Dəyərlər (Optional Parameters and Defaults) ❓
 
-Funksiya elan edilmiş parametrlərdən **daha az arqumentlə (fewer arguments)** çağırılanda, əlavə parametrlər **`undefined`** defolt dəyərinə təyin olunur. Bəzi arqumentləri ixtiyari etmək faydalıdır.
+### 8.3.1 İxtiyari Parametrlər və Standart Dəyərlər (Optional Parameters and Defaults) ❓
 
-**Misal (köhnə üsul):**
+JavaScript funksiyalarında bəzi arqumentləri ötürməmək olar. Belə halda, həmin parametrlər `undefined` olur. Standart dəyərlər isə arqument ötürülmədikdə istifadə olunur.
+
+**Köhnə üsul (default yoxdursa):**
 
 ```javascript
-function getPropertyNames(o, a) {
-  if (a === undefined) a = []; // Əgər 'a' undefined-dirsə, yeni massiv istifadə et
-  for(let property in o) a.push(property);
-  return a;
+function multiply(a, b) {
+  if (b === undefined) b = 1;
+  return a * b;
 }
 
-let o = {x: 1}, p = {y: 2, z: 3};
-let a = getPropertyNames(o); // a == ["x"]
-getPropertyNames(p, a);      // a == ["x", "y", "z"]
+console.log(multiply(5));    // 5
+console.log(multiply(5, 2)); // 10
 ```
-Yuxarıdakı `if` ifadəsi yerinə, **`||` operatoru** (truthy/falsy dəyərlər üçün §4.10.2) ilə daha qısa yaza bilərsiniz: `a = a || [];`.
 
-**Qeyd:** İxtiyari arqumentləri **arqument siyahısının sonuna** qoymaq vacibdir ki, onlar buraxıla bilsin. Əks halda, funksiyanı çağıran şəxs birinci arqumenti buraxıb ikincini ötürmək istəsə, birinci arqument üçün açıq şəkildə `undefined` ötürməlidir.
-
-**ES6+ Defolt Parametr Dəyərləri:**
-ES6 və sonrakı versiyalarda, hər parametr üçün **defolt dəyəri (default value)** birbaşa parametr siyahısında təyin edə bilərsiniz:
+**ES6 ilə Standart dəyərlər:**
 
 ```javascript
-function getPropertyNames(o, a = []) { // 'a' parametrinin defolt dəyəri boş massivdir
-  for(let property in o) o.push(property); // Düzəliş: a.push(property); olmalıydı
-  return a;
+function greet(name, greeting = "Hello") {
+  console.log(greeting + ", " + name);
 }
 
-// Hər çağırışda yeni boş massiv yaradılır
-let names1 = getPropertyNames({x: 1}); // names1 == ["x"]
-let names2 = getPropertyNames({y: 2, z: 3}); // names2 == ["y", "z"]
+greet("Alice");                // Hello, Alice
+greet("Bob", "Good morning");  // Good morning, Bob
 ```
-Parametr defolt ifadələri funksiya çağırılanda qiymətləndirilir. Defolt dəyərlər sabit (constant) və ya digər parametrlərin dəyərlərindən istifadə edə bilər:
+
+**Standart dəyər `undefined` olduqda tətbiq olunur, `null` olsa yox:**
 
 ```javascript
-const rectangle = (width, height = width * 2) => ({width, height});
-rectangle(1); // => { width: 1, height: 2 }
+greet("Alice", null); // null, Alice
 ```
-Bu sintaksis ox funksiyaları, metodlar və digər funksiya təyin formaları ilə işləyir.
+
+**Standart dəyər digər parametrlərə bağlı ola bilər:**
+
+```javascript
+function rectangle(width, height = width * 2) {
+  return { width, height };
+}
+
+console.log(rectangle(3));      // { width: 3, height: 6 }
+console.log(rectangle(3, 4));   // { width: 3, height: 4 }
+```
+
+**Əlavə nümunələr:**
+
+```javascript
+// Standart dəyər funksiya nəticəsi ola bilər
+function randomNumber() {
+  return Math.floor(Math.random() * 100);
+}
+
+function getNumber(num = randomNumber()) {
+  return num;
+}
+
+console.log(getNumber());    // Random number between 0 and 99
+console.log(getNumber(50));  // 50
+```
 
 ---
 
-### 8.3.2 Qalan Parametrlər və Dəyişən Uzunluqlu Arqument Siyahıları (Rest Parameters and Variable-Length Argument Lists) ➕
+
+### 8.3.2 Qalan Parametrlər və Dəyişən Uzunluqlu Arqument Siyahıları (Rest Parameters and Variable-Length Argument Lists)
 
 **Qalan parametrlər (Rest parameters)** funksiyanın elan edilmiş parametrlərdən **daha çox arqumentlə (arbitrarily more arguments)** çağırılmasına imkan verir.
 
@@ -389,7 +656,7 @@ max(1, 10, 100, 2, 3, 1000, 4, 5, 6); // => 1000
 **Qaydalar:**
 * Qalan parametrin qarşısında **üç nöqtə (`...`)** olmalıdır.
 * Funksiya təyinatında **sonuncu parametr** olmalıdır.
-* Qalan arqumentlər **massivdə (array)** saxlanılır. Bu massiv boş ola bilər, lakin `undefined` ola bilməz. (Qalan parametrə defolt dəyər təyin etmək qanuni deyil.)
+* Qalan arqumentlər **massivdə (array)** saxlanılır. Bu massiv boş ola bilər, lakin `undefined` ola bilməz. (Qalan parametrə Standart dəyər təyin etmək qanuni deyil.)
 
 Bu cür funksiyalara **variadic functions**, **variable arity functions** və ya **vararg functions** deyilir.
 
@@ -516,12 +783,12 @@ vectorAdd({x: 1, y: 2}, {x: 3, y: 4}); // => {x: 4, y: 6}
 ```
 **Qayda:** Destrukturlama zamanı kolonun sol tərəfində **obyektin xüsusiyyət adları (property names)**, sağ tərəfində isə **parametr (və ya dəyişən) adları** olur. Bu, obyekt literalında dəyərlərin yeri ilə eynidir.
 
-**Defolt Dəyərlərlə Destrukturlama:**
-Destrukturlanmış parametrlərlə də defolt dəyərlər təyin etmək olar.
+**Standart Dəyərlərlə Destrukturlama:**
+Destrukturlanmış parametrlərlə də Standart dəyərlər təyin etmək olar.
 
 ```javascript
 // {x,y} və ya {x,y,z} vektorunu bir skalyara vurur
-function vectorMultiply({x, y, z = 0}, scalar) { // Z üçün defolt dəyər 0
+function vectorMultiply({x, y, z = 0}, scalar) { // Z üçün Standart dəyər 0
   return { x: x * scalar, y: y * scalar, z: z * scalar };
 }
 vectorMultiply({x: 1, y: 2}, 2); // => {x: 2, y: 4, z: 0}
