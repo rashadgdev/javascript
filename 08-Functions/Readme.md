@@ -45,21 +45,101 @@ Funksiyalar dəyər qaytarmalıdırsa, `return` ifadəsindən istifadə edirlər
 
 ---
 
-### 8.1.2 Funksiya İfadələri (Function Expressions)
+### 8.1.2 Funksiya İfadələri (Function Expressions) 🧩
 
-Funksiya bəyanatlarına oxşayır, lakin daha böyük bir ifadənin hissəsi olurlar və adları **ixtiyaridir (optional)**.
+Funksiya ifadəsi — funksiya **bir ifadənin içində yaradılır** və adının olması **məcburi deyil**.
 
-**Misallar:**
+#### Misallar:
 
 ```javascript
-const square = function(x) { return x*x; }; 
 // Dəyişənə təyin edilmiş funksiya ifadəsi
+const square = function(x) {
+  return x * x;
+};
 
-let tensquared = (function(x) {return x*x;}(10));
+console.log(square(5)); // 25
+
 // Dərhal çağırılan funksiya ifadəsi (IIFE)
+let tensquared = (function(x) {
+  return x * x;
+})(10);
+
+console.log(tensquared); // 100
 ```
 
-**Vacib Məqam:** Funksiya ifadələri **hoist olunmur**. Onlar yalnız təyin olunduqları ifadə icra olunduqdan sonra mövcud olurlar. Odur ki, funksiya ifadələrini təyin olunmazdan əvvəl çağırmaq mümkün deyil. Funksiyaya dəfələrlə istinad etmək üçün onu bir dəyişənə (adətən `const` ilə) təyin etmək lazımdır.
+#### Vacib Məqam ⚠️
+
+Funksiya ifadələri **hoist olunmur**. Yəni onlar yalnız təyin olunduqdan sonra işləyir.
+Funksiyanı dəfələrlə istifadə etmək istəyirsinizsə, onu bir dəyişənə (`const` və ya `let`) təyin edin.
+
+---
+
+### Funksiya Bəyanatı vs. Funksiya İfadəsi ⚔️
+
+#### 1. Funksiya Bəyanatı (Function Declaration) ✍️
+
+Funksiya ayrıca elan olunur və **hoist** edilir. Yəni kodda əvvəl yazılmasa belə çağırıla bilər.
+
+```javascript
+// Funksiya bəyanatı
+function greet() {
+  return "Salam!";
+}
+
+console.log(greet()); // ✅ "Salam!" işləyir, çünki bəyanatlar hoist olunur
+
+// Bu formada yazılsa da eyni cavab verəcək:
+
+console.log(greet()); // ✅ "Salam!" işləyir, çünki bəyanatlar hoist olunur
+
+function greet() {
+  return "Salam!";
+}
+```
+
+---
+
+#### 2. Funksiya İfadəsi (Function Expression) 🧩
+
+Funksiya bir ifadənin içində yaradılır və **yalnız təyin edildikdən sonra** işləyir. Hoist olunmur.
+
+```javascript
+// Funksiya ifadəsi
+const greet = function() {
+  return "Salam!";
+};
+
+console.log(greet()); // ✅ "Salam!"
+```
+
+Amma belə etsək:
+
+```javascript
+console.log(greet()); // ❌ Səhv: greet təyin olunmayıb
+const greet = function() {
+  return "Salam!";
+};
+```
+
+---
+
+#### 3. Dərhal Çağırılan Funksiya İfadəsi (IIFE) ⚡
+
+İfadə dərhal yaradılıb işə düşür:
+
+```javascript
+(function(name) {
+  console.log("Salam, " + name + "!");
+})("Əli"); // ✅ Salam, Əli!
+```
+
+---
+
+👉 Yekun olaraq:
+
+* **Declaration** — əvvəl/sonra istənilən yerdə çağırmaq olar (hoisting var).
+* **Expression** — yalnız təyin olunduqdan sonra işləyir.
+* **IIFE** — xüsusi halda, bir dəfəlik icra üçün.
 
 ---
 
@@ -68,46 +148,74 @@ let tensquared = (function(x) {return x*x;}(10));
 ES6-da **ox funksiyaları (arrow functions)** `function` açar sözü olmadan, `=>` (ox) operatoru ilə təyin olunur. Çox yığcam sintaksisə malikdirlər və ad tələb olunmur.
 
 **Əsas Sintaksis:**
+
 * Parametrlər mötərizədə, sonra `=>`, sonra fiqurlu mötərizədə funksiya gövdəsi:
-    ```javascript
-    const sum = (x, y) => { return x + y; };
-    ```
+
+```javascript
+const sum = (x, y) => { 
+    return x + y; 
+};
+```
+
 * Əgər gövdə **tək bir `return` ifadəsidirsə**, `return`, nöqtəli vergül və fiqurlu mötərizələri qoymaya bilərsiniz:
-    ```javascript
-    const sum = (x, y) => x + y;
-    ```
+
+```javascript
+const sum = (x, y) => x + y;
+```
+
 * Əgər funksiyanın **yalnız bir parametri varsa**, parametrin ətrafındakı mötərizələri də qoymaya bilərsiniz:
-    ```javascript
-    const polynomial = x => x*x + 2*x + 3;
-    ```
+
+```javascript
+const polynomial = x => x*x + 2*x + 3;
+```
+
 * **Heç bir arqument yoxdursa**, boş mötərizələr `()` mütləqdir:
-    ```javascript
-    const constantFunc = () => 42;
-    ```
+
+```javascript
+const constantFunc = () => 42;
+```
+
+---
 
 **Qeydlər:**
+
 * Parametrlər və `=>` arasında yeni sətir qoymayın (sintaktik səhvə səbəb ola bilər).
 
+```javascript
+// 1. Blok + return → düzgün
+const f = x => { 
+    return { value: x }; 
+};
+f(5); 
+// Nəticə: { value: 5 }
 
-    ```javascript
-    const f = x => { return { value: x }; }; 
-    // {value: "5"}
-    const g = x => ({ value: x });          
-    // {value: "5"}
-    const h = x => { value: x };            
-    // undefined
-    ```
+// 2. Qısa obyekt literalı üçün mötərizə → düzgün
+const g = x => ({ 
+    value: x 
+});
+g(5); 
+// Nəticə: { value: 5 }
+
+// 3. Blok, return yoxdur → səhv!
+const h = x => { 
+    value: x 
+};
+h(5); 
+// Nəticə: undefined
+```
+
+---
 
 Ox funksiyaları `map()`, `filter()` kimi **massiv metodlarına (array methods)** funksiya ötürərkən ideal seçimdir, çünki qısa yazılışa malikdirlər:
 
 ```javascript
 let filtered = [1, null, 2, 3].filter(x => x !== null); 
-// [1, 2, 3]
-// null elementlər silinir
+// Nəticə: [1, 2, 3] → null elementlər silinir
+
 let squares = [1, 2, 3, 4].map(x => x*x);   
-// [1, 4, 9, 16]           
-// Hər elementi kvadrata yüksəldir
+// Nəticə: [1, 4, 9, 16] → hər elementi kvadrata yüksəldir
 ```
+
 ---
 
 ### 8.1.4 İç-içə Funksiyalar (Nested Functions) 🌳
@@ -132,7 +240,7 @@ console.log(processArray([1, 2, 3, 4, 5, 6])); // => 12 (2+4+6)
 
 ---
 
-# 8.2 Funksiyaları Çağırmaq (Invoking Functions) 🚀
+## 8.2 Funksiyaları Çağırmaq (Invoking Functions) 
 
 Funksiya kodları təyin olunanda deyil, **çağırılanda** icra olunur. JavaScript funksiyaları beş əsas yolla çağırıla bilər:
 1.  **Funksiyalar kimi (As functions)**
@@ -143,9 +251,6 @@ Funksiya kodları təyin olunanda deyil, **çağırılanda** icra olunur. JavaSc
 
 ---
 
-Budur **8.2.1 Funksiya Çağırışı** bölməsinin **daha çox example ilə zənginləşdirilmiş, qısa, aydın və axıcı yenilənmiş versiyası**:
-
----
 
 ### 8.2.1 Funksiya Çağırışı (Function Invocation) ⚡️
 
@@ -168,6 +273,13 @@ function add(a, b) {
 
 let result = add(5, 7); 
 console.log(result); // 12
+
+function subtract (a,b){
+  a - b;
+}
+
+let result = subtract(8, 7); 
+console.log(result) // undefined
 ```
 
 ---
@@ -432,10 +544,8 @@ function C() {
   // primitiv dəyər
 }
 console.log(new C()); 
-// C { } --> yeni obyekt, 42 ignore edilir
+// C { } --> yeni boş obyekt, 42 ignore edilir
 ```
-
----
 
 ```javascript
 function Rectangle(width, height) {
@@ -455,7 +565,6 @@ console.log(rect.area()); // 50
 ### 8.2.4 Dolayı Çağırış (Indirect Invocation)
 
 JavaScript-də funksiyalar obyekt olduğu üçün onların `call()` və `apply()` metodları mövcuddur. Bu metodlar funksiyanı dolayı yolla çağırmağa və `this` dəyərini açıq şəkildə təyin etməyə imkan verir.
-
 Bu üsulla funksiyanı başqa obyekt üzərində metod kimi işlətmək olur, həmin obyektin özündə həmin metod olmasa belə.
 
 ---
@@ -482,17 +591,34 @@ greet.call(user); // Hello, Alice
 
 Burada `greet` funksiyası `user` obyektinin `name` xüsusiyyətini oxuyur, çünki `call()` vasitəsilə `this` həmin obyektə bağlanır.
 
+---
 
-#### Nümunə: `apply()`
+#### Nümunə: `apply()` 🛠️
+
+`apply()` metodu `call()`-a çox bənzəyir. Fərq ondadır ki, arqumentlər **sıra ilə ayrıca** yox, **massiv (array) şəklində** ötürülür.
+
+**Sintaksis:**
 
 ```javascript
+func.apply(thisArg, [arg1, arg2, ...])
+```
+
+**Misal:**
+
+```javascript
+function introduce(city, age) {
+  console.log(`My name is ${this.name}, I am ${age} years old, living in ${city}.`);
+}
+
+const person = { name: "John" };
+
 introduce.apply(person, ["London", 30]);
 // My name is John, I am 30 years old, living in London.
 ```
 
----    
+---
 
-# 8.3 Funksiya Arqumentləri və Parametrləri (Function Arguments and Parameters)
+## 8.3 Funksiya Arqumentləri və Parametrləri (Function Arguments and Parameters)
 
 JavaScript-də funksiya parametrləri üçün tip təyin edilmir və funksiyalar çağırıldıqda ötürülən arqumentlərin nə tipi, nə də sayı yoxlanılır. Bu, proqramçıya çeviklik versə də, bəzi hallarda arqumentlərin tipi və sayı üzərində nəzarət vacib ola bilər.
 
@@ -500,21 +626,23 @@ JavaScript-də funksiya parametrləri üçün tip təyin edilmir və funksiyalar
 
 ### 8.3.1 İxtiyari Parametrlər və Standart Dəyərlər (Optional Parameters and Defaults)
 
-JavaScript funksiyaları bəzi arqumentlər ötürülmədikdə `undefined` qəbul edir. Bu vəziyyətlərdə parametrlər üçün standart dəyər təyin edilə bilər.
+JavaScript funksiyaları bəzi arqumentlər ötürülmədikdə `undefined` qəbul edir. Bu hallarda parametrlərə **standart dəyər** vermək faydalıdır.
 
-**Köhnə üsul (standart dəyər yoxdursa):**
+#### Köhnə üsul (ES6-dan əvvəl)
 
 ```javascript
-function multiply(a, b) {
-  if (b === undefined) b = 1;
-  return a * b;
+function greet(name, greeting) {
+  if (greeting === undefined) {
+    greeting = "Hello"; // standart dəyər əllə təyin olunur
+  }
+  console.log(greeting + ", " + name);
 }
 
-console.log(multiply(4));    // 4
-console.log(multiply(4, 2)); // 8
+greet("Aysel");           // Hello, Aysel
+greet("Rəşad", "Salam");  // Salam, Rəşad
 ```
 
-**ES6 ilə standart dəyər təyini:**
+#### Yeni üsul (ES6 ilə)
 
 ```javascript
 function greet(name, greeting = "Hello") {
@@ -524,6 +652,9 @@ function greet(name, greeting = "Hello") {
 greet("Aysel");           // Hello, Aysel
 greet("Rəşad", "Salam");  // Salam, Rəşad
 ```
+
+---
+
 
 **`null` ötürüldükdə standart dəyər işləmir:**
 
@@ -613,13 +744,13 @@ log("Error", "Disk full", "Low memory");
 | **Variadic function** | İstənilən sayda arqument qəbul edən funksiyalar (məsələn: `console.log()`)                    |
 | **Arity**             | Funksiyanın qəbul etdiyi arqumentlərin sayı                                                   |
 
-> Rest parameter ilə yazılmış funksiyalar `variadic functions` adlanır.
+Rest parameter ilə yazılmış funksiyalar **variadic functions** adlanır.
 
 ---
 
 ### 8.3.3 `arguments` Objekti (The Arguments Object)
 
-ES6-dan əvvəl funksiyaya ötürülən arqumentlərə daxil olmaq üçün `arguments` adlı xüsusi obyekt istifadə olunurdu. Bu obyekt massivə bənzərdir və bütün arqumentləri indekslə təqdim edir: `arguments[0]`, `arguments[1]`, və s.
+ES6-dan əvvəl funksiyaya ötürülən arqumentlərə daxil olmaq üçün `arguments` adlı xüsusi obyekt istifadə olunurdu. Bu obyekt massivə bənzərdir və bütün arqumentləri indekslə təqdim edir: `arguments[0]`, `arguments[1]`
 
 ---
 
@@ -652,8 +783,8 @@ console.log(sum(10, 20));     // 30
 **Spread operatoru (`...`)** ES6 ilə gəlib. Massivin və ya iterable obyektin elementlərini funksiya çağırışında ayrıca arqument kimi açır.
 
 ```javascript
-const letters = ['a', 'b', 'c'];
-console.log(...letters); // a b c
+const words = ['Rashad', 'is', 'coming'];
+console.log(...words); // Rashad is coming
 ```
 
 ---
@@ -696,17 +827,60 @@ console.log(combined);
 
 ---
 
-**Qeyd:**
+## 🔹 Rest operatoru (`...rest`)
 
-* `rest parameter` arqumentləri massiv kimi toplayır.
-* Spread operator massiv elementlərini ayrıca arqument kimi açır.
+**Funksiya parametrlərində** işlənir və **qalan arqumentləri yığır**.
+Yəni bir funksiya neçə arqument alacağını bilməyəndə istifadə olunur.
+
+```javascript
+function sum(...numbers) {
+  return numbers.reduce((total, n) => total + n, 0);
+}
+
+console.log(sum(1, 2, 3));     // 6
+console.log(sum(4, 5, 6, 7));  // 22
+```
+
+➡️ Burada `...numbers` **rest parametri** dir. Funksiyaya gələn bütün arqumentləri bir massivdə toplayır.
 
 ---
 
+## 🔹 Spread operatoru (`...spread`)
+
+**Obyekt və massivlərdə** işlənir və **elementləri açır** (dağıdır).
+Yəni bir massiv/obyektin içindəkiləri başqa massivə/obyektə yaymaq üçündür.
+
+```javascript
+const arr1 = [1, 2, 3];
+const arr2 = [0, ...arr1, 4];
+
+console.log(arr2); // [0, 1, 2, 3, 4]
+```
+
+➡️ Burada `...arr1` **spread operatorudur**. `arr1`-in içindəkiləri açıb `arr2`-nin içinə yerləşdirdi.
+
+Obyekt nümunəsi:
+
+```javascript
+const person = { name: "Aysel", age: 25 };
+const updated = { ...person, age: 26, city: "Baku" };
+
+console.log(updated); 
+// { name: "Aysel", age: 26, city: "Baku" }
+```
+
+---
+
+💡 Yadda saxlamaq üçün sadə cümlə:
+
+* **Rest → yığır (collect)**
+* **Spread → dağıdır (expand)**
+
+---
 
 ### 8.3.5 Funksiya Arqumentlərini Parametrlərdə Açmaq (Destructuring Arguments into Parameters)
 
-Funksiyaya arqument kimi massiv və ya obyekt göndərərkən, onları funksiyanın içində ayrıca dəyişənlərə bölmək olar. Bu üsula **destrukturlama** deyilir.
+Funksiyaya arqument kimi massiv və ya obyekt göndərərkən, onları funksiyanın içində ayrıca dəyişənlərə bölmək olar. Bu üsula **destrukturlama (yəni parçalama)** deyilir.
 
 Məsələn, əgər funksiya iki elementli massiv gözləyirsə, həmin elementləri ayrıca dəyişənlər kimi parametrdə götürmək mümkündür.
 
@@ -767,6 +941,7 @@ function area({width = 1, height = 1}) {
 
 area({width: 5}); // => 5 (height default olaraq 1 götürülür)
 ```
+---
 
 #### Çoxlu ixtiyari arqumentləri obyektlə göndərmək
 
@@ -814,9 +989,9 @@ func({a:1, b:2, c:3, d:4}); // => {c:3, d:4}
 
 ### 8.3.6 Arqument Tipləri (Argument Types) 🛠️
 
-JavaScript-də funksiya parametrlərinin **təyin olunmuş tipləri yoxdur (no declared types)** və funksiyaya ötürülən arqumentlərə **tip yoxlaması (type checking)** avtomatik edilmir. Buna görə, kodun aydın və səhvsiz işləməsi üçün arqumentlərə mənalı adlar vermək və lazım gəldikdə şərhlərlə izah etmək vacibdir.
+JavaScript-də funksiya parametrlərinin **təyin olunmuş tipləri yoxdur** və funksiyaya ötürülən arqumentlərə **tip yoxlaması (type checking)** avtomatik edilmir.
 
-JavaScript **lazım olanda tip çevirmələri (type coercion)** edir (§3.9). Məsələn, string gözləyən funksiyaya başqa tipdən dəyər versəniz, funksiya onu avtomatik stringə çevirə bilər. Bu, ümumiyyətlə səhvsiz işləyir, çünki primitivlərin hamısı `toString()` metoduna malikdir.
+JavaScript **lazım olanda tip çevirmələri (type coercion)** edir. Məsələn, **string** gözləyən funksiyaya başqa tipdən dəyər versəniz, funksiya onu avtomatik stringə çevirə bilər. Bu, ümumiyyətlə səhvsiz işləyir, çünki **primitivlərin** hamısı `toString()` metoduna malikdir.
 
 ---
 
@@ -843,9 +1018,6 @@ console.log(sum([1, 2, 3]));
 // sum(1, 2, 3);         // TypeError: 1 is not iterable
 // sum([1, 2, "3"]);     // TypeError: element 2 is not a number
 ```
-
-Bu nümunədə `sum` funksiyası arqumentin iterable olub olmadığını yoxlayır (for...of ilə) və hər elementin tipinin `number` olduğunu yoxlayır. Əgər tip uyğun deyilsə, `TypeError` atır.
-
 ---
 
 ### 8.4 Funksiyalar Dəyərlər Kimi (Functions as Values)
@@ -947,6 +1119,8 @@ console.log(operate2("add", "hello ", "world")); // => "hello world"
 console.log(operate2("pow", 10, 2));             // => 100
 ```
 
+---
+
 ##  8.4.1 – Funksiyaların Öz Xüsusiyyətləri
 
 JavaScript-də funksiyalar həm də **obyekt olduğuna** görə, onlara adətən obyektə etdiyimiz kimi **xüsusiyyət (property)** əlavə edə bilərik. Bu xüsusiyyətlər, funksiyanın xarici dəyişənlərə ehtiyac duymadan **daxili məlumat (internal state)** saxlamasına imkan verir.
@@ -954,7 +1128,7 @@ JavaScript-də funksiyalar həm də **obyekt olduğuna** görə, onlara adətən
 ---
 
 ### Call Counter
-
+    
 ```javascript
 function greet(name) {
   greet.count++; // hər çağırışda say artır
@@ -975,24 +1149,60 @@ console.log(`Greet funksiyası ${greet.count} dəfə çağırılıb.`);
 
 ---
 
-###  Keşləmə ilə Sadə Kvadrat Funksiyası
+
+### Keşləmə ilə Sadə Kvadrat Funksiyası
+
+Bəzən eyni nəticəni dəfələrlə hesablamağa ehtiyac olmur. Bir dəfə hesablanan nəticəni **yadda saxlamaq** və sonrakı çağırışlarda ordan götürmək daha səmərəlidir. Bu üsula **memoization (keşləmə)** deyilir.
 
 ```javascript
 function cachedSquare(n) {
+  // Əgər nəticə əvvəldən hesablanmayıbsa:
   if (!(n in cachedSquare.cache)) {
-    cachedSquare.cache[n] = n * n;
+    console.log("Hesablanır:", n);
+    cachedSquare.cache[n] = n * n; // yadda saxlanır
   }
+  // Əks halda mövcud nəticəni qaytarır
   return cachedSquare.cache[n];
 }
 
-cachedSquare.cache = {}; // Xüsusiyyət kimi boş obyekt
+// Funksiyanın özündə cache obyektini saxlayırıq
+cachedSquare.cache = {};
 
-console.log(cachedSquare(4)); // 16 (hesablayır və yadda saxlayır)
-console.log(cachedSquare(4)); // 16 (birbaşa keşdən götürür)
-console.log(cachedSquare.cache); // { "4": 16 }
+console.log(cachedSquare(4)); // Hesablanır: 4 → 16
+console.log(cachedSquare(4)); // (cache-dən götürülür) → 16
+console.log(cachedSquare(5)); // Hesablanır: 5 → 25
+
+console.log(cachedSquare.cache); // { "4": 16, "5": 25 }
 ```
 
-Bu nümunədə `cachedSquare.cache` funksiyanın **öz yaddaşı** kimi işləyir. Bu texnika **memoization** adlanır – təkrar hesablamalardan qaçmaq üçün faydalıdır.
+👉 Burada `cachedSquare.cache` funksiyanın **öz "daxili yaddaşı"** kimi işləyir.
+
+* İlk dəfə çağıranda nəticəni hesablayır və cache-ə yazır.
+* Sonrakı çağırışlarda artıq **hesablama etmir**, hazır nəticəni qaytarır.
+
+---
+
+### Daha Geniş İstifadə 🌐
+
+Bu üsul yalnız kvadrat almaqda yox, digər **çox vaxt aparan funksiyalarda** da istifadə oluna bilər (məsələn: faktorial, Fibonacci, API sorğuları və s.).
+
+```javascript
+function cachedFactorial(n) {
+  if (n in cachedFactorial.cache) {
+    return cachedFactorial.cache[n];
+  }
+  if (n === 0 || n === 1) return 1;
+
+  let result = n * cachedFactorial(n - 1);
+  cachedFactorial.cache[n] = result;
+  return result;
+}
+
+cachedFactorial.cache = {};
+
+console.log(cachedFactorial(5)); // 120 (hesablanır)
+console.log(cachedFactorial(5)); // 120 (cache-dən götürülür)
+```        
 
 ---
 
@@ -1025,190 +1235,244 @@ Hər iki funksiyada `message` adlı dəyişən var, amma onlar fərqli namespace
 
 ---
 
-### İmmediately Invoked Function Expression (IIFE)
+
+### Immediately Invoked Function Expression (IIFE) ⚡
 
 Bəzən kodu sadəcə namespace yaratmaq üçün funksiyanın içində yazıb dərhal icra etmək istəyirik. Bunun üçün anonim funksiya ifadəsindən istifadə olunur və bu funksiya dərhal çağırılır.
+
+**IIFE** — “dərhal çağırılan funksiya ifadəsi” deməkdir.
+Yəni funksiyanı **yaradırıq** və **dərhal işə salırıq**.
+
+#### Niyə istifadə olunur? 🤔
+
+* **Qlobal dəyişənlərdən qaçmaq** üçün (namespace yaratmaq).
+* Müvəqqəti dəyişənləri **yalnız içəridə istifadə etmək** üçün.
+* Kodun icrasını **dərhal başlatmaq** üçün.
+
+---
+
+#### Sadə nümunə:
 
 ```javascript
 (function() {
   let count = 0; // Lokal dəyişən
   console.log("İcra olunur, say: " + count);
-})();
+})(); // → İcra olunur, say: 0
 ```
+
+🔎 Burada:
+
+* `(function() { ... })` → funksiyanı **ifadə** halına gətirir.
+* `()` → funksiyanı **dərhal çağırır**.
 
 Yuxarıdakı anonim funksiyanın dərhal çağırılması **IIFE** adlanır. Sintaksisin başa düşülməsi üçün `function` sözündən əvvəl mötərizə qoymaq vacibdir. Bu, JavaScript-ə bildirir ki, bu, funksiya bəyanatı deyil, ifadədir.
 
 ---
 
-### 8.6 Kloujurlar (Closures)
-
-JavaScript-də funksiyalar **leksik skoplaşma (lexical scoping)** prinsipi ilə işləyir. Bu o deməkdir ki, funksiyanın daxilində istifadə olunan dəyişənlər onun **harada təyin olunduğuna** görə müəyyənləşir, çağırıldığı yerə görə yox.
-
-Buna görə, funksiyanın təyin olunduğu yerdəki skopdakı dəyişənlərə funksiya çağırılanda da daxil olmaq mümkündür. Bu xüsusiyyət kompüter elmlərində **kloujur (closure)** adlanır.
-
----
-
-### Kloujurlar nədir?
-
-Kloujur – funksiya ilə onu əhatə edən skopun birgə saxlanmasıdır. Başqa sözlə, funksiya təyin edildiyi yerdəki dəyişənləri yadda saxlayır və həmin dəyişənlərə funksiyanın başqa yerdən çağırılması zamanı da daxil ola bilir.
-
----
-
-### Leksik Skopun İşi:
+#### Parametrlə IIFE ✨
 
 ```javascript
-let scope = "global";
+(function(name) {
+  console.log("Salam, " + name + "!");
+})("Aysel");
 
-function checkScope() {
-  let scope = "local";
+// → Salam, Aysel!
+```
+
+Burada funksiyaya arqument ötürürük və o dərhal istifadə olunur.
+
+---
+
+#### Arrow Function ilə IIFE 🚀
+
+ES6 ilə birlikdə IIFE daha qısa yazıla bilər:
+
+```javascript
+(() => {
+  console.log("Arrow IIFE işləyir!");
+})();
+```
+
+---
+
+#### Praktiki istifadə 🌐
+
+Məsələn, qlobal `window` obyektini qarışdırmamaq üçün:
+
+```javascript
+(function() {
+  const apiKey = "SECRET_KEY_123"; // gizli dəyişən
+  console.log("API hazırdır");
+})();
+
+console.log(typeof apiKey); // "undefined"
+```
+
+👉 `apiKey` xaricdən **görünmür**, çünki yalnız IIFE daxilində yaşayır.
+
+---
+
+### 8.6 Kloujurlar (Closures)
+
+JavaScript-də funksiyalar **leksik skoplaşma (lexical scoping)** prinsipi ilə işləyir. Bu o deməkdir ki, funksiyanın daxilində istifadə olunan dəyişənlər onun **harada təyin olunduğuna** görə müəyyənləşir.
+
+---
+
+### Leksik skop nədir? (Lexical Scope)
+
+* Funksiya harada **yaradıldı**sa, onun **skopu** (dəyişənləri və ətraf mühiti) o yerdən götürülür.
+* Funksiya harada **çağırılır**sa, oradan yox.
+
+```javascript
+let globalVar = "global";
+
+function outer() {
+  let localVar = "local";
+
   function inner() {
-    return scope;
+    return localVar;
   }
+
   return inner();
 }
 
-console.log(checkScope()); // "local"
+console.log(outer()); // "local"
 ```
 
-`inner()` funksiyası `scope` dəyişənini axtaranda onu **öz funksiyasından yuxarıdakı** skoplarda tapır. Burada `inner()`-in daxil olduğu skopda `scope` "local" olduğu üçün o qaytarılır.
+💡 **Analogy:**
+Otaqlarda gizli əşyalar var. İç otaqda əşya tapılmazsa, valideyn otağa baxırsan. Tapdığını götürürsən.
 
 ---
 
-### Kloujur nümunəsi: Funksiyanı geri qaytarmaq
+### Kloujur nədir?
+
+* Kloujur = **funksiya + onun yaradıldığı skop**.
+* Funksiya daxilindəki dəyişənləri **xaricdən qoruyur**, amma öz daxilindən istifadə etməyə imkan verir.
 
 ```javascript
-let scope = "global";
-
-function checkScope() {
-  let scope = "local";
-  function inner() {
-    return scope;
-  }
-  return inner; // funksiyanı çağırmır, sadəcə geri qaytarır
+function makeFunc() {
+  let secret = 42;
+  return function() {
+    return secret;
+  };
 }
 
-let func = checkScope();
-console.log(func()); // "local"
+let func = makeFunc();
+console.log(func()); // 42
 ```
 
-Bu misalda `inner` funksiyası `checkScope`-un daxilində təyin olunub, amma sonra `checkScope`-dan çıxaraq `func` dəyişəninə təyin olunur. `func()` çağırışında belə, `inner` funksiyası öz təyin olunduğu `scope` dəyişənini yadda saxlayır və onu qaytarır.
+💡 **Niyə maraqlıdır?**
+
+* `func` çağırıldığında `secret` hələ də yaddaşda qalır.
+* Xaricdən `secret`-ə birbaşa daxil olmaq mümkün deyil.
 
 ---
 
-### Kloujurlardan şəxsi vəziyyət kimi istifadə
-
-Kloujurlar, funksiya daxilində olan dəyişənləri xaricdən gizlətmək, ancaq funksiyaya daxil olmaqla bu dəyişənləri oxumaq və dəyişmək imkanı vermək üçün çox yararlıdır.
+###  Şəxsi vəziyyət yaratmaq (Private State)
 
 ```javascript
-let uniqueInteger = (function() {
-  let counter = 0;
+let counter = (function() {
+  let count = 0; // gizli dəyişən
   return function() {
-    return counter++;
+    return count++;
   };
-}());
+})();
 
-console.log(uniqueInteger()); // 0
-console.log(uniqueInteger()); // 1
-// 'counter' dəyişəninə xaricdən daxil olmaq mümkün deyil
+console.log(counter()); // 0
+console.log(counter()); // 1
+console.log(counter()); // 2
 ```
 
-Burada `counter` dəyişəni `uniqueInteger` funksiyasının daxilində **şəxsi vəziyyət** kimi saxlanılır və başqa koddan əlçatmazdır.
+💡 **Analogy:**
+Bank hesabı – sənə kart verilir, amma pulu birbaşa götürə bilmirsən, yalnız əməliyyat vasitəsilə idarə edə bilərsən.
 
 ---
 
-### Bir neçə funksiyanın eyni şəxsi vəziyyəti paylaşması
+### Bir neçə funksiyanın eyni skopu paylaşması
 
 ```javascript
-function counter() {
+function createCounter() {
   let n = 0;
   return {
-    count: function() { return n++; },
+    inc: function() { return n++; },
     reset: function() { n = 0; }
   };
 }
 
-let c1 = counter();
-let c2 = counter();
+let a = createCounter();
+let b = createCounter();
 
-console.log(c1.count()); // 0
-console.log(c2.count()); // 0
-c1.reset();
-console.log(c1.count()); // 0
-console.log(c2.count()); // 1
+console.log(a.inc()); // 0
+console.log(b.inc()); // 0
+a.reset();
+console.log(a.inc()); // 0
+console.log(b.inc()); // 1
 ```
 
-Hər `counter()` çağırışı öz `n` dəyişənini yaradır və nəticədə fərqli şəxsi vəziyyətə malik obyektlər əmələ gəlir.
+* Hər `createCounter()` çağırışı **öz şəxsi dəyişənini yaradır**.
+* Fərqli funksiyalar fərqli “yaddaşa” malikdir.
 
 ---
 
-### Kloujurlar və getter/setter metodları
+### Dövr və `var` vs `let` problemi
+
+**`var` ilə:**
 
 ```javascript
-function counter(n) {
-  return {
-    get count() { return n++; },
-    set count(value) {
-      if (value > n) n = value;
-      else throw new Error("Count yalnız artırıla bilər");
-    }
-  };
-}
-
-let c = counter(1000);
-console.log(c.count); // 1000
-console.log(c.count); // 1001
-c.count = 2000;
-console.log(c.count); // 2000
-// c.count = 1000;  // Xəta: Count yalnız artırıla bilər
-```
-
-`n` burada şəxsi dəyişəndir, ona birbaşa daxil olmaq mümkün deyil, amma getter və setter vasitəsilə idarə olunur.
-
----
-
-### Dövrdə kloujurlar və dəyişənlərin paylaşılması
-
-`var` ilə yazılan dövrdə dəyişənlər blok skopunda deyil, funksional skopda təyin olunduğu üçün kloujurlar gözlənilməz davranış göstərə bilər.
-
-```javascript
-function constFuncs() {
-  let funcs = [];
-  for(var i = 0; i < 10; i++) {
+function makeFuncs() {
+  var funcs = [];
+  for(var i = 0; i < 5; i++) {
     funcs[i] = function() { return i; };
   }
   return funcs;
 }
 
-let fs = constFuncs();
-console.log(fs[5]()); // 10
+let fs = makeFuncs();
+console.log(fs[2]()); // 5
 ```
 
-Burada bütün funksiyalar eyni `i` dəyişənini paylaşır və `i` dövr bitdikdən sonra `10` olur.
+* `var` **funksiya skoplu**dur → bütün funksiyalar eyni `i`-yə baxır.
 
----
-
-### Həlli: `let` ilə blok skop yaratmaq
+**`let` ilə:**
 
 ```javascript
-function constFuncs() {
+function makeFuncs() {
   let funcs = [];
-  for(let i = 0; i < 10; i++) {
+  for(let i = 0; i < 5; i++) {
     funcs[i] = function() { return i; };
   }
   return funcs;
 }
 
-let fs = constFuncs();
-console.log(fs[5]()); // 5
+let fs = makeFuncs();
+console.log(fs[2]()); // 2
 ```
 
-`let` hər dövr iterasiyasında yeni `i` yaratdığı üçün hər funksiya öz `i`-sini yadda saxlayır.
+* `let` hər dövr üçün **yeni kloujur** yaradır → hər funksiya öz `i`-sini yadda saxlayır.
 
 ---
+
+### 7️⃣ Vizual Analogy (Skop və Kloujur)
+
+```
+╔══════════╗         ╔════════════╗
+║  outer   ║         ║   inner    ║
+║  x = 10  ║◄───────║  uses x    ║
+╚══════════╝         ╚════════════╝
+   ↑ leksik skop        ↑ kloujur
+```
+
+* Outer skopda dəyişən var → inner funksiyası onu “xatırlayır”.
+
+💡 **Əsas fikir:** Funksiya + skop = **kloujur**
+Bu, JavaScript-də **xüsusi yaddaş** yaratmağın əsas yoludur.
+
+---
+
 
 ### 8.7 Funksiya Xüsusiyyətləri, Metodları və Konstruktoru
 
-JavaScript-də funksiyalar təkcə kod blokları deyil, həm də xüsusi obyektlərdir. `typeof` operatoru funksiyaya tətbiq olunanda "function" dəyərini qaytarır. Amma əslində, funksiya JavaScript obyektinin xüsusi növüdür. Bu səbəbdən funksiyalar da obyektlər kimi müxtəlif xüsusiyyətlərə və metodlara sahib ola bilirlər. Bundan əlavə, JavaScript-də yeni funksiya yaratmaq üçün `Function()` adlı konstruktor mövcuddur.
+JavaScript-də **funksiyalar** təkcə kod blokları deyil, həm də xüsusi obyektlərdir. `typeof` operatoru funksiyaya tətbiq olunanda **function** dəyərini qaytarır. Amma əslində, funksiya JavaScript obyektinin xüsusi növüdür. Bu səbəbdən funksiyalar da obyektlər kimi müxtəlif xüsusiyyətlərə və metodlara sahib ola bilirlər. Bundan əlavə, JavaScript-də yeni funksiya yaratmaq üçün **`Function()`** adlı konstruktor mövcuddur.
 
 ---
 
@@ -1249,7 +1513,7 @@ console.log(arrow.name); // "arrow"
 
 ### 8.7.3 `prototype` Xüsusiyyəti
 
-Bütün normal funksiyaların (amma ox funksiyalarının yox) `prototype` adlı bir xüsusiyyəti olur. Bu `prototype` obyektinə istinad edir. JavaScript-də konstruktor funksiyaları bu prototip obyektindən yeni yaradılan obyektlərə xüsusiyyətləri miras verirlər.
+Bütün normal funksiyaların (istisna, arrow funksiyalar) **`prototype`** adlı bir xüsusiyyəti olur. Bu `prototype` obyektinə istinad edir. JavaScript-də konstruktor funksiyaları bu prototip obyektindən yeni yaradılan obyektlərə xüsusiyyətləri miras verirlər.
 
 ```javascript
 function Person(name) {
@@ -1260,8 +1524,8 @@ Person.prototype.greet = function() {
   console.log("Salam, mən " + this.name);
 };
 
-const p = new Person("Rəşad");
-p.greet(); // Salam, mən Rəşad
+const object = new Person("Rəşad");
+object.greet(); // Salam, mən Rəşad
 ```
 
 ---
@@ -1282,13 +1546,11 @@ function f(a, b) {
 
 const o = {name: "obyekt"};
 
-f.call(o, 1, 2);     // this = o, arqumentlər 1 və 2
-f.apply(o, [1, 2]);  // this = o, arqumentlər [1, 2] massivindən götürülür
+f.call(o, 1, 2);     // {name: "obyekt"}, 1,2
+f.apply(o, [1, 2]);  // {name: "obyekt"}, 1,2
 ```
 
 Bu üsullar `this` dəyərini dəyişdirərək funksiyanı istənilən obyekt üzərində işlətməyə imkan verir.
-
-Qeyd etmək lazımdır ki, ox funksiyaları `this` dəyərini öz təyin olunduğu mühitdən alır və `call()` və `apply()` ilə `this`-i dəyişmək mümkün deyil.
 
 `apply()` metodu xüsusilə ixtiyari sayda arqument qəbul edən funksiyalarda faydalıdır. Məsələn, massivdəki ən böyük rəqəmi tapmaq üçün:
 
@@ -1299,10 +1561,24 @@ console.log(max); // 10
 ```
 
 ---
+### 8.7.5 bind() Metodu
 
-### 8.7.5 `bind()` Metodu
+### `bind()` nə edir?
 
-`bind()` metodu funksiyanı müəyyən obyektə bağlayır və yeni funksiya yaradır. Bu yeni funksiyanı çağırdıqda, orijinal funksiya həmişə bağlandığı obyekt üzərində işləyir.
+* `bind()` funksiyanı **müəyyən obyektə bağlayır** → yeni funksiya yaranır.
+* Yeni funksiya çağırıldıqda `this` həmişə **bağlandığı obyekt** olur.
+* Sintaksis:
+
+```javascript
+let newFunc = oldFunc.bind(obj, arg1, arg2, ...);
+```
+
+* `obj` → `this` olacaq obyekt
+* `arg1, arg2...` → funksiyaya əvvəlcədən təyin edilmiş arqumentlər (opsional)
+
+---
+
+### Sadə nümunə
 
 ```javascript
 function f(y) {
@@ -1310,24 +1586,57 @@ function f(y) {
 }
 
 let o = { x: 1 };
-let g = f.bind(o); // f funksiyasını 'o' obyektinə bağlayır
+let g = f.bind(o);
 
-console.log(g(2)); // 3 (this.x = 1, y = 2)
+console.log(g(2)); // 3
 ```
 
-`bind()` funksiyanı bağlamaqla yanaşı, arqumentlərin qismən tətbiqinə də imkan verir. Yəni, funksiyanın əvvəlki arqumentlərini əvvəlcədən təyin etmək mümkündür.
+**İzah:**
+
+| Funksiya çağırışı | `this.x` | `y` | Nəticə |
+| ----------------- | -------- | --- | ------ |
+| `g(2)`            | 1        | 2   | 3      |
+
+* `g` funksiyası həmişə `o` obyektinə bağlandığı üçün `this.x` = 1.
+* `y` isə çağırış zamanı verilir.
+
+---
+
+### Partial Application (Qismən Tətbiq)
+
+* `bind()` istifadə edərək funksiyanın bəzi arqumentlərini əvvəlcədən təyin edə bilərik.
 
 ```javascript
 let sum = (x, y) => x + y;
+let succ = sum.bind(null, 1);
 
-let succ = sum.bind(null, 1); 
-// x = 1 bağlanıb, y çağırış zamanı verilir
 console.log(succ(2)); // 3
 ```
 
-Bu üsul funksional proqramlaşdırmada geniş istifadə olunur və **partial application** (qismən tətbiq) adlanır.
+**İzah:**
 
-Arrow funksiyaları `this` dəyərini bağlamaq üçün `bind()` metodundan istifadə edilə bilməz, çünki onlar `this`-i təyin olunduqları mühitdən götürürlər.
+| Funksiya çağırışı | x (bind) | y (call) | Nəticə |
+| ----------------- | -------- | -------- | ------ |
+| `succ(2)`         | 1        | 2        | 3      |
+
+* `x` arqumenti əvvəlcədən bağlanıb → çağırış zamanı yalnız `y` verilir.
+* Bu üsul **partial application** adlanır.
+
+---
+
+### Arrow funksiyaları ilə `bind()`
+
+* Arrow funksiyaları `this`-i bağlamır.
+* Onlar **lexical this** istifadə edir → təyin olunduqları mühitin `this` dəyərini götürür.
+* Buna görə arrow funksiyasını `bind()` etməyə çalışsan, `this` dəyişməyəcək.
+
+```javascript
+let arrow = () => this.x;
+let obj = { x: 10 };
+
+let boundArrow = arrow.bind(obj);
+console.log(boundArrow()); // this.x arrow-un təyin olunduğu yerə görə → undefined (əsasən)
+```
 
 ---
 
@@ -1384,6 +1693,8 @@ const f = function(x, y) {
 
 `Function()` konstruktoruna ötürülən sonuncu arqument funksiyanın gövdəsidir, digər arqumentlər isə parametr adlarıdır. Əgər parametr yoxdursa, sadəcə gövdə mətni verilir.
 
+----
+
 Konstruktor dinamik funksiyalar yaratmağa imkan verir, lakin bəzi vacib xüsusiyyətləri var:
 
 * `Function()` ilə yaradılan funksiyalar **leksik skopda** deyil, **qlobal skopda** işləyir. Bu o deməkdir ki, onlar tərtib olunduqları yerdəki dəyişənləri görə bilmirlər.
@@ -1407,17 +1718,18 @@ console.log(makeFunction()()); // "qlobal"
 
 ---
 
-# 8.8 Funksional Proqramlaşdırma
+## 8.8 Funksional Proqramlaşdırma
 
-JavaScript rəsmi olaraq Lisp, Haskell və ya OCaml kimi tam funksional proqramlaşdırma dili deyil. Buna baxmayaraq, funksiyaların obyekt kimi istifadə olunması və yüksək səviyyəli massiv metodlarının mövcudluğu JavaScript-də funksional proqramlaşdırma texnikalarını tətbiq etməyə imkan yaradır.
+JavaScript rəsmi olaraq **Lisp**, **Haskell** və ya **OCaml** kimi tam funksional proqramlaşdırma dili deyil. Buna baxmayaraq, funksiyaların obyekt kimi istifadə olunması və yüksək səviyyəli massiv metodlarının mövcudluğu JavaScript-də funksional proqramlaşdırma texnikalarını tətbiq etməyə imkan yaradır.
 
-Funksional proqramlaşdırma, əsasən, funksiyaların birinci dərəcəli obyekt olması, yəni funksiyaların dəyişənlər kimi ötürülməsi, başqa funksiyalara arqument kimi verilməsi və ya nəticə kimi qaytarılması prinsipinə əsaslanır. Bu yanaşma proqram kodunun daha təmiz, oxunaqlı və səhvsiz olmasına kömək edir.
+Funksional proqramlaşdırma, əsasən, **funksiyaların** birinci dərəcəli **obyekt** olması, yəni funksiyaların **dəyişənlər** kimi ötürülməsi, başqa funksiyalara **arqument** kimi verilməsi və ya nəticə kimi qaytarılması prinsipinə əsaslanır. 
+Bu yanaşma proqram kodunun daha təmiz, oxunaqlı və səhvsiz olmasına kömək edir.
 
 ---
 
 ### 8.8.1 Massivlərin Funksiyalarla İşlənməsi (Processing Arrays with Functions)
 
-Təsəvvür edin ki, ədədlər massivimiz var və biz bu dəyərlərin **cümi** və **kvadratlarının ortalamasını** hesablamaq istəyirik. Ənənəvi (imperativ) üsulla bunu belə edə bilərik:
+Təsəvvür edin ki, ədədlər massivimiz var və biz bu dəyərlərin **cəmi** və **kvadratlarının ortalamasını** hesablamaq istəyirik. Ənənəvi (imperativ) üsulla bunu belə edə bilərik:
 
 ```javascript
 let data = [2, 4, 6, 8, 10];
