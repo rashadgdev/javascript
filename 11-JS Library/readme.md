@@ -1,6 +1,6 @@
-### Fəsil 11: JavaScript-in Standart Kitabxanasına Baxış
+# Fəsil 11: JavaScript-in Standart Kitabxanasına Baxış
 
-Bu fəsildə JavaScript-in daxilində olan, **hər proqramda istifadə oluna bilən hazır siniflər və funksiyalar** təqdim olunur. Yəni əlavə heç nə yükləmədən, **JavaScript-in özündə olan alətlərdən** danışırıq.
+Bu fəsildə JavaScript-in daxilində olan, **hər proqramda istifadə oluna bilən hazır siniflər və funksiyalar (built-in functions)** təqdim olunur. Yəni əlavə heç nə yükləmədən, **JavaScript-in özündə olan alətlərdən** danışırıq.
 
 ### Bu fəsildə nə öyrənəcəyik?
 
@@ -32,9 +32,10 @@ Burada aşağıdakı **hazır alətlərlə** tanış olacağıq:
 Yeni `Set` yaratmaq üçün `new Set()` yazırıq. İstəyə görə `Set`-ə əvvəlcədən elementlər verə bilərik.
 
 ```javascript
-let s = new Set(); // boş Set
+let s = new Set(); 
+// boş Set
 
-let t = new Set([1, 2, 3]); // 1, 2, 3 elementləri olan Set
+let t = new Set([1, 2, 3]);
 // new Set([1,2,3])
 
 let strSet = new Set("hello");
@@ -47,6 +48,8 @@ let strSet = new Set("hello");
 let s2 = new Set(t); // t Set-in elementləri ilə yeni Set yaradırıq
 ```
 
+---
+
 ### **Element əlavə etmək — `add()`**
 
 `Set`-ə element əlavə etmək üçün `add()` metodundan istifadə edirik.
@@ -56,12 +59,13 @@ let s = new Set();
 
 s.add(1);
 s.add(2);
-s.add(2); // təkrar əlavə olunur, amma təsiri yoxdur
+s.add(2); 
+// təkrar əlavə olunur, amma təsiri yoxdur
 
 console.log(s.size); // 2
 ```
 
-- `add()` metodunun qaytarışı `Set`-in özüdür, buna görə zəncirləmə mümkündür:
+- `add()` metodunun qaytarışı `Set`-in özüdür, buna görə **zəncirləmə (chaining)** mümkündür:
 
 ```javascript
 s.add(3).add(4).add(5);
@@ -88,7 +92,7 @@ console.log(s.size); // 0
 
 ---
 
-#### Üzvlük Yoxlaması (`has()`) ✅
+#### Üzvlük Yoxlaması (`has()`)
 
 Set-lər ilə ən vacib əməliyyat, müəyyən bir dəyərin set-in üzvü olub olmadığını `has()` metodu (method) ilə yoxlamaqdır:
 
@@ -99,20 +103,21 @@ console.log(oneDigitPrimes.has(4)); // => false
 console.log(oneDigitPrimes.has("5")); // => false ("5" rəqəm olmadığı üçün)
 ```
 
+---
+
 #### Set-ləri İterasiya Etmək (Iterating Sets) 🔄
 
-`Set` sinfi iterable (təkrarlana bilən) olduğundan, `for/of` dövrü ilə bütün elementlərini sıralaya bilərsiniz:
+`Set` sinfi **iterable** (təkrarlana bilən) olduğundan, `for/of` dövrü ilə bütün elementlərini sıralaya bilərsiniz:
 
 ```javascript
 let sum = 0;
 for (let p of oneDigitPrimes) {
-  // Sadə ədədləri dövrə salın və toplayın
   sum += p;
 }
 console.log(sum); // => 17
 ```
 
-`Set` obyektləri iterable olduğu üçün, onları `...` spread operatoru ilə massivlərə və funksiya arqumentlərinə çevirə bilərsiniz:
+`Set` obyektləri **iterable** olduğu üçün, onları `...` spread operatoru ilə massivlərə və funksiya arqumentlərinə çevirə bilərsiniz:
 
 ```javascript
 console.log([...oneDigitPrimes]);
@@ -228,15 +233,15 @@ console.log(m.size); // 0
 
 ---
 
-#### Açar (Key) Müqayisəsi (Key Comparison)
+#### Açar Müqayisəsi (Key Comparison)
 
-`Map` obyektində **istənilən JavaScript dəyəri** açar kimi istifadə edilə bilər: `null`, `undefined`, `NaN`, obyektlər, massivlər və s. Lakin burada açarlar **referens əsasında** müqayisə olunur, yəni `===` operatoru ilə.
+`Map` obyektində **istənilən JavaScript dəyəri** açar kimi istifadə edilə bilər: `null`, `undefined`, `NaN`, obyektlər, massivlər və s. Lakin burada açarlar **referans əsasında** müqayisə olunur, yəni `===` operatoru ilə.
 Bu o deməkdir ki, iki fərqli obyekt və ya massiv **eyni görünüşə malik olsa belə**, `Map` onları **fərqli açar** kimi qəbul edir.
 
 ```javascript
 let m = new Map(); // Boş bir map ilə başlayın.
-m.set({}, 1); // Bir boş obyekti (object) 1-ə xəritələyin.
-m.set({}, 2); // Başqa bir boş obyekti (object) 2-yə xəritələyin.
+m.set({}, 1);
+m.set({}, 2);
 
 console.log(m.size);
 // => 2: bu map-də (map) iki açar (key) var.
@@ -248,7 +253,7 @@ m.set(m, undefined);
 console.log(m.has(m));
 // => true: m özü-özünün açarıdır.
 console.log(m.get(m));
-// => undefined: açar (key) olmasa da bu dəyəri (value) alırdıq.
+// => undefined: açar olmasa da bu dəyəri alırdıq.
 ```
 
 ---
@@ -266,7 +271,6 @@ let m = new Map([
 for (let [key, value] of m) {
   console.log(key, value);
 }
-// Output:
 // x 10
 // y 20
 ```
@@ -299,7 +303,7 @@ m.forEach((value, key) => {
 // Key: y, Value: 20
 ```
 
-**Qeyd:** `forEach()` metodunda birinci parametr `value`, ikinci `key` olur (massivlərdə olduğu kimi).
+**Qeyd:** `forEach()` metodunda birinci parametr `value`, ikinci `key` olur
 
 ---
 
@@ -310,8 +314,6 @@ let m = new Map().set("a", 1).set("b", 2).set("c", 3);
 
 console.log(m.size); // 3
 ```
-
----
 
 ---
 
@@ -459,7 +461,7 @@ JavaScript-də tipli massivlər (**typed arrays**) yaddaşda optimallaşdırılm
 
 Typed array-ləri yaratmaq üçün üç əsas üsul var:
 
-## 1. Uzunluqla Yaratmaq (Creating with Length)
+### 1. Uzunluqla Yaratmaq (Creating with Length)
 
 `TypedArray` konstruktora istədiyiniz element sayını verirsiniz. Bütün elementlər avtomatik `0` ilə doldurulur.
 
@@ -468,23 +470,16 @@ let bytes = new Uint8Array(5);
 console.log(bytes); // Uint8Array(5) [0, 0, 0, 0, 0]
 console.log(bytes.length); // 5
 console.log(bytes[0]); // 0
-```
 
-Digər nümunələr:
-
-```js
 let matrix = new Float64Array(4); // 4 elementli 64-bit float massivi
 console.log(matrix); // Float64Array(4) [0, 0, 0, 0]
-
-let point = new Int16Array(3); // 3 elementli 16-bit işarəli tam ədəd massivi
-console.log(point); // Int16Array(3) [0, 0, 0]
 ```
 
 ---
 
-## 2. Mövcud Dəyərlərdən Yaratmaq (Creating from Existing Values)
+### 2. Mövcud Dəyərlərdən Yaratmaq (Creating from Existing Values)
 
-### a) `of()` metodu ilə
+#### a) `of()` metodu ilə
 
 Birbaşa elementləri verərək yaradılır:
 
@@ -493,7 +488,7 @@ let pixel = Uint8ClampedArray.of(255, 128, 64, 0);
 console.log(pixel); // Uint8ClampedArray(4) [255, 128, 64, 0]
 ```
 
-### b) `from()` metodu ilə
+#### b) `from()` metodu ilə
 
 Mövcud massiv və ya iterable obyektlərdən yaradır:
 
@@ -505,20 +500,19 @@ console.log(uint8Numbers); // Uint8Array(3) [10, 20, 30]
 
 ---
 
-## 3. `ArrayBuffer` ilə Yaratmaq (Creating with `ArrayBuffer`)
+### 3. `ArrayBuffer` ilə Yaratmaq (Creating with `ArrayBuffer`)
 
 ```javascript
 let buffer = new ArrayBuffer(16);
 // 16 baytlıq bufer yaradırıq.
 
-// Bu buferə fərqli "görünüşlər" (views) yaradırıq:
+// Bu buferə fərqli "görünüşlər" yaradırıq:
 let view8 = new Uint8Array(buffer);
-// 8-bit işarəsiz tam ədədlər kimi baxış (view)
 console.log(view8);
 // => Uint8Array(16) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+// new Uint8Array(buffer) === new Uint8Array(16)
 
 let view32 = new Int32Array(buffer);
-// 32-bit işarəli tam ədədlər kimi baxış (view)
 console.log(view32);
 // => Int32Array(4) [0, 0, 0, 0] (16 bayt / 4 bayt = 4 element)
 
@@ -545,7 +539,7 @@ console.log(partialInts);
 
 ---
 
-# 11.2.3 Tipli Massivləri İstifadə Etmək (Using Typed Arrays)
+## 11.2.3 Tipli Massivləri İstifadə Etmək (Using Typed Arrays)
 
 ## Elementlərə giriş və dəyişiklik
 
@@ -599,36 +593,14 @@ let part = doubled.slice(1, 4);
 console.log(part); // Uint8Array(3) [14, 14, 14]
 ```
 
----
-
-### Metodlarla dəyişiklik nümunəsi: səsləri səs artırmaq (volume boost)
-
-```js
-let soundSamples = new Int16Array([100, -100, 200, -200, 0]);
-
-// Hər sample-i 50% artırırıq, amma maksimum 32767-dən çox olmamalıdır
-let boosted = soundSamples.map((x) => {
-  let boostedVal = x * 1.5;
-  if (boostedVal > 32767) return 32767;
-  if (boostedVal < -32768) return -32768;
-  return boostedVal;
-});
-
-console.log(boosted); // Int16Array(5) [150, -150, 300, -300, 0]
-```
-
----
-
-## Vacib xatırlatma
-
 - Typed array-lərin uzunluğu sabitdir, ona görə `push()`, `pop()` kimi metodlar yoxdur.
 - Amma `fill()`, `map()`, `slice()` kimi metodlar tam dəstəklənir və nəticədə eyni tipdə yeni typed array qaytarılır.
 
 ---
 
-# 11.2.4 Tipli Massiv Metodları (Typed Array Methods) və Xüsusiyyətləri (Properties)
+## 11.2.4 Tipli Massiv Metodları (Typed Array Methods) və Xüsusiyyətləri (Properties)
 
-Typed array-lər adi massivlərə oxşayır, amma özlərinə məxsus sürətli metodları və yaddaşla bağlı xüsusiyyətləri var.
+Typed array-lər adi massivlərə oxşayır, özlərinə məxsus sürətli metodları və yaddaşla bağlı xüsusiyyətləri var.
 
 ---
 
@@ -749,13 +721,13 @@ console.log(floats.length); // 2
 
 ---
 
-### **Fəsil 11.3: Requlyar İfadələrlə Nümunə Axtarışı**
+## Fəsil 11.3: Requlyar İfadələrlə Nümunə Axtarışı
 
 **Requlyar ifadə** – mətndə müəyyən bir nümunəni (pattern) təsvir edən bir obyektdir. JavaScript-də `RegExp` sinfi requlyar ifadələri təmsil edir. Həm `String`, həm də `RegExp` sinifləri, mətn üzərində güclü axtarış və əvəzetmə əməliyyatları aparmaq üçün requlyar ifadələrdən istifadə edən metodlara sahibdir.
 
 ---
 
-#### **11.3.1 Requlyar İfadələrin Təyin Edilməsi**
+### **11.3.1 Requlyar İfadələrin Təyin Edilməsi**
 
 JavaScript-də requlyar ifadələr iki əsas üsulla yaradılır: **literal sintaksis** və **konstruktor**.
 
@@ -771,7 +743,7 @@ Bu nümunə, tərkibində "skript" sözü olan istənilən mətni tapacaq.
 
 **2. `RegExp()` Konstruktoru**
 
-Eyni ifadəni `new RegExp()` konstruktoru ilə də yaratmaq mümkündür. Bu zaman ifadə dırnaq içində bir sətir (string) olaraq yazılır.
+Eyni ifadəni `new RegExp()` konstruktoru ilə də yaratmaq mümkündür. Bu zaman ifadə dırnaq içində bir string olaraq yazılır.
 
 ```javascript
 let pattern = new RegExp("skript");
@@ -779,20 +751,20 @@ let pattern = new RegExp("skript");
 
 ---
 
-### **Sadə Simvollar və Meta-Simvollar**
+#### **Sadə Simvollar və Meta-Simvollar**
 
 Requlyar ifadələrdəki simvolların əksəriyyəti (məsələn, bütün hərflər və rəqəmlər) özünü ifadə edir. Yəni `/a/` ifadəsi sadəcə "a" hərfini axtarır.
 
 Ancaq bəzi simvollar xüsusi məna daşıyır və **meta-simvol** adlanır. Məsələn:
 
-- `$` — Sətrin (string) sonunu bildirir.
-- `^` — Sətrin əvvəlini bildirir.
+- `$` — String sonunu bildirir.
+- `^` — String əvvəlini bildirir.
 
 **Nümunə:**
 `/s$/` ifadəsi iki simvoldan ibarətdir:
 
 - `s` — "s" hərfini axtarır.
-- `$` — həmin "s" hərfinin sətrin sonunda olmasını tələb edir.
+- `$` — həmin "s" hərfinin stringin sonunda olmasını tələb edir.
 
 ---
 
@@ -804,7 +776,7 @@ Fleqlər, axtarışın davranışını dəyişən xüsusi "açarlardır". Onlar 
 - `g` — **Global (Qlobal axtarış):** Yalnız ilk uyğunluğu deyil, bütün uyğun gələn nəticələri tapır.
 
 **Nümunə:**
-`/s$/i` — Sətrin "s" və ya "S" hərfi ilə bitib-bitmədiyini yoxlayır.
+`/s$/i` — Stringin "s" və ya "S" hərfi ilə bitib-bitmədiyini yoxlayır.
 
 ```javascript
 let pattern_case_sensitive = /s$/;
@@ -812,19 +784,23 @@ let pattern_case_insensitive = /s$/i;
 
 "salamS".test(pattern_case_sensitive); // false (böyük S olduğu üçün)
 "salamS".test(pattern_case_insensitive); // true (i fleqi fərqi aradan qaldırır)
+
+let pattern_g = /s/g;
+
+console.log("salam sos".match(pattern_g)); // ["s", "s", "s"]
 ```
 
 ---
 
-### **Əlavə və Praktik Nümunələr**
+#### **Əlavə və Praktik Nümunələr**
 
-Requlyar ifadələri yoxlamaq üçün ən sadə metod `.test()` metodudur. O, uyğunluq varsa `true`, yoxdursa `false` qaytarır.
+Requlyar ifadələri yoxlamaq üçün ən sadə metod `.test()` metodudur
 
-**Nümunə 1: Mətnin müəyyən sözlə başlamasının yoxlanılması**
-`^` simvolu sətrin başlanğıcını bildirir.
+**Mətnin müəyyən sözlə başlamasının yoxlanılması**
+`^` simvolu string başlanğıcını bildirir.
 
 ```javascript
-// "Salam" sözü ilə başlayan sətirləri axtarır
+// "Salam" sözü ilə başlayan stringləri axtarır
 const pattern = /^Salam/;
 
 console.log(pattern.test("Salam, dünya!"));
@@ -832,14 +808,16 @@ console.log(pattern.test("Salam, dünya!"));
 console.log(pattern.test("salam, dünya!"));
 // ❌ false (böyük hərf tələb olunur)
 console.log(pattern.test("Əvvəlcə Salam, dünya!"));
-// ❌ false (sətrin əvvəlində deyil)
+// ❌ false (string əvvəlində deyil)
 ```
 
-**Nümunə 2: Yalnız rəqəmlərdən ibarət olmanın yoxlanılması**
+---
+
+**Yalnız rəqəmlərdən ibarət olmanın yoxlanılması**
 `\d` meta-simvolu istənilən rəqəmi (`0-9`) ifadə edir. `+` isə "bir və ya daha çox" deməkdir.
 
 ```javascript
-// Sətrin başdan sona (^...$) yalnız bir və ya daha çox rəqəmdən (\d+) ibarət olmasını yoxlayır
+// String başdan sona (^...$) yalnız bir və ya daha çox rəqəmdən (\d+) ibarət olmasını yoxlayır
 const pattern = /^\d+$/;
 
 console.log(pattern.test("12345")); // ✅ true
@@ -848,7 +826,9 @@ console.log(pattern.test("123 45")); // ❌ false (boşluq simvolu var)
 console.log(pattern.test("12")); // ✅ true
 ```
 
-**Nümunə 3: E-mail formatının sadə yoxlanışı**
+---
+
+**E-mail formatının sadə yoxlanışı**
 
 ```javascript
 // user@domain.com formatını yoxlayır (çox sadələşdirilmiş)
@@ -883,6 +863,8 @@ pattern.test("JavaScript kod yazmaq maraqlıdır."); // ✅ true
 pattern.test("Bu mətnin mənası fərqlidir."); // ❌ false
 ```
 
+---
+
 #### **2. Xüsusi Mənalı Simvollar (Meta-simvollar)**
 
 Bəzi durğu işarələri və simvollar requlyar ifadələrdə xüsusi məna daşıyır. Onlar hərfi mənada özlərini yox, müəyyən bir qaydanı təmsil edirlər. Bu simvollar bunlardır:
@@ -895,11 +877,11 @@ Bu simvolların hər birinin öz rolu var və növbəti fəsillərdə onları de
 
 #### **3. Xüsusi Simvolları Hərfi Mənada Necə İşlətməli?**
 
-Bəs əgər biz mətndə `.` (nöqtə) və ya `+` (üstəgəl) işarəsinin özünü axtarmaq istəsək, nə etməliyik?
+Bəs əgər biz mətndə `.` və ya `+` işarəsinin özünü axtarmaq istəsək, nə etməliyik?
 
 **Qayda:** Xüsusi mənalı bir simvolu hərfi mənada axtarmaq üçün onun önünə `\` (backslash) əlavə etmək lazımdır.
 
-**Praktik Nümunə 1: Domen adında nöqtəni tapmaq**
+**Domen adında nöqtəni tapmaq**
 
 Tutaq ki, `“sayt.az”` mətnindəki nöqtəni tapmaq istəyirik.
 
@@ -922,7 +904,9 @@ correctPattern.test("sayt-az");
 // ❌ false
 ```
 
-**Praktik Nümunə 2: "C++" dilini axtarmaq**
+----
+
+**"C++" dilini axtarmaq**
 
 ```javascript
 let text = "Mən C++ öyrənirəm.";
@@ -938,6 +922,8 @@ wrongPattern.test("Mən C öyrənirəm."); // ✅ true, halbuki biz "C++" axtar�
 let correctPattern = /C\+\+/;
 correctPattern.test(text); // ✅ true
 ```
+
+---
 
 #### **4. Nəzarət Simvolları və Tərs Sleş `\`**
 
@@ -963,34 +949,47 @@ let pattern = /\\Users\\/;
 
 pattern.test(path); // ✅ true
 ```
+Aha, bunu daha aydın və oxunaqlı formada belə izah edə bilərik:
 
-#### **DIQQƏT: `new RegExp()` konstruktoru ilə fərq**
+---
 
-Əgər requlyar ifadəni `new RegExp("...")` ilə yaradırsınızsa, tərs sleşləri **ikiqat** yazmalısınız. Çünki JavaScript sətirləri (`string`) də `\` simvolunu `escape` üçün istifadə edir.
+#### **`new RegExp()` ilə Requlyar İfadə Fərqi**
+
+JavaScript-də regular expression yaratmaq üçün iki yol var: literal (`/.../`) və konstruktor (`new RegExp("...")`).
+
+**Əsas fərq:**
+
+* Literal sintaksisdə `\` bir dəfə yazılır.
+* Konstruktor istifadə edəndə `\` ikiqat olmalıdır, çünki string içində `\` escape üçün istifadə olunur.
 
 ```javascript
-// Literal sintaksis:
-let literalPattern = /\\/; // Tək bir \ axtarır
+// 1️⃣ Literal sintaksis
+let literalPattern = /\\/; // tək bir \ axtarır
 
-// Konstruktor sintaksisi:
-// Birinci \ sətir (string) üçündür, ikinci \ isə requlyar ifadə üçün.
-let constructorPattern = new RegExp("\\\\"); // Bu da eynilə tək bir \ axtarır.
+// 2️⃣ Konstruktor sintaksisi
+// Birinci \ string üçün, ikinci \ regex üçün
+let constructorPattern = new RegExp("\\\\"); // eynilə tək bir \ axtarır
 
-console.log(literalPattern.test("C:\\")); // ✅ true
-console.log(constructorPattern.test("C:\\")); // ✅ true
+console.log(literalPattern.test("C:\\"));      // true ✅
+console.log(constructorPattern.test("C:\\"));  // true ✅
 ```
 
----
+**İzah:**
+
+* Literal: `/\\/` → regexdə `\`
+* Konstruktor: `"\\\\"` → stringdə `\\` → regexdə `\`
+
+Bu qayda, xüsusilə fayl yolları, escape simvolları və dinamik regex-lərdə vacibdir.
 
 ---
-
-## BURA KIMI BAXMISAN
 
 ### Simvol Qrupları (Character Classes)
 
-Tutaq ki, mətndə "a", "b" və ya "c" hərflərindən _hər hansı birini_ tapmaq istəyirik. Bunu `/a|b|c/` kimi yaza bilərik, amma daha qısa və oxunaqlı bir yolu var: simvol qrupları.
+Tutaq ki, mətndə "a", "b" və ya "c" hərflərindən _hər hansı birini_ tapmaq istəyirik. Bunu `/a|b|c/` kimi yaza bilərik, amma daha qısa və oxunaqlı bir yolu var: **simvol qrupları**.
 
 Simvol qrupu, kvadrat mötərizə `[...]` içərisinə yazılan simvollar toplusudur və həmin topludan **yalnız bir simvolun** uyğun gəlməsini yoxlayır.
+
+---
 
 #### **1. Əsas Simvol Qrupları: `[...]`**
 
@@ -1012,6 +1011,8 @@ pattern.test("abc"); // ✅ true (hər üçü var, ilk "a"-ya görə true qaytar
 - `/[0-9]/` — Bütün rəqəmlərdən hər hansı biri.
 - `/[a-zA-Z0-9_]/` — İstənilən hərf, rəqəm və ya alt xətt.
 
+---
+
 #### **2. İnkar Edilmiş Qruplar: `[^...]`**
 
 Əgər mötərizənin içində ilk simvol kimi `^` (caret) işarəsi qoysanız, qrup tam əksinə işləyəcək: mötərizə içindəki simvollar **xaricində** istənilən bir simvolu axtaracaq.
@@ -1026,7 +1027,9 @@ pattern.test("12a"); // ✅ true ("a" simvolu rəqəm deyil)
 pattern.test("salam"); // ✅ true (bütün simvollar rəqəm deyil)
 ```
 
-**Diqqət:** Mötərizə daxilindəki `^` ilə requlyar ifadənin əvvəlindəki `^` (sətrin başlanğıcı) fərqli mənalar daşıyır.
+**Diqqət:** Mötərizə daxilindəki `^` ilə requlyar ifadənin əvvəlindəki `^` (stringin başlanğıcı) fərqli mənalar daşıyır.
+
+---
 
 #### **3. Hazır Qısayollar (Shorthands)**
 
@@ -1044,7 +1047,9 @@ Bəzi simvol qrupları o qədər çox istifadə olunur ki, onlar üçün xüsusi
 
 Bu qısayolları birbaşa və ya kvadrat mötərizələrin daxilində istifadə edə bilərsiniz. Məsələn, `/[\s\d]/` ifadəsi "istənilən boşluq simvolu və ya istənilən rəqəm" deməkdir.
 
-**Praktik Nümunə:** Azərbaycan mobil nömrə formatının yoxlanılması.
+---
+
+**Azərbaycan mobil nömrə formatının yoxlanılması**
 `+994 (50) 123-45-67`
 
 ```javascript
@@ -1056,14 +1061,9 @@ numberPattern.test("+994 55 321-09-87"); // ❌ false (mötərizələr yoxdur)
 numberPattern.test("994 (55) 321-09-87"); // ❌ false (+ işarəsi yoxdur)
 ```
 
-#### **4. İstisnalar və Xüsusi Hallar**
-
-- **Defis (`-`) simvolu:** Əgər qrup daxilində defis simvolunun özünü axtarmaq istəyirsinizsə, onu mütləq **ən sonda** yazın. Məsələn, `/\[a-z-]/` ifadəsi kiçik hərfləri və ya defis simvolunu axtarır.
-- **Backspace (`\b`):** `\b` qısayolu normalda "söz sərhədi" (word boundary) deməkdir. Lakin mötərizə içində `[\b]` şəklində yazılarsa, o, hərfi mənada "backspace" simvolunu ifadə edən yeganə yoldur.
-
 ---
 
-### **(Bonus) Unicode Simvol Qrupları: `\p{...}`**
+### ** Unicode Simvol Qrupları: `\p{...}`**
 
 Standart qısayollar (`\w`, `\d`) əsasən ASCII (latın əlifbası və ingilis dilinə aid) simvolları tanıyır. Məsələn, `\w` Azərbaycan əlifbasındakı `ə`, `ş`, `ü` kimi hərfləri tanımır.
 
@@ -1090,7 +1090,7 @@ pattern.test("123"); // ❌ false
 
 ### **Fəsil 11.3.4: Təkrarlayıcılar (Repetition)**
 
-Əvvəlki dərslərdə öyrəndiyimiz sintaksislə iki rəqəmli ədədi `/\d\d/` və ya dörd rəqəmli ədədi `/\d\d\d\d/` kimi ifadə edə bilərdik. Bəs istənilən sayda rəqəmdən ibarət bir ədədi və ya üç hərfdən sonra gələn, ancaq mütləq olmayan (könüllü) bir rəqəmi necə təsvir edə bilərik?
+Əvvəlki dərslərdə öyrəndiyimiz sintaksislə iki rəqəmli ədədi `/\d\d/` və ya dörd rəqəmli ədədi `/\d\d\d\d/` kimi ifadə edə bilərdik. Bəs istənilən sayda rəqəmdən ibarət bir ədədi və ya üç hərfdən sonra gələn, ancaq mütləq olmayan bir rəqəmi necə təsvir edə bilərik?
 
 Bu cür daha mürəkkəb nümunələri qurmaq üçün requlyar ifadələrin **təkrarlanma** sintaksisindən istifadə edirik. Bu operatorlar, onlardan əvvəl gələn simvolun, qrupun və ya sinfin neçə dəfə təkrarlana biləcəyini göstərir.
 
@@ -1109,13 +1109,15 @@ Aşağıdakı cədvəldə təkrarlama operatorları və onların mənaları veri
 | **`*`**     | Əvvəlki elementdən **sıfır və ya daha çox dəfə** olmalıdır. Ekvivalenti: `{0,}`. |
 | **`?`**     | Əvvəlki element **könüllüdür** (sıfır və ya bir dəfə). Ekvivalenti: `{0,1}`.     |
 
+---
+
 #### **Praktik Nümunələr**
 
 **1. `{n}` — Dəqiq sayla təkrarlanma**
 4 rəqəmli PİN kod axtarışı:
 
 ```javascript
-let pattern = /^\d{4}$/; // Sətrin başdan sona yalnız 4 rəqəmdən ibarət olmasını yoxlayır
+let pattern = /^\d{4}$/; // Stringin başdan sona yalnız 4 rəqəmdən ibarət olmasını yoxlayır
 
 pattern.test("1234"); // ✅ true
 pattern.test("123"); // ❌ false (3 rəqəmdir)
@@ -1135,7 +1137,7 @@ pattern.test("user_long_name"); // ❌ false (14 simvol)
 ```
 
 **3. `+` — Bir və ya daha çox**
-"Java" sözünün əvvəlində və sonunda ən az bir boşluq olan sətirləri tapmaq:
+"Java" sözünün əvvəlində və sonunda ən az bir boşluq olan stringləri tapmaq:
 
 ```javascript
 let pattern = /\s+java\s+/;
@@ -1173,10 +1175,10 @@ pattern.test("bu (mesaj) gizlidir"); // `(` simvoluna qədər olan "bu " hissəs
 **1. Təkrarlayıcı Nəyə Tətbiq Olunur?**
 Təkrarlayıcılar yalnız onlardan **dərhal əvvəl gələn tək bir elementə** (simvol, simvol qrupu və ya qısayol) təsir edir.
 
-- `/\d{3}/` — Üç ədəd rəqəm deməkdir (`\d\d\d`).
-- `/ab{3}/` — "a" hərfi və ondan sonra gələn üç ədəd "b" hərfi deməkdir (`abbb`). Bu ifadə "ababab" demək DEYİL.
+- `/\d{3}/` — Üç ədəd rəqəm deməkdir (`\d\d\d`)
+- `/ab{3}/` — "a" hərfi və ondan sonra gələn üç ədəd "b" hərfi deməkdir (`abbb`)
 
-Əgər bir neçə simvoldan ibarət bir qrupu təkrarlamaq istəyirsinizsə, onları mötərizə `()` içinə almalısınız. Bu, növbəti dərsin mövzusudur. Məsələn, `/(ab){3}/` ifadəsi "ababab" deməkdir.
+Əgər bir neçə simvoldan ibarət bir qrupu təkrarlamaq istəyirsinizsə, onları mötərizə `()` içinə almalısınız. Məsələn, `/(ab){3}/` ifadəsi "ababab" deməkdir.
 
 **2. `*` və `?` Təhlükəsi: Heç Nəyə Uyğunlaşma**
 `*` (sıfır və ya daha çox) və `?` (sıfır və ya bir) operatorları **heç nəyə** də uyğun gələ bilər. Bu, bəzən gözlənilməz nəticələrə yol aça bilər.
@@ -1187,10 +1189,8 @@ Məsələn, `/a*/` ifadəsini götürək. Bu ifadə "sıfır və ya daha çox 'a
 let pattern = /a*/;
 
 pattern.test("aaaa"); // ✅ true (4 'a' var)
-pattern.test("b"); // ✅ true (Çünki "b" sətrinin əvvəlində SIFIR sayda 'a' var)
+pattern.test("b"); // ✅ true (Çünki "b" stringinin əvvəlində SIFIR sayda 'a' var)
 ```
-
-Bu ikinci nəticə çaşdırıcı görünə bilər. Requlyar ifadə mühərriki sətrin əvvəlinə baxır və soruşur: "Burada sıfır və ya daha çox 'a' varmı?". Cavab "Bəli, burada sıfır 'a' var" olduğu üçün nəticə `true` olur. Buna görə də bu operatorları istifadə edərkən diqqətli olmaq lazımdır.
 
 ---
 
@@ -1207,13 +1207,17 @@ Təkrarlayıcını "tənbəl" etmək çox asandır: sadəcə ondan sonra bir sua
 - `??` (acgöz) → `??` (tənbəl)
 - `{n,m}` (acgöz) → `{n,m}?` (tənbəl)
 
+---
+
 #### **Acgöz və Tənbəl Rejimin Fərqi**
 
-Bu fərqi anlamaq üçün ən yaxşı nümunə HTML teqləri arasındakı mətni tapmaqdır. Tutaq ki, belə bir sətrimiz var:
+Bu fərqi anlamaq üçün ən yaxşı nümunə HTML teqləri arasındakı mətni tapmaqdır. Tutaq ki, belə bir string var:
 
 `let text = "<b>JavaScript</b> və <b>CSS</b>";`
 
 Bizim məqsədimiz `<b>` teqləri arasındakı məzmunu tapmaqdır.
+
+---
 
 **1. Acgöz `.*` ilə Yanaşma (Yanlış Nəticə)**
 
@@ -1224,6 +1228,8 @@ console.log(text.match(greedyPattern)[0]);
 ```
 
 **Niyə belə oldu?** `.*` ifadəsi "istənilən simvoldan sıfır və ya daha çox" deməkdir və acgöz olduğu üçün ilk `<b>`-dən sonra dayana biləcəyi ən son `</b>`-ə qədər hər şeyi (o cümlədən birinci `</b>` və `<b>` teqlərini) ələ keçirdi.
+
+---
 
 **2. Tənbəl `*?` ilə Yanaşma (Düzgün Nəticə)**
 
@@ -1260,7 +1266,7 @@ console.log(filePattern.test("archive.zip")); // ❌ false
 **Diqqət:** `|` soldan sağa işləyir. Soldakı variant uyğun gələn kimi, sağdakı yoxlanılmır.
 
 ```javascript
-// "ab" sətrində "a" tapılan kimi axtarış dayanır.
+// "ab" stringində "a" tapılan kimi axtarış dayanır.
 console.log("ab".match(/a|ab/)); // Nəticə: ["a"]
 ```
 
@@ -1296,8 +1302,6 @@ if (match) {
 ```
 
 **3. Geri İstinadlar (Back-references: `\1`, `\2`):** Bir qrupun yadda saxladığı mətni eyni requlyar ifadənin içində yenidən istifadə etməyə imkan verir. `\1` birinci qrupa, `\2` ikinci qrupa istinad edir.
-
-Ən yaxşı nümunə, açılış və bağlanış dırnaq işarələrinin eyni olmasını təmin etməkdir:
 
 ```javascript
 // Bura diqqət: \1 simvolu, birinci mötərizənin (['"]) yadda saxladığı simvolun
@@ -1356,19 +1360,21 @@ console.log(quotePattern.test(`"səhvdir'`)); // ❌ false
 
 ---
 
-### (SPECIFYING MATCH POSITION) Uyğunluğun Mövqeyini Bildirən Operatorlar
+### (Specifying Match Position) Uyğunluğun Mövqeyini Bildirən Operatorlar
 
-Bəzi operatorlar simvolları yox, onların arasındakı **mövqeləri** yoxlayır. Bunlara "lövbər" (anchor) deyilir, çünki nümunəni sətrin (string) müəyyən bir yerinə "bağlayırlar".
+Bəzi operatorlar simvolları yox, onların arasındakı **mövqeləri** yoxlayır. Bunlara "lövbər" (anchor) deyilir, çünki nümunəni stringin müəyyən bir yerinə "bağlayırlar".
+
+---
 
 #### 1. Lövbərlər (Anchors): `^`, `$`, `\b`, `\B`
 
-- **`^`** — Sətrin (string) **əvvəlini** bildirir.
-- **`$`** — Sətrin (string) **sonunu** bildirir.
+- **`^`** — Stringin **əvvəlini** bildirir.
+- **`$`** — Stringin **sonunu** bildirir.
 - **`\b`** — **Söz sərhədini (word boundary)** bildirir. Söz simvolu (`\w`) ilə qeyri-söz simvolu (`\W`) arasındakı mövqedir.
 - **`\B`** — Söz sərhədi (word boundary) **olmayan** mövqeni bildirir.
 
 ```javascript
-// Yalnız "salam" sözündən ibarət sətrə uyğun gəlir
+// Yalnız "salam" sözündən ibarət stringə uyğun gəlir
 console.log(/^salam$/.test("salam")); // ✅ true
 console.log(/^salam$/.test("çox salam")); // ❌ false
 
@@ -1382,6 +1388,8 @@ const innerPattern = /\Baz\B/;
 console.log(innerPattern.test("bazar")); // ✅ true
 console.log(innerPattern.test("azad")); // ❌ false ('az' sözün başındadır)
 ```
+
+---
 
 #### 2. İrəli Baxış (Lookahead): `(?=...)` və `(?!...)`
 
@@ -1400,6 +1408,8 @@ const javaPattern = /Java(?!Script)/;
 console.log(javaPattern.test("JavaBeans")); // ✅ true
 console.log(javaPattern.test("JavaScript")); // ❌ false
 ```
+
+---
 
 #### 3. Geri Baxış (Lookbehind): `(?<=...)` və `(?<!...)`
 
@@ -1452,17 +1462,17 @@ console.log(/^.$/.test("😊")); // ❌ false ( 'u' fleqi olmadan emoji 2 simvol
 
 ---
 
-### Sətir (String) Metodları ilə Nümunə Axtarışı
+### String Metodları ilə Nümunə Axtarışı
 
-Requlyar ifadələri (Regular Expressions) JavaScript kodunda istifadə etmək üçün `String` obyektinin 4 əsas metodu var.
+Requlyar ifadələri JavaScript kodunda istifadə etmək üçün `String` obyektinin 4 əsas metodu var.
 
 ---
 
 #### 1. `search()` Metodu
 
-Sətrin (string) daxilində requlyar ifadəyə uyğun ilk alt-sətrin başlanğıc indeksini (index) qaytarır. Uyğunluq tapılmazsa, `-1` qaytarır.
+String daxilində requlyar ifadəyə uyğun ilk alt-stringin başlanğıc indeksini (index) qaytarır. Uyğunluq tapılmazsa, `-1` qaytarır.
 
-**Nümunə 1: Sadə axtarış**
+**Sadə axtarış**
 
 ```javascript
 let text = "JavaScript öyrənmək üçün əla dildir.";
@@ -1470,10 +1480,11 @@ let text = "JavaScript öyrənmək üçün əla dildir.";
 // /üçün/ requlyar ifadəsi ilə axtarış
 let index = text.search(/üçün/);
 
-console.log(`'üçün' sözü ${index} indeksindən başlayır.`); // ✅ Nəticə: 'üçün' sözü 19 indeksindən başlayır.
+console.log(`'üçün' sözü ${index} indeksindən başlayır.`); 
+// ✅ Nəticə: 'üçün' sözü 19 indeksindən başlayır.
 ```
 
-**Nümunə 2: Uğursuz axtarış**
+**Uğursuz axtarış**
 
 ```javascript
 let text = "JavaScript öyrənmək üçün əla dildir.";
@@ -1484,13 +1495,13 @@ if (index === -1) {
 }
 ```
 
-**Nümunə 3: Sətir (String) arqumenti ilə axtarış**
-`search()` metodu arqument olaraq sətir (string) də qəbul edə bilir və onu avtomatik requlyar ifadəyə çevirir.
+**String arqumenti ilə axtarış**
+`search()` metodu arqument olaraq string də qəbul edə bilir və onu avtomatik requlyar ifadəyə çevirir.
 
 ```javascript
 let text = "JavaScript öyrənmək üçün əla dildir.";
 
-// 'dildir' sözünü birbaşa sətir kimi axtarmaq
+// 'dildir' sözünü birbaşa string kimi axtarmaq
 let index = text.search("dildir");
 
 console.log(index); // ✅ Nəticə: 33
@@ -1500,7 +1511,7 @@ console.log(index); // ✅ Nəticə: 33
 
 #### 2. `replace()` Metodu
 
-Sətrin daxilində tapılan nümunəni yeni bir sətirlə əvəz edir.
+Stringin daxilində tapılan nümunəni yeni bir stringlə əvəz edir.
 
 **Nümunə 1: Sadə qlobal (global) əvəzetmə**
 
@@ -1554,7 +1565,7 @@ console.log(reordered); // ✅ Nəticə: "John (Ad), Doe (Soyad)"
 
 #### 3. `match()` Metodu
 
-Sətrin daxilindəki uyğunluqları bir massiv (array) şəklində qaytarır.
+String daxilindəki uyğunluqları bir massiv (array) şəklində qaytarır.
 
 **Nümunə 1: `g` fleqi ilə bütün uyğunluqları tapmaq**
 Mətndəki bütün hashtag-ləri tapaq.
@@ -1622,10 +1633,10 @@ for (const match of matches) {
 
 #### 5. `split()` Metodu
 
-Sətri (string) verilmiş ayırıcıya (separator) görə bölərək alt-sətirlərdən ibarət bir massiv (array) yaradır.
+Stringi verilmiş ayırıcıya görə bölərək alt-stringlərdən ibarət bir massiv (array) yaradır.
 
 **Nümunə 1: Kompleks ayırıcı ilə bölmə**
-Sətri həm vergül, həm nöqtə, həm də nida işarəsinə görə sözlərə ayırmaq.
+Stringi həm vergül, həm nöqtə, həm də nida işarəsinə görə sözlərə ayırmaq.
 
 ```javascript
 let sentence = "Salam, dünya! Necəsən?";
@@ -1660,10 +1671,12 @@ Requlyar ifadələri təkcə literal `/.../` sintaksisi ilə deyil, həm də `ne
 
 **Arqumentlər:**
 
-1.  **Nümunə (pattern):** Requlyar ifadənin gövdəsini təmsil edən bir sətir (string).
-2.  **Fleqlər (flags):** İkinci, könüllü (optional) arqument. Fleqləri təmsil edən sətir (`"g"`, `"i"`, `"gi"` və s.).
+1.  **Nümunə (pattern):** Requlyar ifadənin gövdəsini təmsil edən bir string.
+2.  **Fleqlər (flags):** İkinci, könüllü (optional) arqument. Fleqləri təmsil edən string (`"g"`, `"i"`, `"gi"` və s.).
 
-**Diqqət:** Sətir (string) içində `\` xüsusi məna daşıdığı üçün, requlyar ifadədəki hər bir `\` simvolu üçün ikiqat `\\` yazılmalıdır.
+**Diqqət:**  String içində `\` xüsusi məna daşıdığı üçün, requlyar ifadədəki hər bir `\` simvolu üçün ikiqat `\\` yazılmalıdır.
+
+---
 
 **Nümunə 1: Dinamik axtarış nümunəsi yaratmaq**
 İstifadəçinin daxil etdiyi sözü böyük-kiçik hərf fərqi olmadan bütün mətndə axtaran bir ifadə yaradaq.
@@ -1694,7 +1707,7 @@ searchInText("kod", "Kod yazmaq hər zaman maraqlıdır. Bu kod çox sadədir.")
 Beş rəqəmli poçt kodunu (`\d{5}`) axtaran ifadə yaradaq.
 
 ```javascript
-// \d yazmaq üçün sətir daxilində \\d yazmalıyıq.
+// \d yazmaq üçün string daxilində \\d yazmalıyıq.
 const zipcodePattern = new RegExp("\\d{5}", "g");
 
 console.log("10001 10002 10003".match(zipcodePattern)); // ✅ Nəticə: ["10001", "10002", "10003"]
@@ -1719,7 +1732,7 @@ console.log(caseInsensitivePattern.flags); // ✅ Nəticə: "i" (g fleqi silindi
 
 ##### `test()` Metodu
 
-Ən sadə metoddur. Verilmiş sətrin (string) requlyar ifadəyə uyğun gəlib-gəlmədiyini yoxlayır və `true` və ya `false` qaytarır.
+Ən sadə metoddur. Verilmiş stringi requlyar ifadəyə uyğun gəlib-gəlmədiyini yoxlayır və `true` və ya `false` qaytarır.
 
 ```javascript
 const pattern = /^\d+$/; // Yalnız rəqəmlərdən ibarət olub-olmadığını yoxlayır
@@ -1755,7 +1768,7 @@ while ((match = hexPattern.exec(text)) !== null) {
 
 #### `lastIndex` Xüsusiyyəti (Property) və Onun Yaratdığı Problemlər
 
-`g` və ya `y` fleqləri ilə işləyən `exec()` və `test()` metodları `lastIndex` adlanan bir xüsusiyyətdən (property) asılıdır. Bu xüsusiyyət növbəti axtarışın haradan başlayacağını bildirir və hər uğurlu axtarışdan sonra avtomatik yenilənir. Bu, bəzən gözlənilməz problemlərə yol aça bilər.
+`g` və ya `y` fleqləri ilə işləyən `exec()` və `test()` metodları `lastIndex` adlanan bir xüsusiyyətdən asılıdır. Bu xüsusiyyət növbəti axtarışın haradan başlayacağını bildirir və hər uğurlu axtarışdan sonra avtomatik yenilənir. Bu, bəzən gözlənilməz problemlərə yol aça bilər.
 
 **Problem 1: Sonsuz dövr (Infinite Loop)**
 Əgər `RegExp` literalı `while` dövrünün şərtinin daxilində yazılarsa, hər dövrdə yeni bir obyekt yaranır və `lastIndex` sıfırlanır. Bu da sonsuz dövrə səbəb olur.
@@ -1778,7 +1791,7 @@ while ((match = pattern.exec("ab a")) !== null) {
 ```
 
 **Problem 2: Buraxılmış uyğunluqlar**
-Eyni qlobal (global) requlyar ifadə obyekti birdən çox sətir (string) üzərində istifadə edildikdə, `lastIndex` sıfırlanmadığı üçün bəzi uyğunluqlar tapılmaya bilər.
+Eyni qlobal (global) requlyar ifadə obyekti birdən çox string üzərində istifadə edildikdə, `lastIndex` sıfırlanmadığı üçün bəzi uyğunluqlar tapılmaya bilər.
 
 ```javascript
 const wordList = ["book", "apple", "coffee"];
@@ -1805,7 +1818,7 @@ for (const word of wordList) {
 Hər `RegExp` obyektinin, onun haqqında məlumat verən, yalnız oxuna bilən (read-only) xüsusiyyətləri var:
 
 - **`.source`**: Requlyar ifadənin `/.../` arasındakı mətnini qaytarır.
-- **`.flags`**: Fleqləri bir sətir (string) olaraq qaytarır.
+- **`.flags`**: Fleqləri bir string olaraq qaytarır.
 - **`.global`**, **`.ignoreCase`**, **`.multiline`** və s.: Müvafiq fleqin təyin edilib-edilmədiyini göstərən `true`/`false` dəyərlər.
 
 ```javascript
@@ -1819,7 +1832,7 @@ console.log("Hərfə həssasdırmı? (ignoreCase):", myPattern.ignoreCase); // �
 
 ---
 
-### 11.4 Tarix (Date) və Zaman (Time)
+## 11.4 Tarix (Date) və Zaman (Time)
 
 JavaScript-də tarix və zamanla işləmək üçün `Date` sinifi (class) istifadə olunur. `Date` obyekti `new Date()` konstruktoru (constructor) ilə yaradılır.
 
@@ -1846,7 +1859,7 @@ console.log("Müəyyən edilmiş tarix:", someDay.toLocaleString("az-AZ"));
 // ✅ Nəticə: 13.06.2025, 19:30:00
 ```
 
-**3. Sətir (string) ilə**  
+**3.String ilə**  
 `new Date()` standart formatda olan stringləri də emal edə bilir. Ən çox istifadə olunan format ISO 8601 formatıdır.
 
 ```javascript
@@ -1863,79 +1876,179 @@ console.log(
 
 ### 11.4.1 Zaman Damğası (Timestamp) ⏱
 
-Hər bir `Date` obyekti arxa planda sadəcə bir rəqəm saxlayır: 1 Yanvar 1970-ci il saat 00:00:00-dan (UTC vaxtı ilə) keçən millisaniyələrin sayı. Buna **zaman damğası (timestamp)** deyilir.
+JavaScript-də hər bir `Date` obyekti arxa planda **tək bir ədəd** saxlayır.
+Bu ədəd, **1 Yanvar 1970-ci il, 00:00:00 UTC-dən keçən millisaniyələrin sayı**dır.
 
-- `.getTime()`: Obyektin zaman damğasını (timestamp) qaytarır.
-- `.setTime()`: Obyektin zaman damğasını (timestamp) dəyişir.
-- `Date.now()`: Hal-hazırkı zaman damğasını (timestamp) birbaşa qaytarır.
+Buna **zaman damğası (timestamp)** deyilir.
 
-**Nümunə: Kodun işləmə müddətini ölçmək** 🚀
+
+#### Əsas metodlar:
+
+* **`.getTime()`** → Mövcud `Date` obyektinin zaman damğasını qaytarır.
+* **`.setTime(ms)`** → `Date` obyektinin vaxtını verilən millisaniyə ilə dəyişir.
+* **`Date.now()`** → Hazırkı zaman damğasını qaytarır (yəni indiki an millisaniyə ilə).
+
+---
+
+#### **Nümunə 1: İndiki vaxtın zaman damğası**
 
 ```javascript
-console.log("Əməliyyat başlayır...");
+let now = new Date();
 
-// Əməliyyat başlayır...
-const startTime = Date.now();
-
-// Bir qədər vaxt aparan bir əməliyyat simulyasiyası
-for (let i = 0; i < 100000000; i++) {
-  /* Boş dövr */
-}
-
-const endTime = Date.now();
-const duration = endTime - startTime;
-
-console.log(`✅ Əməliyyat ${duration} ms (millisaniyə) çəkdi.`);
-// ✅ Əməliyyat 51 ms (millisaniyə) çəkdi.
+console.log(now.getTime()); // məsələn: 1737012345678
+console.log(Date.now());    // eyni nəticəyə çox yaxın ədədi qaytarır
 ```
 
 ---
 
-### 11.4.2 Tarix üzərində Hesablamalar (Date Arithmetic) 셈️
+#### **Nümunə 2: Zamanı dəyişmək**
 
-`Date` obyektləri ilə riyazi əməliyyatlar aparmaq mümkündür.
+```javascript
+let date = new Date();
+console.log(date); // Cari vaxt
 
-**Tarix Hissələrini Almaq və Dəyişmək (Getters & Setters)**  
-Hesablama aparmaq üçün əvvəlcə tarixin hissələrini almalı (`get`) və ya dəyişməliyik (`set`).
+// 0 millisaniyə qoyaq (Epoch vaxtı)
+date.setTime(0);
+console.log(date); // Thu Jan 01 1970 03:00:00 GMT+0300 (UTC+3)
+```
 
-- `getFullYear()` / `setFullYear()`
-- `getMonth()` / `setMonth()`
-- `getDate()` / `setDate()` (❗️ Ayın gününü verir)
-- `getDay()` (❗️ Həftənin gününü verir: 0 = Bazar, 1 = Bazar ertəsi...)
+---
 
-**Nümunə 1: İki tarix arasındakı fərqi tapmaq**
+#### **Nümunə 3: Kodun işləmə müddətini ölçmək** 
+
+```javascript
+console.log("Əməliyyat başlayır...");
+
+const startTime = Date.now(); // başlanğıc
+
+// Bir qədər vaxt aparan əməliyyat simulyasiyası
+for (let i = 0; i < 100000000; i++) {
+  /* boş dövr */
+}
+
+const endTime = Date.now();     // bitiş
+const duration = endTime - startTime;
+
+console.log(`✅ Əməliyyat ${duration} ms çəkdi.`);
+// Məs: "✅ Əməliyyat 47 ms çəkdi."
+```
+
+---
+
+
+### 11.4.2 Tarix üzərində Hesablamalar (Date Arithmetic)
+
+JavaScript-də `Date` obyektləri ilə **hesablama aparmaq mümkündür**: tarixlər arasındakı fərqi hesablamaq, tarixə gün/ay/il əlavə etmək, və ya tarixi dəyişmək olar.
+
+Bunun üçün əsasən **getter** və **setter** metodlarından istifadə olunur.
+
+---
+
+#### 📌 Tarixin hissələrini almaq (`get` metodları)
+
+* `getFullYear()` → ili qaytarır.
+* `getMonth()` → ayı qaytarır (❗️ 0–11 aralığında; yanvar = 0, dekabr = 11).
+* `getDate()` → ayın gününü qaytarır (1–31).
+* `getDay()` → həftənin gününü qaytarır (0 = Bazar, 1 = Bazar ertəsi … 6 = Şənbə).
+* `getHours()`, `getMinutes()`, `getSeconds()` → saat dəqiqliyində vaxtı qaytarır.
+
+---
+
+#### 📌 Tarixin hissələrini dəyişmək (`set` metodları)
+
+* `setFullYear(year)` → ili dəyişir.
+* `setMonth(month)` → ayı dəyişir (0–11).
+* `setDate(day)` → ayın gününü dəyişir.
+* `setHours(h)`, `setMinutes(m)` … → vaxtı dəyişir.
+
+---
+
+#### Nümunə 1: İki tarix arasındakı fərq
 
 ```javascript
 const newYear = new Date("2026-01-01");
 const today = new Date("2025-06-13");
 
 const diffMilliseconds = newYear - today;
-// Fərqi günə çeviririk (1000ms * 60s * 60m * 24h)
 
+// 1 gün = 1000ms * 60s * 60m * 24h
 const diffDays = Math.floor(diffMilliseconds / (1000 * 60 * 60 * 24));
 
 console.log(`💡 Yeni ilə ${diffDays} gün qalıb.`);
-// ✅ Nəticə: Yeni ilə 202 gün qalıb.
+// ✅ Yeni ilə 202 gün qalıb.
 ```
 
-**Nümunə 2: Tarixə vaxt əlavə etmək (overflow nümunəsi)**
-`set` metodları "daşma" (overflow) problemini avtomatik həll edir. Məsələn, aya 12-dən böyük dəyər verdikdə, il avtomatik artır.
-
-```javascript
-const d = new Date(2025, 10, 20); // 20 Noyabr 2025
-console.log("Başlanğıc tarixi:", d.toLocaleDateString("az-AZ"));
-
-// 20 Noyabrın üstünə 2 ay gəlirik. Nəticədə 20 Yanvar 2026 alınır.
-d.setMonth(d.getMonth() + 2);
-
-console.log("Nəticə:", d.toLocaleDateString("az-AZ")); // ✅ Nəticə: "20.01.2026"
-```
+👉 Burada `Date` obyektləri bir-birindən çıxıldıqda **millisaniyə fərqi** qaytarır. Sonra bunu günlərə çevirdik.
 
 ---
 
+#### Nümunə 2: Tarixə vaxt əlavə etmək (overflow davranışı)
+
+JavaScript-də `set` metodları **daşmanı (overflow)** avtomatik həll edir.
+Məsələn, ay 12-dən çox olsa, il artır; gün 31-dən çox olsa, ay artır.
+
+```javascript
+const d = new Date(2025, 10, 20); // 20 Noyabr 2025
+console.log("Başlanğıc:", d.toLocaleDateString("az-AZ"));
+
+// 2 ay əlavə edirik
+d.setMonth(d.getMonth() + 2);
+
+console.log("Nəticə:", d.toLocaleDateString("az-AZ"));
+// ✅ "20.01.2026"
+```
+
+👉 Burada noyabr + 2 ay = yanvar 2026 oldu.
+
+---
+
+#### Nümunə 3: Gün əlavə etmək
+
+```javascript
+let d = new Date(2025, 0, 31); // 31 Yanvar 2025
+console.log("Başlanğıc:", d.toLocaleDateString("az-AZ"));
+
+// 1 gün əlavə
+d.setDate(d.getDate() + 1);
+
+console.log("Nəticə:", d.toLocaleDateString("az-AZ"));
+// ✅ "01.02.2025"
+```
+
+👉 Görürsən, fevral ayına keçid **öz-özünə idarə olundu**, heç səhv olmadı.
+
+---
+
+#### Nümunə 4: Tarixlər arasında fərqi illərlə tapmaq
+
+```javascript
+let birth = new Date("2000-05-15");
+let now = new Date();
+
+let age = now.getFullYear() - birth.getFullYear();
+
+// Əgər doğum günü bu il hələ çatmayıbsa, yaşı 1 azaldırıq
+if (
+  now.getMonth() < birth.getMonth() ||
+  (now.getMonth() === birth.getMonth() && now.getDate() < birth.getDate())
+) {
+  age--;
+}
+
+console.log(`👶 İstifadəçinin yaşı: ${age}`);
+```
+
+👉 Bu üsulla **doğum tarixindən yaş hesablamaq** mümkündür.
+
+---
+
+
 ### 11.4.3 Tarixin Formatlanması və Emalı (Formatting and Parsing) 📜
 
-`Date` obyektini istifadəçiyə göstərmək üçün onu sətirə (string) çevirmək lazımdır.
+`Date` obyektini istifadəçiyə göstərmək üçün onu **string**-ə çevirmək lazımdır. Bunun üçün müxtəlif metodlar mövcuddur.
+Eyni zamanda, string şəklində verilmiş tarixi **yenidən `Date` obyektinə çevirmək (parse etmək)** mümkündür.
+
+---
 
 **Nümunə: Müxtəlif formatlama metodları**
 
@@ -1943,36 +2056,71 @@ console.log("Nəticə:", d.toLocaleDateString("az-AZ")); // ✅ Nəticə: "20.01
 const d = new Date("2025-10-26T20:30:00");
 
 console.log("toString():", d.toString());
+// "Sun Oct 26 2025 20:30:00 GMT+0400 (Azerbaijan Standard Time)"
+
 console.log("toUTCString():", d.toUTCString());
-console.log("toISOString():", d.toISOString()); // ❗️ API-lar üçün standart format
-console.log("toLocaleDateString('az-AZ'):", d.toLocaleDateString("az-AZ")); // ✅ "26.10.2025"
-console.log("toLocaleTimeString('az-AZ'):", d.toLocaleTimeString("az-AZ")); // ✅ "20:30:00"
+// "Sun, 26 Oct 2025 16:30:00 GMT"
+
+console.log("toISOString():", d.toISOString());
+// "2025-10-26T16:30:00.000Z" ❗️ API-lar üçün standart format
+
+console.log("toLocaleDateString('az-AZ'):", d.toLocaleDateString("az-AZ"));
+// "26.10.2025"
+
+console.log("toLocaleTimeString('az-AZ'):", d.toLocaleTimeString("az-AZ"));
+// "20:30:00"
+
 console.log("toDateString():", d.toDateString());
+// "Sun Oct 26 2025"
 ```
 
-**`Date.parse()`:** Sətir (string) formatında olan tarixi analiz edərək onun zaman damğasını (timestamp) qaytarır. Bu, formatlamanın əksidir.
+---
+
+**Nümunə: String-dən tarixə çevirmə (`Date.parse()`)**
 
 ```javascript
 const dateString = "2025-01-01T00:00:00Z";
 const timestamp = Date.parse(dateString);
 
-console.log("Alınan timestamp:", timestamp); // ✅ Nəticə: 1735689600000
+console.log("Alınan timestamp:", timestamp);
+// 1735689600000 (millisaniyə ilə)
 
-// Həmin timestamp-dən yeni Date obyekti yaratmaq
 const newDate = new Date(timestamp);
-console.log(newDate.toUTCString()); // ✅ Nəticə: "Wed, 01 Jan 2025 00:00:00 GMT"
+console.log(newDate.toUTCString());
+// "Wed, 01 Jan 2025 00:00:00 GMT"
 ```
 
 ---
 
-### 11.5 Xəta Sinifləri (Error Classes)
+**Əlavə nümunə: İstifadəçi stringini parse etmək**
+
+```javascript
+const userInput = "15/09/2025 14:45"; // DD/MM/YYYY HH:MM
+// Bu formatı parse etmək üçün ayrıca qayda yazmaq lazım olur
+const [datePart, timePart] = userInput.split(" ");
+const [day, month, year] = datePart.split("/");
+const [hour, minute] = timePart.split(":");
+
+const customDate = new Date(year, month - 1, day, hour, minute);
+
+console.log(customDate.toString());
+// "Mon Sep 15 2025 14:45:00 GMT+0400 (Azerbaijan Standard Time)"
+```
+
+---
+
+Beləliklə:
+
+* **Formatting** – `Date` → `string` (istifadəçiyə göstərmək üçün).
+* **Parsing** – `string` → `Date` (istifadəçi daxil etdiyi tarixi oxumaq üçün).
+
+--- 
+
+## 11.5 Xəta Sinifləri (Error Classes)
 
 JavaScript-də `throw` və `catch` istənilən dəyəri xəta kimi istifadə edə bilsə də, ən yaxşı təcrübə (best practice) `Error` sinifindən (class) və ya onun alt-siniflərindən (subclasses) istifadə etməkdir.
 
-**Niyə `Error` obyekti istifadə etməliyik?** 🤔
-Çünki `Error` obyekti yaradıldıqda, o, kodun hansı ardıcıllıqla çağırıldığını göstərən **yaddaş stekini (stack trace)** özündə saxlayır. Bu, xətanın mənbəyini tapmaq (debug) üçün çox vacibdir.
-
-`Error` obyektinin 3 əsas xüsusiyyəti (property) var:
+`Error` obyektinin 3 əsas xüsusiyyəti  var:
 
 - **`.name`**: Xətanın növü (məsələn, "Error", "TypeError").
 - **`.message`**: Konstruktora (constructor) ötürülən xəta mesajı.
@@ -1999,54 +2147,146 @@ try {
   console.log("-------------------");
   console.log("Stek izi (stack trace):", error.stack);
 }
+
+// Output:
+/*
+❗️ Bir xəta baş verdi!
+Xətanın adı (name):Error
+Xətanın mesajı (message):
+İstifadəçi 18 yaşından kiçikdir və ya yaşı rəqəm deyil.
+
+-------------------
+
+Stek izi (stack trace):
+
+Error: İstifadəçi 18 yaşından kiçikdir və ya yaşı rəqəm deyil. at checkAge (<anonymous>:10:11) at <anonymous>:16:17 at mn (<anonymous>:16:5455) at Object.playcodeUpdateWindow (<anonymous>:25:438) at <anonymous>:25:1688 at <anonymous>:12:3313 at Array.forEach (<anonymous>) at e._handleSignal (<anonymous>:12:3286) at e.dispatch (<anonymous>:12:1650) at t (<anonymous>:15:1493)
+*/
 ```
 
-**JavaScript-in Standart Xəta Növləri**
-JavaScript-in özünün də standart xətalar üçün alt-sinifləri var:
+----
+##### JavaScript-in Standart Xəta Növləri
 
-- **`TypeError`**: Dəyər üzərində səhv tipdə əməliyyat aparıldıqda. Məsələn, `(10).toUpperCase()`.
-- **`ReferenceError`**: Mövcud olmayan bir dəyişənə müraciət edildikdə. Məsələn, `console.log(x)`.
-- **`SyntaxError`**: Kodun sintaksisi səhv olduqda. Məsələn, `let x = ;`.
-- `RangeError`, `URIError`, `EvalError`...
+JavaScript proqramlaşdırma dilində bəzi **hazır (built-in)** xəta sinifləri mövcuddur. Bu siniflər `Error` sinifindən törəyir və proqramda müəyyən növ səhvlər baş verdikdə avtomatik yaradılır.
 
+### 1. `TypeError` – Tip xətası
+
+Dəyər üzərində onun tipinə uyğun olmayan bir əməliyyat aparıldıqda baş verir.
+
+**Nümunə:**
+
+```js
+(10).toUpperCase(); 
+// TypeError: (10).toUpperCase is not a function
+```
+
+`toUpperCase()` metodunu yalnız `string` tiplər üçün istifadə etmək olar.
+
+---
+
+### 2. `ReferenceError` – İstinad xətası
+
+Təyin olunmamış bir dəyişənə müraciət edildikdə baş verir.
+
+**Nümunə:**
+
+```js
+console.log(x); 
+// ReferenceError: x is not defined
+```
+
+---
+
+### 3. `SyntaxError` – Sintaksis xətası
+
+JavaScript kodunun düzgün sintaksisə uyğun yazılmadığı hallarda yaranır.
+
+**Nümunə:**
+
+```js
+let x = ;
+// SyntaxError: Unexpected token ';'
+```
+
+---
+
+### 4. `RangeError` – Aralıq xətası
+
+Bir funksiyaya və ya əməliyyata icazə verilən aralıqdan kənar dəyər verildikdə yaranır.
+
+**Nümunə:**
+
+```js
+let arr = new Array(-5);
+// RangeError: Invalid array length
+```
+
+---
+
+### 5. `URIError` – URI kodlaşdırma xətası
+
+`decodeURI` və `encodeURI` funksiyalarında yanlış simvollar istifadə olunduqda baş verir.
+
+**Nümunə:**
+
+```js
+decodeURI('%');
+// URIError: URI malformed
+```
+---
+
+Bu standart xətalar JavaScript tərəfindən avtomatik yaradılır. Əgər proqramın məntiqi tələb edirsə, biz öz **xüsusi (fərdi) xəta siniflərimizi** də yarada bilərik.
+
+----
 **Fərdi Xəta Sinifləri Yaratmaq (Custom Error Classes)**
-Bəzən proqramın məntiqinə uyğun xüsusi xəta sinifləri yaratmaq daha faydalı olur. Məsələn, şəbəkə (network) sorğuları üçün `HTTPError` yaradaq.
+Bəzən proqramın məntiqinə uyğun xüsusi xəta sinifləri yaratmaq daha faydalı olur. Məsələn, istifadəçi sistemi qeyri-qanuni şəkildə istifadə edərsə, biz `UnauthorizedError` adında bir xəta yarada bilərik. Bu, istənilən `Error` deyil, **giriş icazəsi ilə bağlı konkret xəta** olduğunu açıq şəkildə göstərir.
 
-**Nümunə: `HTTPError` sinifi**
+**Nümunə: `UnauthorizedError` sinifi**
 
 ```javascript
-// Error sinifini genişləndirərək öz xəta sinifimizi yaradırıq
-class HTTPError extends Error {
-  constructor(status, statusText, url) {
-    // `super()` ilə ana Error sinifinin konstruktoruna mesaj göndəririk
-    super(`${status} ${statusText}: ${url}`);
-
-    // Öz xüsusiyyətlərimizi əlavə edirik
-    this.name = "HTTPError";
-    this.status = status;
-    this.statusText = statusText;
-    this.url = url;
+// Öz fərdi xəta sinifimizi yaradırıq
+class UnauthorizedError extends Error {
+  constructor(username) {
+    super(`İstifadəçi icazəsiz giriş etməyə çalışdı: ${username}`);
+    this.name = "UnauthorizedError";
+    this.username = username;
+    this.time = new Date().toISOString();
   }
 }
 
-function fetchSomeData(url) {
-  // Tutaq ki, sorğu uğursuz oldu və 404 statusu qayıtdı
-  throw new HTTPError(404, "Not Found", url);
+function login(username, password) {
+  const validUsers = {
+    admin: "1234",
+    user: "abcd",
+  };
+
+  if (!(username in validUsers) || validUsers[username] !== password) {
+    throw new UnauthorizedError(username);
+  }
+
+  return `Xoş gəlmisiniz, ${username}!`;
 }
 
 try {
-  fetchSomeData("http://example.com/non-existent-page");
+  const message = login("hacker", "wrongpass");
+  console.log(message);
 } catch (error) {
-  console.error("Xəta baş verdi:", error.message);
+  console.error("🚨 Xəta baş verdi:", error.message);
 
-  // Xətanın bizim yaratdığımız HTTPError olub-olmadığını yoxlayırıq
-  if (error instanceof HTTPError) {
-    console.error(`HTTP Status: ${error.status}`);
-    console.error(`Sorğu edilən URL: ${error.url}`);
+  if (error instanceof UnauthorizedError) {
+    console.error(`Xəta növü: ${error.name}`);
+    console.error(`İstifadəçi adı: ${error.username}`);
+    console.error(`Vaxt: ${error.time}`);
+  } else {
+    console.error("Naməlum xəta!");
   }
 }
+/* 
+🚨 Xəta baş verdi: İstifadəçi icazəsiz giriş etməyə çalışdı: hacker
+Xəta növü: UnauthorizedError
+İstifadəçi adı: hacker
+Vaxt: 2025-08-01T09:47:00.000Z 
+*/
 ```
-
 ---
 
 ### 11.6 JSON Seriləşdirmə (Serialization) və Emal (Parsing) 🔄
@@ -2055,8 +2295,8 @@ try {
 
 JavaScript-də bu proses üçün **JSON (JavaScript Object Notation)** formatı və iki əsas funksiya istifadə olunur:
 
-- `JSON.stringify()`: Obyekti JSON formatlı sətirə (string) çevirir.
-- `JSON.parse()`: JSON formatlı sətri (string) yenidən obyektə çevirir.
+- `JSON.stringify()`: Obyekti JSON formatlı string-ə çevirir.
+- `JSON.parse()`: JSON formatlı string-i yenidən obyektə çevirir.
 
 JSON əksər primitiv tipləri (string, number, boolean, null), massivləri (arrays) və obyektləri (objects) dəstəkləyir, ancaq `Date`, `Map`, `Set`, `RegExp` kimi mürəkkəb tipləri birbaşa dəstəkləmir.
 
@@ -2071,12 +2311,12 @@ const user = {
   profile: null,
 };
 
-// 1. Obyekti JSON sətirinə çeviririk
+// 1. Obyekti JSON stringinə çeviririk
 const jsonString = JSON.stringify(user);
 console.log("Normal JSON:", jsonString);
-// ✅ Nəticə: {"id":101,"username":"johndoe","isAdmin":false,"roles":["editor","viewer"],"profile":null}
+// {"id":101,"username":"johndoe","isAdmin":false,"roles":["editor","viewer"],"profile":null}
 
-// 2. İnsanların oxuması üçün formatlı (pretty-print) JSON yaradırıq
+// 2. İnsanların oxuması üçün formatlı JSON yaradırıq
 // 3-cü arqument boşluqların sayını bildirir
 const prettyJsonString = JSON.stringify(user, null, 2);
 console.log("Formatlı JSON:\n", prettyJsonString);
@@ -2093,70 +2333,99 @@ console.log("Formatlı JSON:\n", prettyJsonString);
 }
 */
 
-// 3. Sətri yenidən obyektə çeviririk
+// 3. Stringi yenidən obyektə çeviririk
 const userCopy = JSON.parse(jsonString);
 console.log("Kopyalanmış obyekt:", userCopy);
 ```
 
 ---
 
-### 11.6.1 Fərdi Dəyişikliklər (JSON Customizations) 🛠️
 
-`JSON.stringify` və `JSON.parse` metodlarının davranışını xüsusi ehtiyaclara görə dəyişmək mümkündür.
+## 11.6.1 Fərdi Dəyişikliklər (JSON Customizations)
 
-**`toJSON()` Metodu**
-Əgər bir obyektin `.toJSON()` adlı metodu varsa, `JSON.stringify` həmin obyekti deyil, bu metodun qaytardığı dəyəri sətirə çevirəcək. `Date` obyektləri bu metoddan istifadə edərək özlərini ISO formatlı sətirə çevirir.
+JavaScript-də obyektləri JSON formatına çevirən və əksinə çevirən metodlar – `JSON.stringify` və `JSON.parse` – öz davranışlarını dəyişmək üçün **əlavə imkanlar** təqdim edir.
 
-**`JSON.parse()` ilə "Canlandırıcı" (Reviver) Funksiyası**
-`JSON.parse` metodunun ikinci arqumenti **reviver** funksiyasıdır. Bu funksiya emal edilən hər bir `key:value` cütü üçün çağırılır və dəyəri çevirməyə (transform) imkan verir. Bu, `Date` sətirlərini yenidən `Date` obyektinə çevirmək üçün idealdır.
+Bu imkanlardan istifadə edərək:
 
-**Geniş Nümunə: `Date` obyektini seriləşdirib yenidən canlandırmaq**
+* Bəzi dəyərləri gizlədə,
+* Yalnız seçilmiş xüsusiyyətləri saxlaya,
+* Tarixləri `Date` obyektinə geri çevirə bilərik.
 
-```javascript
-const event = {
-  title: "JavaScript Konfransı",
-  date: new Date(), // Hazırkı vaxt
-};
+---
 
-// 1. stringify edirik. `date` xüsusiyyəti toJSON() metodu sayəsində ISO sətirinə çevriləcək.
-const eventString = JSON.stringify(event);
-console.log("Seriləşdirilmiş:", eventString);
-// ✅ Nəticə: {"title":"JavaScript Konfransı","date":"2025-06-13T15:28:51.520Z"}
+### 1. `toJSON()` metodu ilə fərdi çevirmə
 
-// 2. parse edərkən reviver funksiyası ilə `date`-i yenidən Date obyektinə çeviririk
-const revivedEvent = JSON.parse(eventString, (key, value) => {
-  // Əgər dəyər tarix formatlı bir sətirdirsə...
-  if (key === "date" && typeof value === "string") {
-    return new Date(value); // ...onu Date obyektinə çevir
-  }
-  return value; // Əks halda dəyəri olduğu kimi saxla
-});
+Əgər bir obyektin daxilində `toJSON()` metodu varsa, `JSON.stringify()` həmin obyektin yerinə bu metodun qaytardığı dəyəri seriləşdirir.
 
-console.log("Canlandırılmış:", revivedEvent);
-console.log("Tarixin tipi:", revivedEvent.date instanceof Date); // ✅ Nəticə: true
+**Məsələn: `Date` obyektləri**
+
+```js
+const d = new Date("2025-06-13T15:28:51.520Z");
+console.log(d.toJSON()); 
+// "2025-06-13T15:28:51.520Z"
 ```
 
-**`JSON.stringify()` ilə "Əvəzləyici" (Replacer) Funksiyası**
-`JSON.stringify`-ın ikinci arqumenti həm də **replacer** funksiyası və ya massiv (array) ola bilər.
+---
 
-- **Massiv (Array):** Yalnız massivdə adları olan xüsusiyyətləri seriləşdirir.
-- **Funksiya (Function):** Hər bir dəyəri seriləşdirmədən əvvəl dəyişməyə imkan verir. `undefined` qaytardıqda, həmin xüsusiyyət nəticəyə daxil edilmir.
+### 2. `JSON.parse()` ilə reviver funksiyası
 
-**Nümunə: `replacer` ilə seriləşdirməni idarə etmək**
+`JSON.parse()` metodunun ikinci arqumenti **reviver** adlanır. Bu funksiya hər bir `key:value` cütü üçün çağırılır və dəyərləri istədiyimiz formada **dəyişməyə və ya canlandırmağa** imkan verir.
 
-```javascript
+#### Nümunə: `Date` obyektini seriləşdirib geri qaytarmaq
+
+```js
+const event = {
+  title: "JavaScript Konfransı",
+  date: new Date()
+};
+
+// JSON formatına çeviririk (stringify)
+const eventString = JSON.stringify(event);
+console.log("Seriləşdirilmiş:", eventString);
+// {"title":"JavaScript Konfransı","date":"2025-06-13T15:28:51.520Z"}
+
+// JSON-u geri obyektə çeviririk (parse) və tarix dəyərini canlandırırıq
+const revived = JSON.parse(eventString, (key, value) => {
+  if (key === "date" && typeof value === "string") {
+    return new Date(value); // String olan tarixi yenidən Date obyektinə çevir
+  }
+  return value;
+});
+
+console.log("Canlandırılmış obyekt:", revived);
+/* Canlandırılmış obyekt: 
+{
+    "title": "JavaScript Konfransı",
+    "date": "2025-08-01T10:04:59.377Z"
+}
+*/
+console.log("Tarix tipi:", revived.date instanceof Date); // true
+```
+
+---
+
+### 3. `JSON.stringify()` ilə replacer funksiyası
+
+`JSON.stringify()` metodunun ikinci arqumenti **replacer** funksiyası və ya **massiv** ola bilər.
+
+#### a) Replacer kimi massiv – yalnız seçilmiş xüsusiyyətlər:
+
+```js
 const product = {
   id: 123,
   name: "Laptop",
   price: 2500,
-  internalCode: "XYZ-987-A", // Bu xüsusiyyəti istifadəçiyə göstərmək istəmirik
+  internalCode: "XYZ-987-A",
   specs: { cpu: "i7", ram: 16 },
 };
 
-// 1. Yalnız müəyyən xüsusiyyətləri seçmək (massiv ilə)
-const publicData = JSON.stringify(product, ["name", "price", "specs"], 2);
-console.log("İctimai data:\n", publicData);
-/* ✅ Nəticə:
+const publicView = JSON.stringify(product, ["name", "price", "specs"], 2);
+console.log("Yalnız seçilən xüsusiyyətlər:\n", publicView);
+```
+
+**Nəticə:**
+
+```json
 {
   "name": "Laptop",
   "price": 2500,
@@ -2165,43 +2434,40 @@ console.log("İctimai data:\n", publicData);
     "ram": 16
   }
 }
-*/
-
-// 2. Müəyyən xüsusiyyətləri gizlətmək (funksiya ilə)
-const privateData = JSON.stringify(
-  product,
-  (key, value) => {
-    if (key === "internalCode") {
-      return undefined; // Bu xüsusiyyəti nəticədən çıxar
-    }
-    return value;
-  },
-  2
-);
-console.log("Daxili kodu gizlədilmiş data:\n", privateData);
 ```
 
 ---
 
-### 11.7 Beynəlxalqlaşdırma API-ı (The Internationalization API) 🌍
+#### b) Replacer kimi funksiya – istədiyin sahəni gizlət:
 
-JavaScript-in beynəlxalqlaşdırma (internationalization) API-ı, proqramları fərqli dillər, regionlar və mədəniyyətlər üçün uyğunlaşdırmağa kömək edən bir alətlər toplusudur. Bu API 3 əsas sinifdən (class) ibarətdir:
+```js
+const filtered = JSON.stringify(product, (key, value) => {
+  if (key === "internalCode") return undefined;
+  return value;
+}, 2);
 
-- **`Intl.NumberFormat`**: Rəqəmləri, valyutaları və faizləri formatlamaq üçün.
-- **`Intl.DateTimeFormat`**: Tarix və zamanı formatlamaq üçün.
-- **`Intl.Collator`**: Sətirləri (strings) yerli əlifba qaydalarına görə müqayisə etmək və sıralamaq (sort) üçün.
-
-Bu fəsildə bu siniflərin hər birini ayrı-ayrılıqda araşdıracağıq.
+console.log("Gizlədilmiş versiya:\n", filtered);
+```
 
 ---
 
-### 11.7.1 Rəqəmlərin Formatlanması (Formatting Numbers) 💵
+## 11.7 Beynəlxalqlaşdırma API-ı (The Internationalization API)
+
+JavaScript-in beynəlxalqlaşdırma (internationalization) API-ı, proqramları fərqli dillər, regionlar və mədəniyyətlər üçün uyğunlaşdırmağa kömək edən bir alətlər toplusudur. Bu API 3 əsas sinifdən  ibarətdir:
+
+- **`Intl.NumberFormat`**: Rəqəmləri, valyutaları və faizləri formatlamaq üçün.
+- **`Intl.DateTimeFormat`**: Tarix və zamanı formatlamaq üçün.
+- **`Intl.Collator`**: Stringləri yerli əlifba qaydalarına görə müqayisə etmək və sıralamaq (sort) üçün.
+
+---
+
+### 11.7.1 Rəqəmlərin Formatlanması (Formatting Numbers)
 
 Fərqli ölkələrdə insanlar rəqəmləri fərqli yazır. Məsələn, bəziləri kəsr hissəni ayırmaq üçün nöqtə (`.`), bəziləri isə vergül (`,`) istifadə edir. Minlik ayırıcıları da fərqli ola bilir. `Intl.NumberFormat` sinifi bu məsələni bizim üçün həll edir.
 
 Onu `new Intl.NumberFormat(locale, options)` konstruktoru ilə yaradırıq:
 
-- **`locale`**: Formatlamanın hansı dil və region üçün ediləcəyini göstərən sətir (string). Məsələn, `"az-AZ"` (Azərbaycan), `"en-US"` (ABŞ İngiliscəsi), `"fr-FR"` (Fransa Fransızcası). Boş buraxılarsa, sistemin lokalını götürür.
+- **`locale`**: Formatlamanın hansı dil və region üçün ediləcəyini göstərən string. Məsələn, `"az-AZ"` (Azərbaycan), `"en-US"` (ABŞ İngiliscəsi), `"fr-FR"` (Fransa Fransızcası). Boş buraxılarsa, sistemin lokalını götürür.
 - **`options`**: Formatlamanın detallarını bildirən bir obyekt (object).
 
 **Nümunə 1: Sadə rəqəm formatlanması (fərqli lokallar ilə)**
@@ -2226,7 +2492,7 @@ console.log("Almaniya formatı:", deFormatter.format(number));
 // ✅ Nəticə: 1.234.567,89
 ```
 
-**Nümunə 2: Valyuta formatlanması (currency)** 💰
+**Nümunə 2: Valyuta formatlanması (currency)**
 Bu, ən çox istifadə olunan xüsusiyyətlərdən biridir. `style: 'currency'` və `currency: 'KOD'` opsiyalarını tələb edir.
 
 ```javascript
@@ -2237,25 +2503,28 @@ const aznFormatter = new Intl.NumberFormat("az-AZ", {
   style: "currency",
   currency: "AZN",
 });
-console.log("Manatla:", aznFormatter.format(amount)); // ✅ Nəticə: 1.550,75 ₼
+console.log("Manatla:", aznFormatter.format(amount)); 
+// ✅ Nəticə: 1.550,75 ₼
 
 // ABŞ Dolları (USD)
 const usdFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 });
-console.log("Dollarla:", usdFormatter.format(amount)); // ✅ Nəticə: $1,550.75
+console.log("Dollarla:", usdFormatter.format(amount)); 
+// ✅ Nəticə: $1,550.75
 
 // Avro (EUR) - valyutanın adını tam göstərmək
 const eurFormatter = new Intl.NumberFormat("de-DE", {
   style: "currency",
   currency: "EUR",
-  currencyDisplay: "name", // 'symbol' (default), 'code', 'name' ola bilər
+  currencyDisplay: "name",
 });
-console.log("Avro ilə:", eurFormatter.format(amount)); // ✅ Nəticə: 1.550,75 Euro
+console.log("Avro ilə:", eurFormatter.format(amount)); 
+// ✅ Nəticə: 1.550,75 Euro
 ```
 
-**Nümunə 3: Faiz formatlanması (percent)**
+**Nümunə 3: Faiz formatlanması**
 
 ```javascript
 const value = 0.895;
@@ -2265,7 +2534,8 @@ const percentFormatter = new Intl.NumberFormat("az-AZ", {
   minimumFractionDigits: 1, // Kəsr hissədə minimum 1 rəqəm göstər
 });
 
-console.log(percentFormatter.format(value)); // ✅ Nəticə: 89,5 %
+console.log(percentFormatter.format(value)); 
+// ✅ Nəticə: 89,5 %
 ```
 
 **Nümunə 4: Rəqəm hissələrinin idarə edilməsi**
@@ -2279,13 +2549,18 @@ const simplePrice = 78.5;
 const priceFormatter = new Intl.NumberFormat("az-AZ", {
   style: "currency",
   currency: "AZN",
-  minimumFractionDigits: 2, // Həmişə minimum 2 kəsr rəqəmi göstər
-  maximumFractionDigits: 2, // Maksimum 2 kəsr rəqəmi göstər (yuvarlaqlaşdırır)
+  minimumFractionDigits: 2, 
+  // Həmişə minimum 2 kəsr rəqəmi göstər
+  maximumFractionDigits: 2, 
+  // Maksimum 2 kəsr rəqəmi göstər (yuvarlaqlaşdırır)
 });
 
-console.log(priceFormatter.format(price)); // ✅ Nəticə: 1.299,00 ₼
-console.log(priceFormatter.format(precisePrice)); // ✅ Nəticə: 49,96 ₼ (yuvarlaqlaşdırdı)
-console.log(priceFormatter.format(simplePrice)); // ✅ Nəticə: 78,50 ₼ (sonuna sıfır əlavə etdi)
+console.log(priceFormatter.format(price)); 
+// ✅ Nəticə: 1.299,00 ₼
+console.log(priceFormatter.format(precisePrice)); 
+// ✅ Nəticə: 49,96 ₼ (yuvarlaqlaşdırdı)
+console.log(priceFormatter.format(simplePrice)); 
+// ✅ Nəticə: 78,50 ₼ (sonuna sıfır əlavə etdi)
 ```
 
 **Nümunə 5: Format metodunu birbaşa istifadə etmək**
@@ -2298,16 +2573,17 @@ const data = [100, 2500, 98765];
 const formatWithGrouping = new Intl.NumberFormat("az-AZ").format;
 
 const formattedData = data.map(formatWithGrouping);
-console.log(formattedData); // ✅ Nəticə: ["100", "2.500", "98.765"]
+console.log(formattedData); 
+// ✅ Nəticə: ["100", "2.500", "98.765"]
 ```
 
 ---
 
-### 11.7.2 Tarix və Zamanın Formatlanması (Formatting Dates and Times) 🗓️
+### 11.7.2 Tarix və Zamanın Formatlanması (Formatting Dates and Times) 
 
-`Date` obyektinin `.toLocaleDateString()` kimi sadə metodları olsa da, onlar formatlama üzərində tam nəzarət imkanı vermir. Məsələn, bəlkə də ilin göstərilməsini istəmir, amma həftənin gününün əlavə olunmasını istəyirsiniz? Ayın adı tam yazılsın, yoxsa qısaldılmış?
+`Date` obyektinin `.toLocaleDateString()` kimi sadə metodları olsa da, onlar formatlama üzərində tam nəzarət imkanı vermir.
 
-Bütün bu detallı nəzarəti **`Intl.DateTimeFormat`** sinifi təmin edir. O da `Intl.NumberFormat` kimi `new Intl.DateTimeFormat(locale, options)` konstruktoru ilə yaradılır və `.format()` metodu ilə istifadə olunur.
+Bütün bu detallı nəzarəti **`Intl.DateTimeFormat`** sinfi təmin edir. O da `Intl.NumberFormat` kimi `new Intl.DateTimeFormat(locale, options)` konstruktoru ilə yaradılır və `.format()` metodu ilə istifadə olunur.
 
 - **`locale`**: Formatlamanın hansı dil və region üçün ediləcəyini göstərir (məsələn, `"az-AZ"`).
 - **`options`**: Tarix və zamanın hansı hissələrinin və necə göstəriləcəyini təyin edən bir obyekt (object).
@@ -2321,13 +2597,14 @@ Bütün bu detallı nəzarəti **`Intl.DateTimeFormat`** sinifi təmin edir. O d
 
 ---
 
-**Geniş Nümunələr**
+**Nümunələr**
 
 **Nümunə 1: Sadə və detallı formatların müqayisəsi**
 Hazırkı vaxtı (`new Date()`) götürərək onu fərqli detallarla formatlayaq.
 
 ```javascript
-const today = new Date(); // Hazırkı vaxt: 13 İyun 2025, 19:33
+const today = new Date(); 
+// Hazırkı vaxt: 13 İyun 2025, 19:33
 
 // 1. Standart, qısa format (Azərbaycan lokalı ilə)
 const simpleFormatter = new Intl.DateTimeFormat("az-AZ");
@@ -2365,92 +2642,18 @@ const az_format = new Intl.DateTimeFormat("az-AZ", options).format(date);
 const en_format = new Intl.DateTimeFormat("en-US", options).format(date);
 const ja_format = new Intl.DateTimeFormat("ja-JP", options).format(date);
 
-console.log("🇦🇿 Azərbaycan:", az_format); // ✅ Nəticə: Cümə, 13 iyun 2025
-console.log("🇺🇸 ABŞ:", en_format); // ✅ Nəticə: Friday, June 13, 2025
-console.log("🇯🇵 Yaponiya:", ja_format); // ✅ Nəticə: 2025年6月13日金曜日
-```
-
-Gördüyünüz kimi, eyni qaydalar hər dilin öz qrammatikasına uyğun tətbiq olunur.
-
-**Nümunə 3: Zaman qurşağının (Timezone) dəyişdirilməsi** ✈️
-Hazırda Bakıda saatın neçə olduğunu bilirik. Görəsən eyni anda Nyu-Yorkda saat neçədir?
-
-```javascript
-const now = new Date(); // Hazırkı vaxt
-
-const timeOptions = {
-  hour: "2-digit",
-  minute: "2-digit",
-  second: "2-digit",
-  timeZoneName: "short",
-};
-
-// Bakı vaxtı
-const bakuTime = new Intl.DateTimeFormat("az-AZ", {
-  ...timeOptions,
-  timeZone: "Asia/Baku",
-});
-console.log("Bakı vaxtı:", bakuTime.format(now));
-// ✅ Nəticə: 19:33:03 GMT+4
-
-// Nyu-York vaxtı
-const newYorkTime = new Intl.DateTimeFormat("en-US", {
-  ...timeOptions,
-  timeZone: "America/New_York",
-});
-console.log("Nyu-York vaxtı:", newYorkTime.format(now));
-// ✅ Nəticə: 11:33:03 AM EDT
-```
-
-**Nümunə 4: Müxtəlif format stilləri**
-Fərqli məqsədlər üçün fərqli formatlar yarada bilərik.
-
-```javascript
-const eventDate = new Date("2025-12-25T20:00:00");
-
-// Stil 1: Yalnız ay və gün
-const monthDay = new Intl.DateTimeFormat("az-AZ", {
-  month: "long",
-  day: "numeric",
-}).format(eventDate);
-console.log("🗓️ Tədbir tarixi:", monthDay); // ✅ Nəticə: 25 dekabr
-
-// Stil 2: Qısa tarix və 12-saatlıq zaman formatı
-const shortWithAmPm = new Intl.DateTimeFormat("en-US", {
-  year: "2-digit",
-  month: "numeric",
-  day: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-  hour12: true,
-}).format(eventDate);
-console.log("⏰ ABŞ formatı:", shortWithAmPm); // ✅ Nəticə: 12/25/25, 8:00 PM
-```
-
-**Nümunə 5 (Bonus): Fərqli təqvimlər**
-Tarixi başqa təqvim sistemlərinə görə də formatlamaq olar.
-
-```javascript
-const d = new Date("2025-06-13");
-const opts = { year: "numeric", era: "short" };
-
-console.log(
-  "İslami Təqvim:",
-  new Intl.DateTimeFormat("ar-SA-u-ca-islamic", opts).format(d)
-);
-// ✅ Nəticə: ١٤٤٦ هـ
-console.log(
-  "İbrani Təqvimi:",
-  new Intl.DateTimeFormat("he-IL-u-ca-hebrew", opts).format(d)
-);
-// ✅ Nəticə: ה'תשפ"ה
+console.log("🇦🇿 Azərbaycan:", az_format); 
+// ✅ Nəticə: Cümə, 13 iyun 2025
+console.log("🇺🇸 ABŞ:", en_format); 
+// ✅ Nəticə: Friday, June 13, 2025
+console.log("🇯🇵 Yaponiya:", ja_format); 
+// ✅ Nəticə: 2025年6月13日金曜日
 ```
 
 ---
+### 11.7.3 Stringlərin Müqayisəsi və Sıralanması (Comparing and Sorting Strings) 
 
-### 11.7.3 Sətirlərin Müqayisəsi və Sıralanması (Comparing and Sorting Strings) 🔤
-
-Sətirləri (strings) əlifba sırasına görə sıralamaq (sort) düşündüyümüzdən daha mürəkkəb bir məsələdir. Məsələn, JavaScript-in standart `.sort()` metodu simvolları onların Unicode kodlarına görə sıralayır. Bu, bir çox dil üçün, o cümlədən Azərbaycan dili üçün düzgün nəticə vermir.
+Stringləri  əlifba sırasına görə sıralamaq (sort) düşündüyümüzdən daha mürəkkəb bir məsələdir. Məsələn, JavaScript-in standart `.sort()` metodu simvolları onların Unicode kodlarına görə sıralayır. Bu, bir çox dil üçün, o cümlədən Azərbaycan dili üçün düzgün nəticə vermir.
 
 **Problem Nədir?** 🤔
 Standart `.sort()` metodu Azərbaycan dilinin xüsusi hərflərini (`ç`, `ş`, `ğ`, `ə`, `ö`, `ü`) və onların əlifbadakı yerini tanımır.
@@ -2461,11 +2664,12 @@ const words = ["şüşə", "səbət", "çanta", "can"];
 // Standart sort metodu səhv nəticə verir
 words.sort();
 console.log("Səhv sıralama:", words);
-// ❌ Nəticə (təxmini): ["can", "səbət", "çanta", "şüşə"] (çünki 's' hərfi 'ç'-dən əvvəl gəlir)
+// ❌ Nəticə : ["can", "səbət", "çanta", "şüşə"] 
+// (çünki 's' hərfi 'ç'-dən əvvəl gəlir)
 ```
 
 **Həll Yolu: `Intl.Collator`** ✅
-`Intl.Collator` sinifi (class) sətirləri müxtəlif dillərin və regionların qaydalarına uyğun olaraq müqayisə etmək və sıralamaq üçün yaradılıb. O, `.compare` adlı bir metod təqdim edir ki, bu metodu birbaşa `.sort()` metoduna ötürmək olar.
+`Intl.Collator` sinifi (class) stringləri müxtəlif dillərin və regionların qaydalarına uyğun olaraq müqayisə etmək və sıralamaq üçün yaradılıb. O, `.compare` adlı bir metod təqdim edir ki, bu metodu birbaşa `.sort()` metoduna ötürmək olar.
 
 `new Intl.Collator(locale, options)` konstruktoru ilə yaradılır:
 
@@ -2480,7 +2684,7 @@ console.log("Səhv sıralama:", words);
   - `"accent"`: Aksentləri nəzərə alır, amma böyük-kiçikliyi yox (`e` != `ə`, amma `ə` == `Ə`).
   - `"case"`: Böyük-kiçikliyi nəzərə alır, amma aksentləri yox (`e` != `E`, amma `e` == `ə`).
   - `"variant"`: Hər şeyi nəzərə alır (tam həssaslıq). Bu, `"sort"` üçün standart dəyərdir.
-- **`numeric`**: `true` olarsa, sətirlərin içindəki rəqəmləri ədədi dəyərlərinə görə sıralayır (məsələn, "Fəsil 2" "Fəsil 10"-dan əvvəl gəlir).
+- **`numeric`**: `true` olarsa, stringlərin içindəki rəqəmləri ədədi dəyərlərinə görə sıralayır (məsələn, "Fəsil 2" "Fəsil 10"-dan əvvəl gəlir).
 - **`ignorePunctuation`**: `true` olarsa, durğu işarələri və boşluqlar nəzərə alınmır.
 
 ---
@@ -2504,14 +2708,14 @@ console.log("Düzgün sıralama:", words);
 ```
 
 **Nümunə 2: Rəqəmlərin nəzərə alınması (Numeric Sorting)** 🔢
-Fayl adları və ya başlıqlar kimi rəqəmli sətirləri sıralamaq üçün `numeric: true` əvəzsizdir.
+Fayl adları və ya başlıqlar kimi rəqəmli stringləri sıralamaq üçün `numeric: true` əvəzsizdir.
 
 ```javascript
 const files = ["report-10.pdf", "report-2.pdf", "report-1.pdf"];
 
-// Standart sort səhv nəticə verəcək: ["report-1.pdf", "report-10.pdf", "report-2.pdf"]
 files.sort();
 console.log("Səhv rəqəm sıralaması:", files);
+// ["report-1.pdf", "report-10.pdf", "report-2.pdf"]
 
 // Düzgün sıralama üçün `numeric: true` istifadə edirik
 const numericCollator = new Intl.Collator(undefined, { numeric: true }).compare;
@@ -2520,60 +2724,27 @@ console.log("Düzgün rəqəm sıralaması:", files);
 // ✅ Nəticə: ["report-1.pdf", "report-2.pdf", "report-10.pdf"]
 ```
 
-**Nümunə 3: Həssaslığın (Sensitivity) idarə edilməsi**
-Böyük-kiçik hərf və ya aksent fərqlərini nəzərə alıb-almamağı seçə bilərik.
-
-```javascript
-const names = ["Emin", "əmin", "emin", "Əmin"];
-
-// `sensitivity: 'base'` - nə böyük-kiçikliyə, nə də aksentə fikir verir
-const baseCollator = new Intl.Collator("az-AZ", { sensitivity: "base" })
-  .compare;
-names.sort(baseCollator);
-console.log("Əsas hərfə görə sıralama:", names);
-// ✅ Nəticə (təxmini): ["Emin", "emin", "əmin", "Əmin"] (eyni baza hərflər qruplaşdırılır)
-
-// `sensitivity: 'variant'` (standart) - hər şeyi nəzərə alır
-const variantCollator = new Intl.Collator("az-AZ", { sensitivity: "variant" })
-  .compare;
-names.sort(variantCollator);
-console.log("Tam həssas sıralama:", names);
-// ✅ Nəticə: ["Emin", "emin", "Əmin", "əmin"] (düzgün əlifba sırası)
-```
-
-**Nümunə 4: "Yumşaq" axtarış (Fuzzy Search)** 🔍
-`usage: 'search'` və `sensitivity: 'base'` ilə aksent və böyük-kiçik hərf fərqi olmadan axtarış etmək olar.
-
-```javascript
-const cityList = ["Gəncə", "Şəki", "Gence", "gəncə"];
-const searchTerm = "gence";
-
-const fuzzyMatcher = new Intl.Collator("az-AZ", {
-  usage: "search",
-  sensitivity: "base",
-}).compare;
-
-// `searchTerm`-ə bərabər olan ilk elementi tapırıq
-const found = cityList.find((city) => fuzzyMatcher(city, searchTerm) === 0);
-
-console.log(`'${searchTerm}' üçün tapılan ilk uyğunluq: ${found}`);
-// ✅ Nəticə: 'gence' üçün tapılan ilk uyğunluq: Gəncə
-```
-
 ---
-
-### 11.8 Konsol (Console) API-ı 💻
+## 11.8 Konsol (Console) API-ı 💻
 
 `console` obyekti, JavaScript kodunu yazarkən və sazlayarkən (debug) ən yaxın dostumuzdur. O, sadəcə `console.log()`-dan ibarət deyil və bir çox faydalı metoda malikdir. Bu API standart olmasa da, bütün müasir brauzerlər və Node.js tərəfindən tam dəstəklənir.
+
+---
 
 **Log Səviyyələri (Log Levels): `log`, `info`, `warn`, `error`**
 Bu metodlar mesajları fərqli vaciblik səviyyələrinə görə konsola çıxarmaq üçündür. Brauzerlər adətən hər birini fərqli ikon və rənglə göstərir.
 
 ```javascript
 console.log("Bu, sadə bir log mesajıdır.");
-console.info("💡 Bu, informativ bir mesajdır."); // Adətən yanında (i) ikonu olur.
-console.warn("⚠️ Bu, bir xəbərdarlıqdır."); // Adətən sarı rəngdə və xəbərdarlıq ikonu ilə.
-console.error("❌ Bu isə bir xətadır."); // Adətən qırmızı rəngdə və xəta ikonu ilə.
+console.info("💡 Bu, informativ bir mesajdır."); 
+console.warn("⚠️ Bu, bir xəbərdarlıqdır."); 
+console.error("❌ Bu isə bir xətadır."); 
+
+// Bu, sadə bir log mesajıdır.
+// 💡 Bu, informativ bir mesajdır.
+// ⚠️ Bu, bir xəbərdarlıqdır.
+// ❌ Bu isə bir xətadır.
+
 ```
 
 **Yoxlama (Assertion): `assert()`**
@@ -2591,7 +2762,7 @@ console.assert(x > y, "X y-dən böyük deyil!", { x_dəyəri: x, y_dəyəri: y 
 // ❌ Nəticə: Assertion failed: X y-dən böyük deyil! {x_dəyəri: 5, y_dəyəri: 10}
 ```
 
-**Cədvəl Formatı (Table Formatting): `table()`** 📊
+**Cədvəl Formatı (Table Formatting): `table()`**
 Massivləri (arrays of objects) və ya obyektləri oxunaqlı cədvəl formatında göstərmək üçün super bir vasitədir.
 
 ```javascript
@@ -2604,9 +2775,32 @@ const users = [
 console.log("İstifadəçilər cədvəl formatında:");
 console.table(users);
 
+/* İstifadəçilər cədvəl formatında:
+┌─────────┬─────────┬──────────────┬─────┐
+│ (index) │   ad    │    soyad     │ yas │
+├─────────┼─────────┼──────────────┼─────┤
+│    0    │ 'Elvin' │  'Əliyev'    │ 28  │
+│    1    │ 'Ayan'  │ 'Məmmədova'  │ 25  │
+│    2    │ 'Tural' │ 'Hüseynov'   │ 32  │
+└─────────┴─────────┴──────────────┴─────┘
+*/
+
 console.log("Yalnız 'ad' və 'yas' sütunları ilə cədvəl:");
 console.table(users, ["ad", "yas"]);
+
+/*
+Yalnız 'ad' və 'yas' sütunları ilə cədvəl:
+┌─────────┬─────────┬─────┐
+│ (index) │   ad    │ yas │
+├─────────┼─────────┼─────┤
+│    0    │ 'Elvin' │ 28  │
+│    1    │ 'Ayan'  │ 25  │
+│    2    │ 'Tural' │ 32  │
+└─────────┴─────────┴─────┘
+*/
 ```
+
+---
 
 **Qruplaşdırma (Grouping): `group()`, `groupEnd()`**
 Əlaqəli konsol mesajlarını bir başlıq altında, iç-içə və səliqəli şəkildə qruplaşdırmağa imkan verir.
@@ -2620,7 +2814,22 @@ console.log("Şəhər: Bakı");
 console.log("Küçə: Nizami");
 console.groupEnd(); // Daxili qrupu bağlayır
 console.groupEnd(); // Əsas qrupu bağlayır
+
+/*
+▼ İstifadəçi Məlumatları
+   Ad: Elvin Əliyev
+   Yaş: 28
+   ▼ 📍 Ünvan
+      Şəhər: Bakı
+      Küçə: Nizami
+*/
+
+/*
+▶ İstifadəçi Məlumatları
+*/
 ```
+
+---
 
 **Sayğac (Counter): `count()`, `countReset()`**
 Müəyyən bir hadisənin neçə dəfə baş verdiyini izləmək üçün idealdır.
@@ -2633,7 +2842,7 @@ for (let i = 0; i < 5; i++) {
     console.count("Tək rəqəm");
   }
 }
-// Nəticə:
+//
 // Cüt rəqəm: 1
 // Tək rəqəm: 1
 // Cüt rəqəm: 2
@@ -2644,13 +2853,12 @@ console.countReset("Cüt rəqəm"); // "Cüt rəqəm" sayğacını sıfırlayır
 console.count("Cüt rəqəm"); // ✅ Nəticə: Cüt rəqəm: 1
 ```
 
-**Zamanlayıcı (Timer): `time()`, `timeLog()`, `timeEnd()`** ⏱️
+---
+
+**Zamanlayıcı (Timer): `time()`, `timeLog()`, `timeEnd()`**
 Müəyyən bir əməliyyatın nə qədər vaxt apardığını ölçmək üçün `Date.now()`-dan daha rahat bir üsuldur.
 
 ```javascript
-// "Məlumat yükləmə" adlı zamanlayıcını başladırıq
-console.time("Məlumat yükləmə");
-
 // Müəyyən bir müddət sonra...
 setTimeout(() => {
   console.timeLog("Məlumat yükləmə", "İlkin datalar yükləndi.");
@@ -2669,11 +2877,11 @@ setTimeout(() => {
 
 ---
 
-### 11.8.1 Konsol ilə Formatlı Çıxış (Formatted Output) 🎨
+### 11.8.1 Konsol ilə Formatlı Çıxış (Formatted Output)
 
 `console.log` və bənzəri metodların ilk arqumenti C proqramlaşdırma dilindəki kimi formatlaşdırma təyin edə bilər. `%s`, `%d` kimi xüsusi işarələr sonrakı arqumentlərin dəyərləri ilə əvəz olunur.
 
-- **`%s`**: Sətir (String)
+- **`%s`**: (String)
 - **`%d`** və **`%i`**: Tam rəqəm (Integer)
 - **`%f`**: Həqiqi rəqəm (Floating-point)
 - **`%o`** və **`%O`**: Obyekt (Object)
@@ -2688,8 +2896,15 @@ const balance = 152.75;
 const user = { name: "Ayan", age: 25 };
 
 console.log("İstifadəçi: %s, Yaş: %d, Balans: %f AZN", name, age, balance);
+// İstifadəçi: Ayan, Yaş: 25, Balans: 152.75 AZN
 
 console.log("Obyektin detallı görünüşü: %O", user);
+/* 
+{
+    "name": "Ayan",
+    "age": 25
+}
+*/
 ```
 
 **Nümunə 2: CSS ilə rəngli çıxış (Brauzer Konsolu üçün)**
@@ -2705,13 +2920,13 @@ console.log(
 
 ---
 
-### 11.9 URL API-ları (URL APIs) 🔗
+## 11.9 URL API-ları (URL APIs)
 
 Veb proqramlaşdırmada URL-lərlə işləmək çox yayğın bir tələbatdır. JavaScript-də URL-ləri emal etmək, hissələrə ayırmaq (parse), dəyişdirmək və düzgün formatlamaq üçün müasir **`URL`** sinifi (class) mövcuddur.
 
 `URL` sinifi standart ECMAScript-in bir hissəsi olmasa da, bütün müasir brauzerlər və Node.js tərəfindən tam dəstəklənir.
 
-#### `URL` Obyektinin Yaradılması və Xüsusiyyətləri (Properties)
+#### `URL` Obyektinin Yaradılması və Xüsusiyyətləri 
 
 `new URL()` konstruktoru ilə bir URL obyekti yaradılır. Bu obyekt URL-i avtomatik olaraq hissələrə ayırır və bu hissələrə xüsusiyyətlər (properties) vasitəsilə asanlıqla müraciət etmək olur.
 
@@ -2723,6 +2938,7 @@ const myUrl =
 const url = new URL(myUrl);
 
 console.log("Bütün URL (href):", url.href);
+// "https://www.example.com:8080/axtarish?q=JavaScript&lang=az#netice-1"
 console.log("Protokol (protocol):", url.protocol); // "https:"
 console.log("Host (host):", url.host); // "www.example.com:8080"
 console.log("Hostname (hostname):", url.hostname); // "www.example.com"
@@ -2746,35 +2962,45 @@ url.pathname = "/məhsullar/yeni məhsul";
 url.search = "filter=yeni#";
 
 console.log("Avtomatik formatlanmış URL:", url.href);
-// ✅ Nəticə: https://mysite.com/m%C9%99hsullar/yeni%20m%C9%99hsul?filter=yeni%23
+// https://mysite.com/m%C9%99hsullar/yeni%20m%C9%99hsul?filter=yeni%23
 // Gördüyünüz kimi, 'ə', ' ' (boşluq) və '#' simvolları düzgün kodlaşdırıldı.
 ```
 
+---
 #### Axtarış Parametrləri (Search Params): `URLSearchParams`
 
 URL-in `?`-dən sonrakı hissəsini (`q=test&cat=tech` kimi) idarə etmək üçün `search` xüsusiyyəti əvəzinə, daha güclü olan `searchParams`-dan istifadə etmək daha rahatdır. Bu, `URLSearchParams` adlı xüsusi bir obyekt qaytarır.
 
-**Geniş `URLSearchParams` Nümunəsi:**
+**`URLSearchParams` Nümunəsi:**
 
 ```javascript
 const url = new URL("https://example.com/search");
 console.log("Başlanğıc URL:", url.href);
+// Başlanğıc URL: https://example.com/search
 
 // 1. Parametrlər əlavə edirik: .append()
 url.searchParams.append("q", "JavaScript");
 url.searchParams.append("cat", "proqramlaşdırma");
-console.log("Parametr əlavə edildi:", url.href); // ...?q=JavaScript&cat=proqramlaşdırma
+console.log("Parametr əlavə edildi:", url.href); 
+// Parametr əlavə edildi: 
+// https://example.com/search?q=JavaScript&cat=proqramla%C5%9Fd%C4%B1rma
 
 // 2. Parametrin dəyərini dəyişirik: .set()
-url.searchParams.set("q", "ECMAScript"); // 'q'-nin köhnə dəyərini silib yenisini yazır
-console.log("Parametr dəyişdirildi:", url.href); // ...?q=ECMAScript&cat=proqramlaşdırma
+url.searchParams.set("q", "ECMAScript"); 
+// 'q'-nin köhnə dəyərini silib yenisini yazır
+console.log("Parametr dəyişdirildi:", url.href); 
+// Parametr dəyişdirildi: 
+// https://example.com/search?q=ECMAScript&cat=proqramla%C5%9Fd%C4%B1rma
 
 // 3. Eyni adlı ikinci bir parametr əlavə edirik
 url.searchParams.append("cat", "veb");
-console.log("Eyni adlı parametr əlavə edildi:", url.href); // ...&cat=proqramlaşdırma&cat=veb
+console.log("Eyni adlı parametr əlavə edildi:", url.href); 
+// Eyni adlı parametr əlavə edildi:
+// https://example.com/search?q=ECMAScript&cat=proqramla%C5%9Fd%C4%B1rma&cat=veb
 
 // 4. Parametrləri alırıq: .get() və .getAll()
-console.log("`q` parametrinin dəyəri:", url.searchParams.get("q")); // ✅ "ECMAScript"
+console.log("`q` parametrinin dəyəri:", url.searchParams.get("q")); 
+// ✅ "ECMAScript"
 console.log(
   "`cat` parametrinin bütün dəyərləri:",
   url.searchParams.getAll("cat")
@@ -2782,44 +3008,20 @@ console.log(
 
 // 5. Parametri silirik: .delete()
 url.searchParams.delete("cat");
-console.log("Parametr silindi:", url.href); // ...?q=ECMAScript
+console.log("Parametr silindi:", url.href); 
+// ...?q=ECMAScript
 
 // 6. Bütün parametrlər üzərində dövr etmək (loop)
 for (const [key, value] of url.searchParams) {
   console.log(`Açar: ${key}, Dəyər: ${value}`);
 }
+// Açar: q, Dəyər: ECMAScript
+// Açar: cat, Dəyər: proqramlaşdırma
 ```
 
 ---
 
-### 11.9.1 Köhnə (Legacy) URL Funksiyaları 📜
-
-`URL` sinifindən əvvəl, JavaScript-də URL kodlaşdırması üçün qlobal funksiyalar mövcud idi. Onları bilmək faydalıdır, amma istifadələri məsləhət görülmür.
-
-- **`escape()`/`unescape()`**: Ən köhnə və **istifadədən qalxmış (deprecated)** funksiyalar. **Heç vaxt istifadə etməyin.**
-- **`encodeURI()`/`decodeURI()`**: Bütöv bir URL-i kodlaşdırmaq üçündür. URL ayırıcılarını (`:`, `/`, `?`, `#`, `&`) kodlaşdırmır.
-- **`encodeURIComponent()`/`decodeURIComponent()`**: URL-in tək bir hissəsini (məsələn, axtarış dəyərini) kodlaşdırmaq üçündür. Bütün xüsusi simvolları, o cümlədən ayırıcıları kodlaşdırır.
-
-**`encodeURI` və `encodeURIComponent` arasındakı fərq:**
-
-```javascript
-const fullUrl = "http://example.com/search?q=c++ kod";
-const urlComponent = "c++ kod";
-
-// encodeURI bütün URL üçün nəzərdə tutulub, / : ? & = # simvollarını dəyişmir.
-console.log("encodeURI:", encodeURI(fullUrl));
-// ✅ Nəticə: http://example.com/search?q=c++%20kod
-
-// encodeURIComponent isə bir hissə üçün nəzərdə tutulub, bütün xüsusi simvolları dəyişir.
-console.log("encodeURIComponent:", encodeURIComponent(urlComponent));
-// ✅ Nəticə: c%2B%2B%20kod
-```
-
-**Son Nəticə:** Bu köhnə funksiyalarla başınızı ağrıtmaqdansa, URL ilə bağlı bütün əməliyyatlar üçün **hər zaman müasir `URL` sinifindən istifadə edin.** O, həm daha güclü, həm də daha təhlükəsizdir.
-
----
-
-### 11.10 Zamanlayıcılar (Timers) ⏳
+## 11.10 Zamanlayıcılar (Timers) 
 
 JavaScript-in ilk günlərindən bəri brauzerlər və Node.js, proqramlara müəyyən bir müddət sonra və ya periodik olaraq funksiya çağırmaq imkanı verən iki əsas funksiya təqdim edir: **`setTimeout()`** və **`setInterval()`**. Bu funksiyalar kodun dərhal yox, gələcəkdə icra olunmasını təmin edir və asinxron (asynchronous) proqramlaşdırmanın təməlini təşkil edir.
 
@@ -2827,13 +3029,11 @@ JavaScript-in ilk günlərindən bəri brauzerlər və Node.js, proqramlara mü�
 
 #### `setTimeout()` — Birdəfəlik Gecikmə
 
-Bu funksiya, verilmiş bir funksiyanı (callback) müəyyən bir gecikmədən (delay) sonra **yalnız bir dəfə** icra etmək üçün istifadə olunur.
+Bu funksiya, verilmiş bir funksiyanı (callback) müəyyən bir gecikmədən  sonra **yalnız bir dəfə** icra etmək üçün istifadə olunur.
 `setTimeout(funksiya, gecikmə_ms)`
 
 - **`funksiya`**: Gecikmədən sonra icra olunacaq funksiya.
 - **`gecikmə_ms`**: Gecikmə müddəti (millisaniyə ilə). `1000ms = 1 saniyə`.
-
-**❗️ Vacib Məqam:** `setTimeout` asinxron işləyir. Yəni, o, funksiyanı icra üçün "növbəyə" qoyur və dərhal sonrakı kodun icrasına davam edir, gecikmənin bitməsini gözləmir.
 
 **Nümunə 1: Asinxron davranış**
 
@@ -2849,6 +3049,7 @@ console.log("Üçüncü mesaj (dərhal icra olunur)");
 // Konsolun çıxışı:
 // ✅ Birinci mesaj (dərhal icra olunur)
 // ✅ Üçüncü mesaj (dərhal icra olunur)
+
 // ...2 saniyə sonra...
 // ✅ İkinci mesaj (2 saniyə sonra icra olunur)
 ```
@@ -2867,6 +3068,8 @@ setTimeout(() => {
   clearTimeout(bombTimerId);
   console.log("😌 Bomba zərərsizləşdirildi, partlayış olmayacaq.");
 }, 3000);
+
+// 😌 Bomba zərərsizləşdirildi, partlayış olmayacaq.
 ```
 
 ---
@@ -2897,4 +3100,8 @@ setTimeout(() => {
   clearInterval(clockIntervalId);
   console.log("Saat dayandırıldı.");
 }, 10000);
+
+// console.log("Rəqəmsal saat başladıldı... (10 saniyə sonra dayanacaq)");
+// 🕒 17:30:53
+// Saat dayandırıldı.
 ```
