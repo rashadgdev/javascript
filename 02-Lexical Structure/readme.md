@@ -1,4 +1,4 @@
-# Chapter 2. Leksikal Struktur
+# 2. Leksikal Struktur
 
 Proqramlaşdırma dilinin **leksikal strukturu** — sənin proqramı həmin dildə necə yazmalı olduğunu izah edən qaydalar toplusudur. Bu dilin ən aşağı səviyyəli sintaksisidir.  
 Yəni dəyişənlərin adlandırılması, kommentlərin necə yazılması, sətrlərin bir-birindən necə ayrılması və s. kimi texniki detallar buraya daxildir.
@@ -23,7 +23,7 @@ let onLine, OnLine, Online, ONLINE;
 // Bunlar dörd fərqli dəyişəndir
 ```
 
-JavaScript yazılış zamanı **boşluqlara və sətir keçidlərinə çox da əhəmiyyət vermir**. Bu isə bizə kodu istədiyimiz kimi formatlamaq imkanı verir.
+JavaScript yazılış zamanı **boşluqlara və sətir keçidlərinə** çox da əhəmiyyət vermir. Bu isə bizə kodu istədiyimiz kimi formatlamaq imkanı verir.
 
 ---
 
@@ -59,7 +59,7 @@ true, false   // boolean dəyərlər
 null          // obyektin olmaması
 ```
 
-Literallar dəyişkənlərə mənalı məlumat təyin etmək üçün istifadə olunur.
+Literallar dəyişənlərə məlumat təyin etmək üçün istifadə olunur.
 
 ---
 
@@ -211,7 +211,7 @@ i++; // postfix
 
 ---
 
-### Arrow funksiyalarda sətir yazılışı
+### Arrow funksiyaların yazılışı
 
 Səhv yazım:
 
