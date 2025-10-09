@@ -4,6 +4,7 @@ Bu fəsil, JavaScript-in təməl quruluş daşları olan **ifadələri (expressi
 **İfadə (Expression)** – JavaScript-də qiymətləndirilərək bir **dəyər (value)** yaradan istənilən kod parçasıdır. Sadə bir rəqəm, bir dəyişənin adı və ya daha mürəkkəb riyazi əməliyyatlar – bunların hamısı bir ifadədir.   
 Operatorlar isə, bu sadə ifadələri birləşdirərək daha mürəkkəb ifadələr yaratmaq üçün istifadə olunur. Məsələn, `x` və `y` ayrı-ayrı ifadədirsə, `x * y` da onların hasilini yaradan yeni bir ifadədir.
 
+
 ---
 ## 4.1 İlkin İfadələr (Primary Expressions)
 Ən sadə ifadələr, yəni özündən daha sadə bir ifadədən təşkil olunmayan ifadələrə **ilkin ifadələr (primary expressions)** deyilir. Üç əsas növü var:
