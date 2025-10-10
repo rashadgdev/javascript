@@ -1,4 +1,4 @@
-# Fəsil 7. Massivlər (Arrays)
+# 7. Massivlər (Arrays)
 
 JavaScript-də **massivlər** dəyərlərin **sıralanmış kolleksiyasıdır**. Onlar proqramlaşdırmanın əsas hissələrindən biridir.
 
