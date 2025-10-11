@@ -1,6 +1,6 @@
 # 9. Siniflər (Classes)
 
-Fəsil 6-da biz JavaScript-də **obyektləri** öyrəndik — yəni, unikal xüsusiyyətlərə malik quruluşları. Amma çox vaxt eyni xüsusiyyətlərə və metodlara sahib obyektlər qrupu yaratmaq lazım gəlir. Belə hallarda **siniflər (classes)** istifadə olunur. Siniflər kodunuzu daha səliqəli, oxunaqlı və təkrar istifadəyə yararlı edir.
+Fəsil 6-da biz JavaScript-də **obyektləri** öyrəndik. Amma çox vaxt eyni xüsusiyyətlərə və metodlara sahib obyektlər qrupu yaratmaq lazım gəlir. Belə hallarda **siniflər (classes)** istifadə olunur. Siniflər kodunuzu daha səliqəli, oxunaqlı və təkrar istifadəyə yararlı edir.
 
 ---
 
@@ -57,7 +57,7 @@ JavaScript-də sinif eyni **prototip obyektindən (prototype object)** xüsusiyy
 
 ---
 
-#### Sadə nümunə: İnsan (Person) sinfi
+#### İnsan (Person) sinfi
 
 ```javascript
 function Person(name, age) {
@@ -130,7 +130,7 @@ let obj = new Constructor(...args);
 
 ---
 
-#### Nümunə 1: Sadə sinif (`Car`)
+#### Car sinif
 
 ```js
 function Car(make, model, year) {
@@ -151,75 +151,101 @@ console.log(car.info()); // 2010 Toyota Camry
 
 ### 9.2.1 `instanceof` və Sinif Kimliyi
 
-----
-
-#### 🔎 `instanceof` necə işləyir?
-
-`instanceof` operatoru belə işləyir:
+JavaScript-də bir obyektin müəyyən sinifdən yaradılıb-yaradılmadığını yoxlamaq üçün `instanceof` operatorundan istifadə olunur.
 
 ```js
-obj instanceof Constructor
+object instanceof Constructor
 ```
 
-➡️ Bu zaman JS belə yoxlayır: `Constructor.prototype` obyektin `__proto__` zəncirində varmı?
-
-Başqa sözlə, bu addımları edir:
-
-1. `obj.__proto__` götürür.
-2. Əgər `Constructor.prototype`-ə bərabərdirsə → ✅ `true`.
-3. Əgər bərabər deyilsə, `obj.__proto__.__proto__`-ya keçir.
-4. Zəncirin sonuna (null-a) qədər davam edir.
+Bu ifadə **`true`** qaytarır, əgər `object` obyektinin prototip zəncirində `Constructor.prototype` varsa.
 
 ---
 
-### Misal:
+#### `instanceof` necə işləyir?
+
+`instanceof` daxildə aşağıdakı addımları yerinə yetirir:
+
+1. `object.__proto__` (yəni obyektin prototipi) alınır.
+2. Əgər bu, `Constructor.prototype`-ə bərabərdirsə → nəticə **true**.
+3. Əgər bərabər deyilsə → `object.__proto__.__proto__` yoxlanılır.
+4. Bu proses **zəncirin sonuna** (`null`-a) qədər davam edir.
+   Əgər heç bir mərhələdə uyğunluq tapılmazsa, nəticə **false** olur.
+
 
 ```js
 class Car {}
 let car = new Car();
 
-console.log(car instanceof Car); // true
-console.log(car instanceof Object); 
-// true (çünki Object.prototype də zəncirdə var)
-console.log(car instanceof Array); // false
+console.log(car instanceof Car);    // true
+console.log(car instanceof Object); // true — çünki Object də zəncirdə var
+console.log(car instanceof Array);  // false
 ```
+
+Burada `car` obyektinin prototip zənciri belədir:
+
+```
+car → Car.prototype → Object.prototype → null
+```
+
+`Array.prototype` bu zəncirdə olmadığı üçün `car instanceof Array` → `false`.
 
 ---
 
-#### Maraqlı məqam: Paylaşılan prototip
+#### Paylaşılan Prototip
 
-Bu nümunəndə:
+Bəzən `instanceof` “aldadıcı” nəticə qaytara bilər. Məsələn:
 
 ```js
+function Car() {}
 function Strange() {}
-Strange.prototype = Car.prototype;
+
+Strange.prototype = Car.prototype; // Eyni prototip paylaşılır
 
 let weird = new Strange();
-console.log(weird instanceof Car); // true
+
+console.log(weird instanceof Car); // true — amma əslində Car ilə yaradılmayıb
+console.log(weird instanceof Strange); // true
 ```
 
-Burada `Strange.prototype` ilə `Car.prototype` **eyni obyekt**-dir. Ona görə `instanceof` deyir ki, bu `Car`-ın nümunəsidir. Halbuki, `Car` konstruktoru ilə yaradılmayıb.
-
-➡️ Yəni `instanceof` həmişə “konstruktorla yaradılıb” yox, “prototip zənciri uyğun gəlir” prinsipinə baxır.
+Bu vəziyyətdə `Strange.prototype` və `Car.prototype` **eyni obyektə** istinad edir.
+`instanceof` sadəcə bu prototip obyektinin zəncirdə olub-olmamasına baxdığı üçün hər iki halda `true` qaytarır.
 
 ---
 
-#### Alternativ: `isPrototypeOf()`
+#### `isPrototypeOf()` — Alternativ Yanaşma
 
-Əgər sadəcə prototipi yoxlamaq istəyirsənsə (konstruktordan asılı olmayaraq), onda:
+Əgər bir obyektin **prototip zəncirində** müəyyən obyektin olub-olmadığını yoxlamaq istəyirsənsə, `isPrototypeOf()` metodundan istifadə edə bilərsən.
 
 ```js
-Car.prototype.isPrototypeOf(car); // true
+Car.prototype.isPrototypeOf(weird); // true
 ```
 
-Bu sadəcə yoxlayır ki, `Car.prototype` həmin obyektin zəncirindədir, yoxsa yox.
+Bu metod sadəcə yoxlayır ki, `Car.prototype` həmin obyektin (`weird`) prototip zəncirindədir, yoxsa yox.
+Yəni konstruktorun kimliyinə fikir vermir — yalnız **prototip əlaqəsini** yoxlayır.
 
 ---
 
-#### Nəticə
 
-* `instanceof` → konstruktor adı ilə obyektin sinfini yoxlamaq üçün istifadə olunur, amma tam “etibarlı” kimlik yoxlaması deyil.
-* `isPrototypeOf` → prototip zəncirində konkret prototipin olub-olmadığını yoxlayır.
+```js
+class Animal {}
+class Dog extends Animal {}
+
+let d = new Dog();
+
+console.log(d instanceof Dog);     // true
+console.log(d instanceof Animal);  // true
+console.log(d instanceof Object);  // true
+console.log(Animal.prototype.isPrototypeOf(d)); // true
+console.log(Dog.prototype.isPrototypeOf(d));    // true
+```
+
+Zəncir belə görünür:
+
+```
+d → Dog.prototype → Animal.prototype → Object.prototype → null
+```
+
+Bu cür əlaqə `instanceof` və `isPrototypeOf()` nəticələrini izah edir.
 
 ---
 
@@ -241,7 +267,7 @@ console.log(o.constructor === A); // true
 
 ---
 
-#### Problem: `constructor` niyə itir?
+#### `constructor` niyə itir?
 
 Əgər biz `prototype`-u **tamamilə başqa bir obyektlə əvəz etsək**, əvvəlki `constructor` properti də itir. Çünki yeni təyin etdiyimiz obyekt sadəcə `Object`-dən gəlir:
 
@@ -251,7 +277,6 @@ function Range(from, to) {
   this.to = to;
 }
 
-// Burada constructor silinir:
 Range.prototype = {
   includes(x) {
     return this.from <= x && x <= this.to;
@@ -262,11 +287,11 @@ console.log(new Range(1, 3).constructor === Range); // false
 console.log(new Range(1, 3).constructor === Object); // true
 ```
 
-➡️ Göründüyü kimi, artıq `constructor` `Range`-i yox, `Object`-i göstərir.
+Göründüyü kimi, artıq `constructor` `Range`-i yox, `Object`-i göstərir.
 
 ---
 
-#### Həll: `constructor`-u əllə bərpa et
+####  `constructor`-u əllə bərpa et
 
 Əgər biz `prototype`-u yenidən yazırıqsa, onda `constructor` properti-ni özümüz əlavə etməliyik:
 
@@ -293,13 +318,6 @@ Range.prototype.toString = function () {
   return `(${this.from}...${this.to})`;
 };
 ```
-
----
-
-🔑 **Qaydalar yadında qalsın:**
-
-* `prototype = { ... }` → köhnə obyekt tamamilə əvəz olunur, `constructor` itir.
-* `prototype.something = ...` → köhnə obyekt qalır, `constructor` qorunur.
 
 ---
 
@@ -332,14 +350,6 @@ let myCar = new Car("Toyota", "Camry", 2010);
 console.log(myCar.info()); // 2010 Toyota Camry
 console.log(myCar.age(2025)); // 15
 ```
-
----
-
-#### Əsas Xüsusiyyətlər
-
-- `class` ilə sinif təyin edirik.
-- `constructor` metodu yeni obyekt yaradılarkən çağırılır və `this`-ə dəyərlər mənimsədilir.
-- Funksiya açar sözü (`function`) yazılmır.
 
 ---
 
@@ -390,7 +400,7 @@ console.log(r.area()); // 20
 `static` ilə yazılan metodlar **obyektlərə (instansiyalara) yox**, birbaşa **sinfin özünə** aiddir.
 
 
-#### Sadə Nümunə: `add` adlı statik metod
+#### `add` adlı statik metod
 
 ```js
 class MathHelper {
@@ -400,39 +410,19 @@ class MathHelper {
 }
 
 console.log(MathHelper.add(2, 3)); // 5
-```
 
----
-
-#### Statik metodun instansiyada işləməməsi
-
-```js
+// Statik metodun instansiyada işləməməsi
 let helper = new MathHelper();
 helper.add(2, 3); // ❌ Xəta: add instansiyada yoxdur
 ```
 
 ---
 
-### Nə üçün istifadə olunur?
-
-Statik metodlar adətən:
-
-* String-dən obyekt yaratmaq (`parse`, `fromJSON` və s.),
-* Müqayisə (`compare`, `equals`),
-* Yardımçı hesablamalar və ya utilitilər (`isValid`, `random`, və s.) üçün yazılır.
-
-➡️ Yəni **obyektə aid olmayan**, amma siniflə bağlı məntiqi əməliyyatlar üçün statik metodlardan istifadə edilir.
-
----
 
 ### 9.3.2 Getter və Setter metodları
 
 Sinifdə `get` və `set` açar sözləri ilə **xüsusi oxuma və yazma metodları** təyin edilə bilər.
 Onlar **xüsusiyyət kimi** istifadə olunur (`obj.name`), **funksiya çağırışı kimi** yox (`obj.name()` deyil).
-
----
-
-#### Sadə Nümunə: `User` sinfi
 
 ```js
 class User {
@@ -570,17 +560,17 @@ console.log(MathUtil.square(4)); // 16
 
 ---
 
-#### Nümunə: `BankAccount` sinfi
+#### `BankAccount` sinfi
 
 ```js
 class BankAccount {
-  // ✅ Public sahə
+  // Public sahə
   owner;
 
-  // 🔒 Private sahə
+  // Private sahə
   #balance = 0;
 
-  // 🏦 Static sahə (ümumi bank adı)
+  // Static sahə (ümumi bank adı)
   static bankName = "Milli Bank";
 
   constructor(owner, initialBalance = 0) {
@@ -604,13 +594,9 @@ class BankAccount {
     return `Bank adı: ${BankAccount.bankName}`;
   }
 }
-```
 
----
+// Obyekt yaradıb istifadə edək
 
-#### İstifadə nümunəsi
-
-```js
 let acc = new BankAccount("Ali", 100);
 
 console.log(acc.owner);     // Ali (public sahə)
@@ -630,73 +616,13 @@ console.log(BankAccount.info());    // Bank adı: Milli Bank
 ---
 
 
-#### Nümunə: Complex Sinfi
-
-Aşağıda **kompleks ədədləri** təmsil edən sinif nümunəsi verilib. Bu sinifdə həm public sahələr, həm instansiya metodları, həm də statik metodlar istifadə olunub.
-
-```js
-class Complex {
-  constructor(real, imag) {
-    this.real = real;
-    this.imag = imag;
-  }
-
-  add(other) {
-    return new Complex(this.real + other.real, this.imag + other.imag);
-  }
-
-  multiply(other) {
-    const r = this.real * other.real - this.imag * other.imag;
-    const i = this.real * other.imag + this.imag * other.real;
-    return new Complex(r, i);
-  }
-
-  get magnitude() {
-    return Math.sqrt(this.real ** 2 + this.imag ** 2);
-  }
-
-  toString() {
-    return `${this.real} + ${this.imag}i`;
-  }
-
-  equals(other) {
-    return (
-      other instanceof Complex &&
-      this.real === other.real &&
-      this.imag === other.imag
-    );
-  }
-
-  static ZERO = new Complex(0, 0);
-  static ONE = new Complex(1, 0);
-  static I = new Complex(0, 1);
-}
-```
-
-İstifadə nümunəsi:
-
-```js
-const x = new Complex(2, 3);
-const y = new Complex(1, -1);
-
-const sum = x.add(y);
-console.log(sum.toString()); // 3 + 2i
-
-const prod = x.multiply(y);
-console.log(prod.toString()); // 5 + 1i
-
-console.log(Complex.ZERO.toString()); // 0 + 0i
-```
-
----
-
 ## 9.4 Mövcud Siniflərə Metodlar Əlavə Etmək
 
 JavaScript prototip-əsaslıdır, buna görə obyektlər yaradıldıqdan sonra belə onların prototiplərinə **yeni metodlar əlavə etmək** mümkündür.
 
 ---
 
-#### Sadə nümunə: `String` tipinə metod əlavə etmək
+#### `String` tipinə metod əlavə etmək
 
 ```js
 // Yeni metod əlavə edirik: stringi tərs çevirir
@@ -711,7 +637,7 @@ console.log("Salam".reverse()); // malaS
 
 ---
 
-#### Sadə nümunə: `Array` tipinə metod əlavə etmək
+#### `Array` tipinə metod əlavə etmək
 
 ```js
 // Yeni metod əlavə edirik: array-dəki bütün elementləri ikiqat edir
@@ -726,7 +652,7 @@ console.log([1, 2, 3].double()); // [2, 4, 6]
 
 ---
 
-#### Sadə nümunə: `Number` tipinə metod əlavə etmək
+#### `Number` tipinə metod əlavə etmək
 
 ```js
 // Yeni metod əlavə edirik: n dəfə callback çağırır
@@ -742,7 +668,6 @@ Number.prototype.times = function (callback) {
 // Salam 3
 ```
 
----
 
 * Daxili tiplərin prototiplərinə dəyişiklik etmək **ümumiyyətlə tövsiyə edilmir**.
 * Xüsusilə `Object.prototype`-a müdaxilə **risklidir**, çünki bütün obyektlər üçün dəyişir və gələcəkdə konflikt yarada bilər.
@@ -756,76 +681,121 @@ Bir sinif (B) başqa sinfi (A) genişləndirərək alt-sinif ola bilər. B, A-n�
 
 ---
 
-### 9.5.1 Alt-siniflər (Subclasses) və Prototiplər (Prototypes) 🔗
 
-Tutaq ki, `Animal` adlı sinifimiz var və biz onun alt-sinfi `Dog` yaratmaq istəyirik. `Dog` həm `Animal`-ın metodlarını miras alacaq, həm də özünə xas metodu olacaq.
+### 9.5.1 Alt-siniflər (Subclasses) və Prototiplər (Prototypes)
+
+Burada `Player` adlı əsas sinif (üst-sinif) və ondan törəyən `Goalkeeper` adlı alt-sinif yaradacağıq.
+`Goalkeeper`, `Player`-in xüsusiyyətlərini miras alacaq, amma özünəməxsus davranış (`saveGoal`) metoduna da sahib olacaq.
 
 ```javascript
-// Üst-sinif: Animal
-function Animal(name) {
+// Üst-sinif: Player
+function Player(name, team) {
   this.name = name;
+  this.team = team;
 }
 
-Animal.prototype.speak = function () {
-  return `${this.name} səslənir.`;
+// Üst-sinifin ümumi metodu
+Player.prototype.introduce = function () {
+  return `${this.name} ${this.team} komandasında oynayır.`;
 };
 
-// Alt-sinif: Dog
-function Dog(name, breed) {
-  Animal.call(this, name); // Animal konstruktorunu çağırırıq
-  this.breed = breed;
+// Alt-sinif: Goalkeeper
+function Goalkeeper(name, team, cleanSheets) {
+  // Player konstruktorunu çağırırıq ki, name və team miras alınsın
+  Player.call(this, name, team);
+  this.cleanSheets = cleanSheets; // əlavə xüsusiyyət
 }
 
-// Dog prototipini Animal prototipindən miras aldırırıq
-Dog.prototype = Object.create(Animal.prototype);
-Dog.prototype.constructor = Dog;
+// Goalkeeper prototipini Player prototipindən miras aldırırıq
+Goalkeeper.prototype = Object.create(Player.prototype);
 
-// Dog öz speak metodunu təyin edir (üst-sinifin metodunu əvəz edir)
-Dog.prototype.speak = function () {
-  return `${this.name} (${this.breed}) havlayır.`;
+// Konstruktor istinadını düzəldirik
+Goalkeeper.prototype.constructor = Goalkeeper;
+
+// Goalkeeper-ə öz metodunu əlavə edirik
+Goalkeeper.prototype.saveGoal = function () {
+  return `${this.name} topu möhtəşəm şəkildə saxladı!`;
 };
 
-// İstifadə nümunəsi
-let myDog = new Dog("Çakır", "Kangal");
-console.log(myDog.speak()); // Çakır (Kangal) havlayır.
+// Üst-sinif metodunu da yenidən təyin edə bilərik
+Goalkeeper.prototype.introduce = function () {
+  return `${this.name} — ${this.team} komandasının qapıçısıdır, ${this.cleanSheets} təmiz oyunla.`;
+};
+
+// İstifadəsi
+const gk = new Goalkeeper("Manuel Neuer", "Bayern Munich", 150);
+
+console.log(gk.introduce());
+// Manuel Neuer — Bayern Munich komandasının qapıçısıdır, 150 təmiz oyunla.
+
+console.log(gk.saveGoal());
+// Manuel Neuer topu möhtəşəm şəkildə saxladı!
 ```
+
+* `Goalkeeper`, `Player` sinifindən miras alır.
+* `Object.create(Player.prototype)` vasitəsilə `Goalkeeper` prototipi `Player`-ın prototipinə bağlanır.
+* `Goalkeeper` həm `Player`-in metodlarını istifadə edə bilir, həm də öz metodlarını (`saveGoal`) əlavə edir.
+* Bu, obyekt yönlü proqramlaşdırmada **miras (inheritance)** prinsipinin klassik nümunəsidir.
+
+
 ---
 
 ### 9.5.2 `extends` və `super` ilə Alt-siniflər (Subclasses)
 
-ES6-dan başlayaraq `extends` ilə sinifdən alt-sinif yaratmaq çox asandır. Alt-sinif həm öz metod və sahələrinə sahib ola bilər, həm də üst-sinifin bütün xüsusiyyətlərini miras alır.
+`extends` və `super` — ES6 siniflərində **miras alma** (inheritance) mexanizmini sadələşdirir.
+Alt-sinif (`subclass`) üst-sinifin (`superclass`) xüsusiyyətlərini alır və əlavə davranışlar yarada bilər.
 
----
-
-#### Nümunə 1: `EZArray` — Array-dən miras alan alt-sinif
 
 ```js
-class EZArray extends Array {
-  // İlk elementi qaytarır
-  get first() {
-    return this[0];
+// Üst-sinif
+class Musician {
+  constructor(name, instrument) {
+    this.name = name;
+    this.instrument = instrument;
   }
-  // Son elementi qaytarır
-  get last() {
-    return this[this.length - 1];
+
+  perform() {
+    return `${this.name} ${this.instrument}-da ifa edir.`;
   }
 }
 
-let a = new EZArray(1, 2, 3, 4);
+// Alt-sinif
+class DJ extends Musician {
+  constructor(name, genre, stageName) {
+    super(name, "DJ set"); // üst-sinifin konstruktorunu çağırırıq
+    this.genre = genre;
+    this.stageName = stageName;
+  }
 
-console.log(a instanceof EZArray); // true
-console.log(a instanceof Array);   // true
-console.log(a.first);              // 1
-console.log(a.last);               // 4
-console.log(a.pop());              // 4
-console.log(a);                    // EZArray(3) [1, 2, 3]
+  // Özünəməxsus metod
+  mix() {
+    return `${this.stageName} ${this.genre} janrında remix hazırlayır!`;
+  }
+
+  // Üst-sinif metodunu yenidən təyin edirik (override)
+  perform() {
+    return `${this.stageName} səhnədə ${this.genre} 
+    musiqisi ilə izdihamı coşdurur!`;
+  }
+}
+
+// İstifadə
+const dj = new DJ("Rəşad", "House", "DJ R3SH");
+
+console.log(dj.perform());
+// DJ R3SH səhnədə House musiqisi ilə izdihamı coşdurur!
+
+console.log(dj.mix());
+// DJ R3SH House janrında remix hazırlayır!
+
+console.log(dj instanceof DJ);        // true
+console.log(dj instanceof Musician);  // true
 ```
-
-✅ Nəticə: `EZArray` instansiyası həm `EZArray`, həm də `Array` kimi işləyir.
 
 ---
 
-#### Nümunə 2: `super` ilə üst-sinif metodunu çağırmaq
+
+#### `super` ilə üst-sinif metodunu çağırmaq
 
 ```js
 class Person {
@@ -855,78 +825,102 @@ console.log(emp.greet());
 // Salam, mənim adım Rəşad. Mən Proqramçı vəzifəsindəyəm.
 ```
 
----
-
-### Qaydalar
 
 1. Alt-sinif konstruktorunda **`super()` çağırılmalıdır**, əks halda `this` istifadə etmək olmaz.
 2. `super` həm konstruktor daxilində, həm də metodlarda üst-sinif metodlarını çağırmaq üçün istifadə olunur.
-3. Əgər konstruktor təyin etməsəniz, alt-sinif avtomatik olaraq bütün arqumentləri `super()`-a ötürür.
 
 ---
 
-### 9.5.3 İrsiyyət (Inheritance) əvəzinə Delegasiya (Delegation)
+## 9.5.3 İrsiyyət (Inheritance) əvəzinə Delegasiya (Delegation)
 
-`extends` ilə bir sinfi miras almaq mümkündür, amma hər zaman lazım deyil.
-Əgər sadəcə bir sinfin funksionallığını təkrar istifadə etmək istəyirsinizsə, onun metodlarını **delegasiya** vasitəsilə çağırmaq daha səmərəlidir.
+JavaScript-də bir sinfi başqa bir sinifdən **miras almaq (inherit)** mümkündür.
+Bu, `extends` açar sözü ilə edilir və alt-sinif üst-sinifin bütün xüsusiyyətlərini və metodlarını avtomatik əldə edir.
 
-> **Qaydası:** “Irsiyyət əvəzinə kompozisiyaya üstünlük verin.” 
-(`Favor composition over inheritance`)
+Amma **bütün hallarda miras almaq düzgün seçim deyil.**
+Bəzən bizə sadəcə başqa bir obyektin funksionallığından **istifadə etmək** lazımdır, amma onun sinifinə çevrilmək lazım deyil.
+Belə hallarda **delegasiya (delegation)** adlanan üsuldan istifadə olunur.
 
 ---
 
-#### Nümunə: `Histogram` sinfi (sadələşdirilmiş)
+### Delegasiya nədir?
+
+**Delegasiya** — bir sinifin öz funksiyalarının bir hissəsini başqa obyektə ötürməsi deməkdir.
+Yəni sinif özü işi yerinə yetirmir, sadəcə başqa obyektin metodlarından istifadə edir.
+
+Başqa sözlə:
+
+> “Mən `Map` sinfi kimi işləyirəm, amma `Map` deyiləm. Sadəcə `Map`-dən kömək alıram.”
+
+Bu üsula “irsiyyət əvəzinə kompozisiya” prinsipi də deyilir.
+
+---
+
+### Futbol Liqası Hesab Cədvəli
+
+Aşağıdakı hissədə biz “Futbol Liqası” üçün bir **hesab cədvəli (ScoreBoard)** sinfi yaradırıq.
+Bu sinif **`Map` obyektindən** istifadə edir, amma onu **miras almır**.
+Beləliklə, `ScoreBoard` sadəcə `Map`-in imkanlarından **delegasiya** yolu ilə faydalanır.
 
 ```js
-class Histogram {
+class ScoreBoard {
   constructor() {
-    this.map = new Map(); // Daxili delegasiya obyekt
+    // Map obyektini içəridə saxlayırıq (delegasiya olunan obyekt)
+    this.scores = new Map();
   }
 
-  add(item) {
-    this.map.set(item, (this.map.get(item) || 0) + 1);
+  // Komandaya xal əlavə edir
+  add(team, points) {
+    this.scores.set(team, (this.scores.get(team) || 0) + points);
   }
 
-  count(item) {
-    return this.map.get(item) || 0;
+  // Komandanın ümumi xalını qaytarır
+  get(team) {
+    return this.scores.get(team) || 0;
   }
 
-  delete(item) {
-    const count = this.count(item);
-    if (count <= 1) this.map.delete(item);
-    else this.map.set(item, count - 1);
+  // Komandanı cədvəldən silir
+  remove(team) {
+    this.scores.delete(team);
   }
 
-  has(item) {
-    return this.map.has(item);
+  // Komandanın olub-olmadığını yoxlayır
+  has(team) {
+    return this.scores.has(team);
   }
 
-  get size() {
-    return this.map.size;
+  // Cədvəldə neçə komanda olduğunu qaytarır
+  get totalTeams() {
+    return this.scores.size;
   }
 }
 ```
 
+
+1. `ScoreBoard` sinfi yaradılır və daxilində `Map` obyektini saxlayır.
+2. Bütün əməliyyatlar (`add`, `get`, `remove`, və s.) bu `Map` üzərindən həyata keçirilir.
+3. Amma `ScoreBoard`, `Map`-in alt-sinfi deyil — yəni `extends Map` istifadə edilmir.
+4. Bu üsulla biz `Map`-in gücündən istifadə edirik, amma `ScoreBoard` sinfi müstəqil qalır.
+
+
 ---
 
-#### İstifadə nümunəsi
-
 ```js
-let h = new Histogram();
-h.add("apple");
-h.add("apple");
-h.add("banana");
+const league = new ScoreBoard();
 
-console.log(h.count("apple"));  // 2
-console.log(h.count("banana")); // 1
-console.log(h.size);            // 2
+league.add("Manchester City", 3);
+league.add("Liverpool", 1);
+league.add("Manchester City", 2);
 
-h.delete("apple");
-console.log(h.count("apple"));  // 1
+console.log(league.get("Manchester City")); // 5
+console.log(league.get("Liverpool"));   // 1
+console.log(league.totalTeams);         // 2
+
+league.remove("Liverpool");
+console.log(league.has("Liverpool"));   // false
 ```
 
 
-Bu nümunədə `Histogram` heç bir sinfi miras almır, amma **`Map` obyektinə delegasiya** edərək bütün əsas funksionallığı əldə edir.
+> Əgər bir sinif başqa sinifin *tipi* deyilsə, amma onun *xidmətlərindən* istifadə edirsə — bu **delegasiya**dır.
 
 ---
 
@@ -943,7 +937,7 @@ Bütün ödəniş üsulları **eyni interfeys** ilə işləməlidir: `.pay()` v�
 
 ---
 
-#### Addım 1: Abstrakt sinif
+####  Abstrakt sinif
 
 Abstrakt sinif yalnız **struktur** verir, birbaşa istifadə edilə bilməz:
 
@@ -954,14 +948,14 @@ class AbstractPayment {
   }
 
   toString() {
-    throw new Error("toString() metodu abstraktdır, implementasiya olunmalıdır.");
+   throw new Error("toString() metodu abstraktdır, implementasiya olunmalıdır.");
   }
 }
 ```
 
 ---
 
-#### Addım 2: Alt-siniflər
+#### Alt-siniflər
 
 Alt-siniflər abstrakt metodları **özünə uyğun implementasiya** edir:
 
@@ -999,7 +993,7 @@ class PaypalPayment extends AbstractPayment {
 
 ---
 
-#### Addım 3: Polimorfizm və İstifadə
+#### Polimorfizm və İstifadə
 
 ```js
 const payments = [
@@ -1011,20 +1005,11 @@ for (let p of payments) {
   p.pay();           // Hər ödəniş öz metodunu icra edir
   console.log(p.toString());
 }
+// Kredit kartı ilə 50 AZN ödəndi.
+// [CreditCard] 50 AZN
+// PayPal ilə 30 AZN ödəndi.
+// [PayPal] 30 AZN
 ```
-
-**Nəticə:**
-
-```
-Kredit kartı ilə 50 AZN ödəndi.
-[CreditCard] 50 AZN
-PayPal ilə 30 AZN ödəndi.
-[PayPal] 30 AZN
-```
-
----
-
-#### 4️⃣ Vizual Şema
 
 ```
 AbstractPayment
@@ -1038,6 +1023,55 @@ AbstractPayment
               toString() → [PayPal] ...
 ```
 
-> **Polimorfizm:** `payments` array-i ilə bütün ödənişləri eyni üsulla çağırırıq, amma hər alt-sinif **öz spesifik davranışını** göstərir.
+---
+
+
+### 9.6 Polimorfizm nədir?
+
+**Polimorfizm** sözünün mənası *“çox formalılıq”* və ya *“bir şeyin bir neçə formada görünməsi”* deməkdir.
+Proqramlaşdırmada isə bu o deməkdir ki, **eyni əməliyyat** və ya **eyni metod çağırışı**, **fərqli obyektlər** üçün **fərqli cür işləyə bilər**.
+
+Yəni biz bir əməliyyatın adını dəyişmədən, onu fərqli obyektlərdə fərqli davranış göstərməyə “öyrədirik”.
 
 ---
+
+Tutaq ki, “**play()**” adlı bir əməliyyatımız var.
+
+* **Futbolçu** üçün `play()` — “topla oynamaq” deməkdir.
+* **Musiqiçi** üçün `play()` — “alət çalmaq” deməkdir.
+* **Uşaq** üçün `play()` — “oyun oynamaq” deməkdir.
+
+Burada **eyni əməliyyat (play)** müxtəlif obyektlər üçün **fərqli mənalar** daşıyır.
+Bu, **polimorfizmin təməl ideyasıdır.**
+
+
+```javascript
+class Person {
+  play() {
+    console.log("Bir insan nəsə oynayır.");
+  }
+}
+
+class FootballPlayer extends Person {
+  play() {
+    console.log("Futbolçu top oynayır.");
+  }
+}
+
+class Musician extends Person {
+  play() {
+    console.log("Musiqiçi gitara çalır.");
+  }
+}
+
+const people = [new FootballPlayer(), new Musician()];
+
+for (const person of people) {
+  person.play(); 
+}
+
+// Futbolçu top oynayır.
+// Musiqiçi gitara çalır.
+```
+
+> **Polimorfizm** – eyni adlı metodların, fərqli siniflərdə fərqli şəkildə işləməsidir.
