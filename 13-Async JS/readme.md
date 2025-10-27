@@ -1,4 +1,4 @@
-# 13. Asinxron (Asynchronous) JavaScript
+# 13. Asinxron JavaScript
 
 Əksər proqramlar fasiləsiz işləmir. Onlar çox vaxt bir hadisənin baş verməsini gözləyir: istifadəçinin düyməyə klikləməsi, şəbəkədən məlumatın gəlməsi və ya müəyyən bir vaxtın keçməsi.  
 **Asinxron proqramlaşdırma**, proqramın bu gözləmə müddətində "donub" qalmaması, əksinə, başqa işləri görməyə davam etməsi üçün bir üsuldur.
@@ -9,18 +9,47 @@ Bu fəsildə asinxron əməliyyatları idarə etmək üçün JavaScript-in 3 əs
 2.  **`async/await`**: `Promise`-lərə əsaslanan, lakin kodu sanki sinxron imiş kimi yazmağa imkan verən rahat sintaksis.
 3.  **Asinxron Iteratorlar və `for/await`**: Asinxron data axınları (streams) ilə işləmək üçün dövrlər
 
-JavaScript dilinin özündə asinxron bir şey yoxdur. Bu xüsusiyyətləri anlamaq üçün biz əvvəlcə brauzer və Node.js tərəfindən təmin edilən asinxron API-lara (məsələn, zamanlayıcılar, hadisələr) baxmalıyıq.
+---
+
+## 13.1 “Callback”-lər ilə Asinxron Proqramlaşdırma
+
+JavaScript-də asinxron davranışın ən sadə və köhnə üsulu **callback** funksiyalarıdır.
+
+**Callback** – başqa bir funksiyaya arqument kimi ötürülən və həmin funksiyanın işi bitdikdə **geri çağırılan** funksiyadır.
+
+Məsələn, dostuna mesaj yazırsan:
+
+> “Mən yemək bişirirəm, hazır olanda mənə zəng elə.”
+
+Bu vəziyyətdə “mənə zəng elə” — **callback** funksiyası kimidir. Sən yemək bişirən funksiyaya bir “geri çağırma” təlimatı verirsən.
+
+
+```javascript
+function greet(name, callback) {
+  console.log("Preparing the greeting...");
+  callback(name);
+}
+
+function sayHello(person) {
+  console.log(`Salam, ${person}!`);
+}
+
+greet("Aysel", sayHello);
+
+//  Preparing the greeting...
+//  Salam, Aysel!
+```
 
 ---
 
-## 13.1 "Callback"-lər ilə Asinxron Proqramlaşdırma
+### Callback-lərin məqsədi
 
-JavaScript-də asinxronluğun ən fundamental səviyyəsi **"callback"** funksiyalarıdır.
-
-**Callback nədir?**
-Bu, yazdığınız və başqa bir funksiyaya arqument kimi ötürdüyünüz bir funksiyadır. Həmin funksiya, müəyyən bir şərt ödəndikdə və ya asinxron bir hadisə baş verdikdə sizin funksiyanızı "geri çağırır".
+Callback-lər **işlərin ardıcıllığını qorumaq** üçün istifadə olunur.
+Məsələn, fayl oxumaq, serverdən məlumat almaq və ya istifadəçi əməliyyatını gözləmək kimi hallarda proqram dərhal nəticə ala bilmir.
+Bu zaman callback kömək edir — “iş bitəndə mənə xəbər ver” deyərək proqramın donmasının qarşısını alır.
 
 ---
+
 
 ### 13.1.1 Zamanlayıcılar (Timers)
 
@@ -94,7 +123,7 @@ Bildirişlər yoxlanılır... (dəfə 3)
 
 ---
 
-#### Tipik səhv
+#### Səhv formada olan kodlar
 
 ```javascript
 // Səhv: funksiyanı dərhal çağırır
@@ -128,15 +157,15 @@ Bu metoda biz iki şey deyirik:
 ```
 
 ```javascript
-// 1. HTML elementini seçirik
+// HTML elementini seçirik
 const button = document.querySelector("#myButton");
 
-// 2. Klik hadisəsi baş verdikdə çağırılacaq callback funksiyası
+// Klik hadisəsi baş verdikdə çağırılacaq callback funksiyası
 function onButtonClick() {
   console.log("🎉 Düyməyə klikləndi! İstifadəçiyə reaksiya veririk...");
 }
 
-// 3. Düyməyə "click" hadisəsi üçün dinləyici əlavə edirik
+// Düyməyə "click" hadisəsi üçün dinləyici əlavə edirik
 button.addEventListener("click", onButtonClick);
 
 console.log(
@@ -158,7 +187,7 @@ Brauzer bu funksiyanı **yadda saxlayır** və yalnız istifadəçi kliklədikd�
 
 ---
 
-#### Tipik səhv
+#### Səhv formada olan kodlar
 
 ```javascript
 // Səhv: funksiyanı dərhal çağırırıq, dinləyici isə boş qalır
@@ -211,7 +240,7 @@ Bu yanaşma nəticələri daha rahat idarə etməyə kömək edir.
 ```javascript
 /**
  * Bu funksiya serverə sorğu göndərərək cari versiya nömrəsini asinxron şəkildə 
- * alır və nəticəni və ya xətanı `versionCallback` funksiyasına ötürür.
+ alır və nəticəni və ya xətanı `versionCallback` funksiyasına ötürür.
  */
 function getCurrentVersionNumber(versionCallback) {
   console.log("🌐 Serverə sorğu göndərilir...");
@@ -260,7 +289,7 @@ console.log(
 
 ---
 
-#### Konsol çıxışı (mümkün hallar)
+#### Konsol çıxışı
 
 **Uğurlu cavab (server 200 OK)**
 
@@ -340,18 +369,13 @@ Konfiqurasiya faylı oxunur...
 ```
 Konfiqurasiya faylı oxunur...
 `readFile` çağırıldı, amma proqram gözləmir, öz işinə davam edir...
-❌ Konfiqurasiya faylını oxumaq mümkün olmadı: ENOENT: no such file or directory, open 'config.json'
+❌ Konfiqurasiya faylını oxumaq mümkün olmadı: ENOENT: no such file 
+or directory, open 'config.json'
 ```
 
 ---
 
 ## 13.2 "Vəd"lər (Promises)
-
-Təsəvvür et ki, dostundan borc pul istəyirsən. Dost dərhal pulu vermir, amma söz verir ki:
-
-> "Sənə sabah verəcəm."
-
-Bu söz, yəni **gələcəkdə icra olunacaq vəd**, JavaScript-də **Promise** adlanır.
 
 **Promise (Vəd)** – asinxron bir əməliyyatın **gələcəkdəki nəticəsini** təmsil edən bir obyektdir.
 
@@ -415,7 +439,7 @@ getData(id)
 
 ---
 
-### 13.2.1 Promise-lərin İstifadəsi (Using Promises)
+### 13.2.1 Promise-lərin İstifadəsi
 
 Təsəvvür edək ki, serverdən məlumat çəkən bir funksiyamız var, amma bu dəfə **callback yerinə Promise** qaytarır. Gəlin bunu `getJSON()` adlandıraq və istifadəsini göstərək:
 
@@ -442,7 +466,7 @@ console.log("Promise quruldu, sorğu arxa planda davam edir...");
 
 ---
 
-###  Xətaların İdarə Edilməsi (Handling Errors)
+###  Xətaların İdarə Edilməsi
 
 Asinxron əməliyyatlar hər an xəta ilə nəticələnə bilər. Promise-lər bunun üçün **standart yol** təqdim edir: `.catch()`.
 
@@ -483,13 +507,6 @@ Promise-lərlə işləyərkən 3 əsas vəziyyət var:
 
 Bir Promise **ya fulfilled, ya da rejected** olduqda onun vəziyyəti **Settled** adlanır. Settled olduqdan sonra nəticəsi dəyişməzdir.
 
-```
-            ┌───────────┐
-Başlanğıc ──> │  Pending  │ ──┬──> Fulfilled (nəticə ilə) ──┐
-            └───────────┘   │                                 ├─> Settled
-                            └──> Rejected (xəta ilə)  ───┘
-```
-
 ---
 
 ### 13.2.2 Promise Zəncirləri (Chaining Promises)
@@ -502,26 +519,10 @@ Promise-lərin ən böyük üstünlüklərindən biri, **ardıcıl asinxron əm�
 
 `fetch` köhnə `XMLHttpRequest`-i əvəz edən müasir Promise-əsaslı vasitədir.
 
-### `fetch` necə işləyir?
-
 1. `fetch(url)` çağırırsınız və dərhal **Promise** qaytarır.
 2. Serverdən ilk cavab gələndə, Promise **fulfilled** olur və `Response` obyekti ilə tamamlanır.
 3. `Response` obyekti hələ sorğunun tam məzmunu (body) deyil. Məzmunu almaq üçün `response.json()` və ya `response.text()` çağırmalısınız.
 4. `.json()` və `.text()` metodları da özləri **yeni bir Promise** qaytarır, çünki məzmunun tam yüklənməsi vaxt tələb edə bilər.
-
----
-
-#### İç-içə Promise-lər
-
-```javascript
-fetch("/api/user/profile").then((response) => {
-  response.json().then((profile) => {
-    displayUserProfile(profile);
-  });
-});
-```
-
-Bu yanaşma bizi yenidən **callback hell-ə bənzər iç-içə quruluşa** qaytarır.
 
 ---
 
@@ -557,22 +558,9 @@ Profil məlumatı göstərildi: { id: 1, name: "Aysel", age: 28 }
 
 ---
 
-#### Zəncirin İşləmə Mexanizmi
+### 13.2.3 Promise-lərin Həll Olunması
 
-1. `fetch(url)` çağırılır → **Promise 1** qaytarılır (pending).
-2. `.then(callback1)` çağırılır → dərhal **Promise 2** qaytarılır.
-3. `.then(callback2)` çağırılır → dərhal **Promise 3** qaytarılır.
-4. Server cavabı gələndə, **Promise 1 fulfilled** olur və nəticəsi `callback1`-ə ötürülür.
-5. `callback1` içində `response.json()` çağırılır → bu da **yeni Promise** qaytarır.
-6. JSON tam yükləndikdə, daxili Promise fulfilled olur və **Promise 2** yerinə yetirilir.
-7. Nəticə `callback2`-yə ötürülür və istifadəçi profili ekranda göstərilir.
-8. Əgər zəncirin hər hansı mərhələsində xəta baş verərsə, `.catch()` işə düşür.
-
----
-
-### 13.2.3 Promise-lərin "Həll Olunması" (Resolving Promises)
-
-Əvvəlki bölmədə belə bir zəncir görmüşdük:
+Əvvəlki bölmədə bu tip bir zəncir görmüşdük:
 
 ```javascript
 fetch(url)
@@ -580,41 +568,39 @@ fetch(url)
   .then((profile) => displayUserProfile(profile));
 ```
 
-Burada sual yaranır:
-`response.json()` özü **Promise** qaytarır, amma növbəti `.then()` birbaşa həmin Promise-in nəticəsini (`profile`) alır.
+`response.json()` özü **yeni bir Promise** qaytarır, amma növbəti `.then()` birbaşa həmin Promise-in **nəticəsini** (`profile` obyektini) alır.
+Bəs bu necə baş verir?
 
----
+JavaScript-də `.then()` metodu **həmişə yeni bir Promise** qaytarır.
+Əgər `.then()` içində başqa bir Promise qaytarsan (məsələn, `response.json()`), o zaman JavaScript avtomatik olaraq bu **daxili Promise-i “həll edir”** və zəncirdəki növbəti `.then()`-ə onun nəticəsini ötürür.
 
-#### Praktiki nümunə
 
 ```javascript
-// c1 - birinci .then callback-i
+// c1 — birinci .then() callback-i
 function c1(response) {
-  console.log("callback 1 (c1) işə düşdü, response obyekti gəldi.");
-  const p4 = response.json(); 
-  // response.json() özü Promise qaytarır
-  console.log("c1, Promise 4-ü (p4) qaytarır.");
-  return p4;
+  console.log("c1: Serverdən cavab gəldi.");
+  const p4 = response.json(); // response.json() yeni Promise qaytarır
+  console.log("c1: p4 (Promise 4) qaytarıldı.");
+  return p4; // c1 Promise qaytarırsa, növbəti then p4-ün nəticəsini alır
 }
 
-// c2 - ikinci .then callback-i
+// c2 — ikinci .then() callback-i
 function c2(profile) {
-  console.log("callback 2 (c2) işə düşdü. Nəticə:", profile);
-  // displayUserProfile(profile);
+  console.log("c2: İstifadəçi profili alındı:", profile);
 }
 
-// Zənciri qururuq
-const p1 = fetch("/api/user/profile"); // p1 (Promise 1)
-const p2 = p1.then(c1); // p2 (Promise 2)
-const p3 = p2.then(c2); // p3 (Promise 3)
+// Zəncirin yaradılması
+const p1 = fetch("/api/user/profile"); // Promise 1
+const p2 = p1.then(c1);                // Promise 2
+const p3 = p2.then(c2);                // Promise 3
 ```
 
-**Konsol çıxışı**
+#### Konsol çıxışı
 
 ```
-callback 1 (c1) işə düşdü, response obyekti gəldi.
-c1, Promise 4-ü (p4) qaytarır.
-callback 2 (c2) işə düşdü. Nəticə: { id: 1, name: "Leyla", age: 28 }
+c1: Serverdən cavab gəldi.
+c1: p4 (Promise 4) qaytarıldı.
+c2: İstifadəçi profili alındı: { id: 1, name: "Leyla", age: 28 }
 ```
 
 ---
@@ -625,7 +611,7 @@ callback 2 (c2) işə düşdü. Nəticə: { id: 1, name: "Leyla", age: 28 }
 
 ---
 
-#### Niyə `.catch()` vacibdir?
+#### Niyə `catch()` vacibdir?
 
 - Sinxron kodda xəta baş verəndə proqram dərhal dayanır və `stack trace`-dən xətanın yerini görürük.
 - Asinxron kodda isə tutulmayan xətalar çox vaxt səssizcə yox olur və problemi tapmaq çətinləşir.
@@ -633,13 +619,13 @@ callback 2 (c2) işə düşdü. Nəticə: { id: 1, name: "Leyla", age: 28 }
 
 ---
 
-#### `.catch()` və `.finally()`
+#### `catch()` və `finally()`
 
-- **`.catch(callback)`** – `.then(null, callback)` qısa formasıdır.
+- **`catch(callback)`** – `.then(null, callback)` qısa formasıdır.
 
   - Zəncir boyunca baş verən bütün xətalar **ilk `.catch()`** tərəfindən tutulur.
 
-- **`.finally(callback)` (ES2018)**
+- **`finally(callback)` (ES2018)**
 
   - Promise **uğurlu (`fulfilled`)** və ya **uğursuz (`rejected`)** olmasından asılı olmayaraq icra olunur.
   - Adətən təmizlik işləri üçün istifadə olunur (məsələn, loading indikatorunu gizlətmək).
@@ -723,7 +709,7 @@ Başlıqlar gəldi, status yoxlanılır...
 
 ---
 
-### Zəncir ortasında xətanın bərpası (Recovery)
+### Zəncir ortasında xətanın bərpası 
 
 `.catch()` həmişə zəncirin sonunda olmalı deyil. Bəzən xətanı tutub, onu bərpa edib, zəncirin davam etməsini təmin edə bilərik.
 
@@ -787,7 +773,7 @@ promise.then((value) => {
 
 ---
 
-### 13.2.5 Promise-lərin Paralel İcrası (Promises in Parallel)
+### 13.2.5 Promise-lərin Paralel İcrası
 
 Əvvəlki bölmələrdə gördüyümüz **zəncirlər** asinxron əməliyyatları **ardıcıl** şəkildə icra edirdi. Bəs əgər bir neçə asinxron əməliyyatı **eyni anda** başladıb, hamısının nəticəsini gözləmək istəsək? Bunun üçün JavaScript `Promise` obyektinin xüsusi statik metodları var.
 
@@ -795,7 +781,7 @@ promise.then((value) => {
 
 #### `Promise.all()` — "Ya Hamısı, Ya Heç Biri"
 
-`Promise.all()` bir massiv Promise qəbul edir və nəticədə **tək bir yeni Promise** qaytarır.
+Bir massiv Promise qəbul edir və nəticədə **tək bir yeni Promise** qaytarır.
 
 **İşləmə Məntiqi:**
 
@@ -838,8 +824,6 @@ Ayarlar: {theme: "dark", notifications: true, ...}
 #### `Promise.allSettled()` — (ES2020)
 
 `Promise.allSettled()` heç vaxt rədd edilmir. O, **bütün Promise-lərin bitməsini** gözləyir və hər birinin nəticəsini statusla birlikdə qaytarır.
-
-**Uğurlu və uğursuz əməliyyatları birlikdə işlətmək**
 
 ```javascript
 const p1 = Promise.resolve("Uğurlu nəticə");
@@ -902,7 +886,7 @@ Qalib gələn nəticə: Sürətli serverdən cavab
 
 ---
 
-### 13.2.6 Öz Promise-lərimizi Yaratmaq (Making Promises)
+### 13.2.6 Öz Promise-lərimizi Yaratmaq
 
 Əvvəllər `fetch()` kimi hazır Promise qaytaran funksiyalardan istifadə etdik. Bəs **özümüz necə Promise yarada bilərik**? Bunun üç əsas yolu var.
 
@@ -1010,7 +994,7 @@ Gözləmə başlayır...
 
 ---
 
-### 13.2.7 Promise-lərin Ardıcıl İcrası (Promises in Sequence)
+### 13.2.7 Promise-lərin Ardıcıl İcrası
 
 `Promise.all()` bir neçə Promise-i **paralel** icra etmək üçün idealdır. Amma bəzən istədiyimiz odur ki, bir massiv (`array`) dolusu URL **ardıcıl olaraq**, yəni birincisi bitdikdən sonra ikincisi işləsin.
 
@@ -1231,7 +1215,7 @@ Burada hər iki `getJSON` sorğusu eyni anda başlayır və `await` onların hə
 
 ---
 
-## 13.4 Asinxron İterasiya (Asynchronous Iteration)
+## 13.4 Asinxron İterasiya
 
 Əvvəlki bölmələrdə öyrəndik ki, **Promise-lər tək bir asinxron əməliyyatın nəticəsi** üçündür.
 Amma bəzən data **hissə-hissə**, zamanla gəlir — məsələn:
@@ -1314,7 +1298,7 @@ await normalForLoop();
 await forAwaitLoop();
 ```
 
-**Console çıxışı (təsəvvür edilən URL-lər üçün):**
+**Console çıxışı:**
 
 ```
 Cavab alındı: /api/url1
@@ -1366,7 +1350,7 @@ async function runClock() {
   console.log("Saat dayandı. 🏁");
 }
 
-// runClock();  // Console çıxışı:
+runClock();
 ```
 
 **Console çıxışı:**
